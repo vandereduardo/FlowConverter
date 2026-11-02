@@ -1,0 +1,18 @@
+# Build outputs
+macos/build/
+*.app/
+build/
+bin/
+obj/
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Bundled external binaries & caches
+macos/Resources/Tools/
+macos/Resources/profiles/
+/tmp/
+*.swp
+*~
