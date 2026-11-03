@@ -1022,28 +1022,47 @@ public enum ThreeMFConverterEngine {
             "top_shell_thickness", "bottom_shell_thickness",
             "sparse_infill_density", "sparse_infill_pattern",
             "top_surface_pattern", "bottom_surface_pattern", "internal_solid_infill_pattern",
+            "infill_direction", "infill_wall_overlap", "infill_combination",
+            "minimum_sparse_infill_area", "reduce_infill_retraction",
             "inner_wall_speed", "outer_wall_speed", "sparse_infill_speed", "internal_solid_infill_speed",
             "top_surface_speed", "initial_layer_speed", "initial_layer_infill_speed",
             "bridge_speed", "gap_infill_speed", "support_speed", "support_interface_speed",
             "small_perimeter_speed", "overhang_1_4_speed", "overhang_2_4_speed", "overhang_3_4_speed", "overhang_4_4_speed",
             "outer_wall_line_width", "inner_wall_line_width", "sparse_infill_line_width",
-            "initial_layer_line_width", "top_surface_line_width", "internal_solid_infill_line_width",
+            "initial_layer_line_width", "top_surface_line_width", "internal_solid_infill_line_width", "line_width",
             "enable_support", "support_type", "support_style",
             "support_on_build_plate_only", "support_threshold_angle", "support_remove_small_overhang",
+            "support_critical_regions_only", "support_angle", "support_base_pattern", "support_base_pattern_spacing",
             "support_interface_top_layers", "support_interface_bottom_layers",
-            "support_top_z_distance", "support_bottom_z_distance",
-            "brim_type", "brim_width", "brim_object_gap", "skirt_loops",
+            "support_interface_pattern", "support_interface_spacing", "support_bottom_interface_spacing",
+            "support_top_z_distance", "support_bottom_z_distance", "support_object_xy_distance",
+            "tree_support_branch_angle", "tree_support_branch_diameter", "tree_support_branch_distance",
+            "tree_support_brim_width", "tree_support_wall_count",
+            "brim_type", "brim_width", "brim_object_gap", "skirt_loops", "skirt_distance", "skirt_height", "raft_layers",
             "seam_position", "seam_gap", "detect_thin_wall", "wall_generator", "wall_sequence", "spiral_mode",
             "elefant_foot_compensation", "xy_contour_compensation", "xy_hole_compensation",
             "fuzzy_skin", "fuzzy_skin_thickness", "fuzzy_skin_point_distance",
             "ironing_type", "ironing_flow", "ironing_speed", "ironing_spacing",
-            "enable_prime_tower", "prime_tower_width", "prime_tower_brim_width",
+            "enable_prime_tower", "prime_tower_width", "prime_tower_brim_width", "prime_volume",
             "wipe_tower_no_sparse_layers", "flush_into_infill", "flush_into_objects", "flush_into_support",
-            "only_one_wall_top", "only_one_wall_first_layer", "avoid_crossing_wall",
+            "only_one_wall_top", "only_one_wall_first_layer", "avoid_crossing_wall", "reduce_crossing_wall",
+            "bridge_no_support", "bridge_density", "bridge_flow", "thick_bridges",
+            "extra_perimeters_on_overhangs", "detect_overhang_wall", "precise_outer_wall", "precise_z_height",
+            "slicing_mode", "print_sequence", "independent_support_layer_height", "enforce_support_layers",
             "ensure_vertical_shell_thickness"
         ]
 
-        let allCandidateProcessKeys = Set(origModifiedProcessKeys).union(preservedScalarIntentKeys)
+        let corePresetGeometryKeys: Set<String> = [
+            "layer_height", "initial_layer_print_height",
+            "wall_loops", "top_shell_layers", "bottom_shell_layers",
+            "sparse_infill_density", "sparse_infill_pattern",
+            "enable_support", "support_type",
+            "brim_type", "brim_width",
+            "spiral_mode", "fuzzy_skin"
+        ]
+        let allCandidateProcessKeys: Set<String> = origModifiedProcessKeys.isEmpty
+            ? Set(preservedScalarIntentKeys)
+            : Set(origModifiedProcessKeys).union(corePresetGeometryKeys)
         let isAnycubicTarget = targetPrinter.brand.lowercased().contains("anycubic") || targetPrinter.name.lowercased().contains("anycubic")
 
         // Resolve official machine + process + filament profile for the target printer
@@ -1210,7 +1229,7 @@ public enum ThreeMFConverterEngine {
         // Sanitize all scalar/array & enum differences across Bambu Studio / AnycubicSlicerNext / OrcaSlicer
         Self.sanitizeCrossSlicerSettings(&settingsDict, targetPrinter: targetPrinter, filamentCount: filamentCount)
 
-        // Populate different_settings_to_system so AnycubicSlicerNext / OrcaSlicer / Bambu Studio preserve custom overrides
+        // Populate different_settings_to_system and inherits_group so AnycubicSlicerNext / OrcaSlicer / Bambu Studio preserve custom overrides
         var diffToSystem: [String] = [
             modifiedProcessKeySet.sorted().joined(separator: ";"),
             "" // Machine profile uses clean target system profile
@@ -1220,6 +1239,7 @@ public enum ThreeMFConverterEngine {
             diffToSystem.append(fDiff)
         }
         settingsDict["different_settings_to_system"] = diffToSystem
+        settingsDict["inherits_group"] = Array(repeating: "", count: 2 + filamentCount)
 
         let updatedJSONData = try JSONSerialization.data(withJSONObject: settingsDict, options: [.prettyPrinted, .sortedKeys])
         try updatedJSONData.write(to: projectSettingsURL, options: .atomic)
@@ -1240,7 +1260,7 @@ public enum ThreeMFConverterEngine {
                 }
             }
             Self.sanitizeXMLMetadataNodes(in: xmlDoc)
-            let outXML = xmlDoc.xmlData(options: [.nodePrettyPrint])
+            let outXML = xmlDoc.xmlData(options: [.nodePrettyPrint, .nodeCompactEmptyElement])
             try? outXML.write(to: sliceInfoURL, options: .atomic)
         }
 
@@ -1249,7 +1269,7 @@ public enum ThreeMFConverterEngine {
            let xmlData = try? Data(contentsOf: modelSettingsURL),
            let xmlDoc = try? XMLDocument(data: xmlData, options: []) {
             Self.sanitizeXMLMetadataNodes(in: xmlDoc)
-            let outXML = xmlDoc.xmlData(options: [.nodePrettyPrint])
+            let outXML = xmlDoc.xmlData(options: [.nodePrettyPrint, .nodeCompactEmptyElement])
             try? outXML.write(to: modelSettingsURL, options: .atomic)
         }
 
@@ -1769,15 +1789,20 @@ public enum ThreeMFConverterEngine {
     }
 
     private static func sanitizeXMLMetadataNodes(in xmlDoc: XMLDocument) {
+        let unsupportedXMLKeys: Set<String> = ["skeleton_infill_density", "skin_infill_density"]
         guard let metaNodes = try? xmlDoc.nodes(forXPath: "//metadata") else { return }
         for node in metaNodes {
             guard let el = node as? XMLElement,
-                  let key = el.attribute(forName: "key")?.stringValue,
-                  let valAttr = el.attribute(forName: "value"),
-                  let rawVal = valAttr.stringValue else {
+                  let key = el.attribute(forName: "key")?.stringValue else {
                 continue
             }
-            if scalarSlicerKeys.contains(key) {
+            if unsupportedXMLKeys.contains(key) {
+                el.detach()
+                continue
+            }
+            if let valAttr = el.attribute(forName: "value"),
+               let rawVal = valAttr.stringValue,
+               scalarSlicerKeys.contains(key) {
                 valAttr.stringValue = sanitizeScalarValue(key: key, rawValue: rawVal, isAnycubic: true)
             }
         }

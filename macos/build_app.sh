@@ -41,10 +41,10 @@ chmod +x "$APP_BUNDLE/Contents/Resources/Scripts/flow_office_converter.py"
 
 # Bundle open-source ffmpeg & cwebp if available locally or via Homebrew
 for tool in ffmpeg cwebp; do
-    if [[ -x "/opt/homebrew/bin/$tool" ]]; then
+    if [[ -x "$RES_DIR/Tools/$tool" ]]; then
+        cp "$RES_DIR/Tools/$tool" "$APP_BUNDLE/Contents/Resources/Tools/$tool"
+    elif [[ -x "/opt/homebrew/bin/$tool" ]]; then
         cp "/opt/homebrew/bin/$tool" "$APP_BUNDLE/Contents/Resources/Tools/$tool"
-    elif [[ -x "$REPO_ROOT/../TangerineClone/TangerineClone.app/Contents/Resources/Tools/$tool" ]]; then
-        cp "$REPO_ROOT/../TangerineClone/TangerineClone.app/Contents/Resources/Tools/$tool" "$APP_BUNDLE/Contents/Resources/Tools/$tool"
     fi
 done
 
