@@ -1,0 +1,266 @@
+<Window x:Class="FlowConverter.Windows.Views.WelcomeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Welcome to Flow Converter"
+        Width="560" Height="440"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True">
+
+    <Window.Resources>
+        <!-- Modern Cyan Primary Button -->
+        <Style x:Key="CyanPrimaryButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#00E5FF" />
+            <Setter Property="Foreground" Value="#0A0E17" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="18,8" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="7"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#33EBFF" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#00B8CC" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Dark Outlined Button -->
+        <Style x:Key="DarkOutlineButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#171D2B" />
+            <Setter Property="Foreground" Value="#B4C2D8" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="12.5" />
+            <Setter Property="Padding" Value="14,8" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderBrush" Value="#2D384E" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="7"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#222B3D" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="#00E5FF" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#101521" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Close Window Button -->
+        <Style x:Key="WindowCloseButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#7888A2" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="btnBorder" Background="Transparent" CornerRadius="12" Width="26" Height="26">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="#2A3345" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="btnBorder" Property="Background" Value="#E53935" />
+                                <Setter Property="Foreground" Value="#FFFFFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- Outer Glow & Window Container -->
+    <Border Background="#0E121D"
+            BorderBrush="#00E5FF"
+            BorderThickness="1.2"
+            CornerRadius="14"
+            Margin="6">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="18" ShadowDepth="2" Direction="270" Color="#000000" Opacity="0.75" />
+        </Border.Effect>
+
+        <Grid Margin="22,16,22,18">
+            <Grid.RowDefinitions>
+                <!-- Title & Close -->
+                <RowDefinition Height="Auto" />
+                <!-- Subtitle -->
+                <RowDefinition Height="Auto" />
+                <!-- Feature Cards (2x2) -->
+                <RowDefinition Height="*" />
+                <!-- Footer Buttons -->
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Top Header Bar: Draggable -->
+            <Grid Grid.Row="0" MouseDown="Header_MouseDown" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Flow Converter Radial Hexagon Emblem -->
+                <Border Grid.Column="0" Width="34" Height="34" CornerRadius="17"
+                        Background="#162032" BorderBrush="#00E5FF" BorderThickness="1.5"
+                        Margin="0,0,12,0" VerticalAlignment="Center">
+                    <Path Data="M 17,7 L 25,12 L 25,22 L 17,27 L 9,22 L 9,12 Z"
+                          Stroke="#00E5FF" StrokeThickness="1.8" Fill="#00E5FF" Opacity="0.85"
+                          HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+
+                <!-- Window Title -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="Flow Converter for Windows"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#FFFFFF" />
+                </StackPanel>
+
+                <!-- Close Button -->
+                <Button Grid.Column="2"
+                        Content="✕"
+                        Style="{StaticResource WindowCloseButtonStyle}"
+                        Click="CloseButton_Click"
+                        ToolTip="Close"
+                        VerticalAlignment="Top" />
+            </Grid>
+
+            <!-- Subtitle -->
+            <TextBlock Grid.Row="1"
+                       Text="Cockpit Radial File Converter, Floating Shelf &amp; 3D Printer .3MF Studio"
+                       FontSize="12"
+                       Foreground="#8E9CB6"
+                       Margin="46,4,0,16" />
+
+            <!-- Feature Cards: 2x2 Grid -->
+            <Grid Grid.Row="2" Margin="0,0,0,16">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Card 1: Alt + Drag -->
+                <Border Grid.Row="0" Grid.Column="0"
+                        Background="#141926" BorderBrush="#253046" BorderThickness="1" CornerRadius="9" Padding="12,10">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Border Background="#00E5FF" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
+                                <TextBlock Text="Alt + Drag" FontSize="10.5" FontWeight="Bold" Foreground="#0A0E17" />
+                            </Border>
+                            <TextBlock Text="Radial Conversion" FontSize="12.5" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <TextBlock Text="Convert across 46 image, audio, video, document &amp; archive formats or 84 3D printer profiles at your cursor."
+                                   FontSize="11" Foreground="#8C9BB4" TextWrapping="Wrap" LineHeight="15" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 2: Shift + Drag -->
+                <Border Grid.Row="0" Grid.Column="2"
+                        Background="#141926" BorderBrush="#253046" BorderThickness="1" CornerRadius="9" Padding="12,10">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Border Background="#00E5FF" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
+                                <TextBlock Text="Shift + Drag" FontSize="10.5" FontWeight="Bold" Foreground="#0A0E17" />
+                            </Border>
+                            <TextBlock Text="29 File Tools" FontSize="12.5" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <TextBlock Text="Interactive workspace: compress, crop, redact, adjust, annotate, trim audio/video, organize PDFs &amp; scan QR."
+                                   FontSize="11" Foreground="#8C9BB4" TextWrapping="Wrap" LineHeight="15" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 3: Ctrl + Drag -->
+                <Border Grid.Row="2" Grid.Column="0"
+                        Background="#141926" BorderBrush="#253046" BorderThickness="1" CornerRadius="9" Padding="12,10">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Border Background="#00E5FF" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
+                                <TextBlock Text="Ctrl + Drag" FontSize="10.5" FontWeight="Bold" Foreground="#0A0E17" />
+                            </Border>
+                            <TextBlock Text="Quick Actions &amp; Shelf" FontSize="12.5" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <TextBlock Text="Floating drop shelf, Share / Send To, copy, move, copy absolute path, and one-click terminal launcher."
+                                   FontSize="11" Foreground="#8C9BB4" TextWrapping="Wrap" LineHeight="15" />
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 4: .3MF Engine -->
+                <Border Grid.Row="2" Grid.Column="2"
+                        Background="#141926" BorderBrush="#253046" BorderThickness="1" CornerRadius="9" Padding="12,10">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <Border Background="#FF6B0D" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
+                                <TextBlock Text=".3MF Engine" FontSize="10.5" FontWeight="Bold" Foreground="#FFFFFF" />
+                            </Border>
+                            <TextBlock Text="Anycubic / Orca / Bambu" FontSize="12.5" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" />
+                        </StackPanel>
+                        <TextBlock Text="Cross-slicer profile engine with automatic build plate recentering, multi-color purge and slicer sanitization."
+                                   FontSize="11" Foreground="#8C9BB4" TextWrapping="Wrap" LineHeight="15" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Bottom Actions -->
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Content="Open Settings…"
+                        Style="{StaticResource DarkOutlineButtonStyle}"
+                        Click="OpenSettings_Click" />
+
+                <Button Grid.Column="2"
+                        Content="Get Started"
+                        Style="{StaticResource CyanPrimaryButtonStyle}"
+                        Click="GetStarted_Click" />
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
