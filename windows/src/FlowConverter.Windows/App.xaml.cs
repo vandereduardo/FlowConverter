@@ -52,12 +52,33 @@ public partial class App : System.Windows.Application
             return;
         }
 
-        _singleInstanceMutex = new Mutex(true, @"Global\FlowConverter_Windows_SingleInstance_Mutex", out bool isNewInstance);
-        if (!isNewInstance)
+        try
         {
-            Shutdown(0);
-            return;
+            _singleInstanceMutex = new Mutex(true, @"Local\FlowConverter_Windows_SingleInstance_Mutex", out bool isNewInstance);
+            if (!isNewInstance)
+            {
+                Shutdown(0);
+                return;
+            }
         }
+        catch
+        {
+            // Continue if named mutex cannot be created in restricted sandbox
+        }
+
+        try
+        {
+            InitializeApplication();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Startup Error: {ex}");
+            Shutdown(1);
+        }
+    }
+
+    private void InitializeApplication()
+    {
 
         AssetGenerator.EnsureHighlightSoundWav();
         AssetGenerator.EnsureAppIconIco();
