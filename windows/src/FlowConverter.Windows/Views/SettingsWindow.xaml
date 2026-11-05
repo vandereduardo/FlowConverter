@@ -68,46 +68,28 @@
             </Setter>
         </Style>
 
-        <!-- Dark ComboBox Style -->
-        <Style x:Key="DarkComboBox" TargetType="ComboBox">
-            <Setter Property="Background" Value="#121722"/>
+        <!-- Dark ComboBox Style (inherits custom dark ControlTemplate from App.xaml) -->
+        <Style x:Key="DarkComboBox" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+            <Setter Property="Background" Value="#141C2B"/>
             <Setter Property="Foreground" Value="#F0F4FA"/>
-            <Setter Property="BorderBrush" Value="#26354D"/>
+            <Setter Property="BorderBrush" Value="#2B3B55"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="8,4"/>
-            <Setter Property="Height" Value="30"/>
+            <Setter Property="Height" Value="32"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="12.5"/>
         </Style>
 
-        <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="#121722"/>
+        <!-- Dark TextBox Style (inherits custom dark ControlTemplate from App.xaml) -->
+        <Style x:Key="DarkTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Background" Value="#141C2B"/>
             <Setter Property="Foreground" Value="#F0F4FA"/>
-            <Setter Property="Padding" Value="8,6"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#1E2B3E"/>
-                    <Setter Property="Foreground" Value="#00E5FF"/>
-                </Trigger>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#172436"/>
-                    <Setter Property="Foreground" Value="#00E5FF"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <!-- Dark TextBox Style -->
-        <Style x:Key="DarkTextBox" TargetType="TextBox">
-            <Setter Property="Background" Value="#121722"/>
-            <Setter Property="Foreground" Value="#F0F4FA"/>
-            <Setter Property="BorderBrush" Value="#26354D"/>
+            <Setter Property="BorderBrush" Value="#2B3B55"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="8,4"/>
-            <Setter Property="Height" Value="30"/>
+            <Setter Property="Height" Value="32"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="12.5"/>
             <Setter Property="CaretBrush" Value="#00E5FF"/>
         </Style>
 
@@ -344,9 +326,9 @@
                                     <Border Grid.Column="0" Width="36" Height="36" CornerRadius="18" Background="#162D3E" BorderBrush="#00E5FF" BorderThickness="1.2" Margin="0,0,12,0">
                                         <TextBlock Text="&#xEA18;" FontFamily="Segoe MDL2 Assets" FontSize="17" Foreground="#00E5FF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
-                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,12,0">
                                         <TextBlock Text="Open Source Unlocked (MIT Edition)" FontWeight="Bold" FontSize="13" Foreground="#F0F4FA"/>
-                                        <TextBlock Text="Unlimited conversions, batch drops, all 29 media tools, and 84 3D printer profiles." FontSize="11.5" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                        <TextBlock Text="Unlimited conversions, batch drops, all 29 media tools, and 84 3D printer profiles." FontSize="11.5" Foreground="#8A99B5" TextWrapping="Wrap" Margin="0,2,0,0"/>
                                     </StackPanel>
                                     <Border Grid.Column="2" Background="#122738" BorderBrush="#00E5FF" BorderThickness="1" CornerRadius="5" Padding="10,5" VerticalAlignment="Center">
                                         <TextBlock x:Name="UsageCountTextBlock" Text="0 Conversions Done" FontSize="11.5" FontWeight="SemiBold" Foreground="#00E5FF"/>
