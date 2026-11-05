@@ -17,7 +17,6 @@ namespace FlowConverter.Windows;
 
 public partial class App : System.Windows.Application
 {
-    private Mutex? _singleInstanceMutex;
     private TrayIconService? _trayService;
     private DragGestureMonitor? _dragMonitor;
     private RadialWheelWindow? _radialWheel;
@@ -52,19 +51,19 @@ public partial class App : System.Windows.Application
             return;
         }
 
+        // Terminate any older running FlowConverter process so newly launched instance takes over cleanly
         try
         {
-            _singleInstanceMutex = new Mutex(true, @"Local\FlowConverter_Windows_SingleInstance_Mutex", out bool isNewInstance);
-            if (!isNewInstance)
+            int currentPid = Environment.ProcessId;
+            foreach (var proc in Process.GetProcessesByName("FlowConverter"))
             {
-                Shutdown(0);
-                return;
+                if (proc.Id != currentPid)
+                {
+                    try { proc.Kill(); proc.WaitForExit(1000); } catch { }
+                }
             }
         }
-        catch
-        {
-            // Continue if named mutex cannot be created in restricted sandbox
-        }
+        catch { }
 
         try
         {
@@ -72,7 +71,7 @@ public partial class App : System.Windows.Application
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine($"Startup Error: {ex}");
+            System.Windows.MessageBox.Show($"FlowConverter Startup Error:\n{ex.Message}", "Flow Converter", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown(1);
         }
     }
@@ -113,10 +112,8 @@ public partial class App : System.Windows.Application
             }
         };
 
-        if (!FlowConverterSettings.Instance.HasSeenWelcomeV2)
-        {
-            ShowWelcomeWindow();
-        }
+        ShowWelcomeWindow();
+        _trayService.ShowNotification("Flow Converter Active", "Hold Alt, Shift, or Ctrl while dragging any file!");
     }
 
     private void OnSummonOrToggleWheel(WheelMode mode, Point cursorDip, IReadOnlyList<string> draggedFiles)
@@ -375,7 +372,10 @@ public partial class App : System.Windows.Application
         {
             _welcomeWindow = new WelcomeWindow
             {
-                OnOpenSettings = ShowSettingsWindow
+                OnOpenSettings = ShowSettingsWindow,
+                OnOpen3MfStudio = Open3MfStudioDialog,
+                OnOpenFloatShelf = FloatingShelfWindow.CreateNewEmptyShelf,
+                OnSummonWheel = () => SummonWheelAtCursor(WheelMode.Conversions)
             };
         }
         _welcomeWindow.Show();
@@ -396,7 +396,6 @@ public partial class App : System.Windows.Application
     {
         _dragMonitor?.Stop();
         _trayService?.Dispose();
-        _singleInstanceMutex?.Dispose();
         base.OnExit(e);
     }
 }

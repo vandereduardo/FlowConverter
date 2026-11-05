@@ -15,9 +15,11 @@ if (-not (Get-Command $dotnetExe -ErrorAction SilentlyContinue)) {
     }
 }
 
-Write-Host "==> Building FlowConverter for Windows (.NET 8 / WPF)..." -ForegroundColor Cyan
+Write-Host "==> Building FlowConverter for Windows (.NET 8 / WPF, self-contained win-x64)..." -ForegroundColor Cyan
 & $dotnetExe publish (Join-Path $scriptDir "src\FlowConverter.Windows\FlowConverter.Windows.csproj") `
     -c Release `
+    -r win-x64 `
+    --self-contained true `
     -o $outDir `
     --nologo
 

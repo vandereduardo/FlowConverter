@@ -18,6 +18,9 @@ public partial class WelcomeWindow : Window
     /// Optional callback invoked when the user clicks "Open Settings...".
     /// </summary>
     public Action? OnOpenSettings { get; set; }
+    public Action? OnOpen3MfStudio { get; set; }
+    public Action? OnOpenFloatShelf { get; set; }
+    public Action? OnSummonWheel { get; set; }
 
     public WelcomeWindow()
     {
@@ -34,7 +37,7 @@ public partial class WelcomeWindow : Window
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        Close();
+        Hide();
     }
 
     private void OpenSettings_Click(object sender, RoutedEventArgs e)
@@ -42,10 +45,20 @@ public partial class WelcomeWindow : Window
         OnOpenSettings?.Invoke();
     }
 
+    private void Open3MfStudio_Click(object sender, RoutedEventArgs e)
+    {
+        OnOpen3MfStudio?.Invoke();
+    }
+
+    private void OpenFloatShelf_Click(object sender, RoutedEventArgs e)
+    {
+        OnOpenFloatShelf?.Invoke();
+    }
+
     private void GetStarted_Click(object sender, RoutedEventArgs e)
     {
         FlowConverterSettings.Instance.HasSeenWelcomeV2 = true;
         FlowConverterSettings.Instance.Save();
-        Close();
+        OnSummonWheel?.Invoke();
     }
 }

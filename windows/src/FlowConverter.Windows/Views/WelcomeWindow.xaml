@@ -247,6 +247,8 @@
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
@@ -254,10 +256,22 @@
                 <Button Grid.Column="0"
                         Content="Open Settings…"
                         Style="{StaticResource DarkOutlineButtonStyle}"
+                        Margin="0,0,8,0"
                         Click="OpenSettings_Click" />
 
+                <Button Grid.Column="1"
+                        Content="3MF Studio…"
+                        Style="{StaticResource DarkOutlineButtonStyle}"
+                        Margin="0,0,8,0"
+                        Click="Open3MfStudio_Click" />
+
                 <Button Grid.Column="2"
-                        Content="Get Started"
+                        Content="Float Shelf"
+                        Style="{StaticResource DarkOutlineButtonStyle}"
+                        Click="OpenFloatShelf_Click" />
+
+                <Button Grid.Column="4"
+                        Content="Summon Wheel"
                         Style="{StaticResource CyanPrimaryButtonStyle}"
                         Click="GetStarted_Click" />
             </Grid>
