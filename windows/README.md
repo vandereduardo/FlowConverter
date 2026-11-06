@@ -2,6 +2,8 @@
 
 **FlowConverter for Windows** is a high-performance, 100% clean-room native Windows implementation of FlowConverter. It brings the fluid "cockpit radial wheel" file workflow, floating drop shelf, interactive visual media studio, and cross-slicer 3D printer `.3MF` profile converter to **Windows 10 and Windows 11**.
 
+The first launch asks you to choose **English** or **Português (Brasil)**. The app suggests the closest supported Windows display language and saves your choice. To change it later, open **Settings → General → App Language** and reopen FlowConverter.
+
 Built using **.NET 8 (`net8.0-windows`)**, **WPF**, and low-level **Win32 Interop**, FlowConverter achieves complete feature parity with the macOS implementation while adhering to Windows design standards and system integration best practices.
 
 ---

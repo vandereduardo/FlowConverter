@@ -18,6 +18,7 @@ using FlowConverter.Windows.Models;
 using DragEventArgs = System.Windows.DragEventArgs;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Point = System.Windows.Point;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Views;
 
@@ -160,8 +161,8 @@ public partial class FloatingShelfWindow : Window
     private void UpdateView()
     {
         int count = Items.Count;
-        TitleTextBlock.Text = $"Float ({count})";
-        CompactCountTextBlock.Text = count == 1 ? "1 file" : $"{count} files";
+        TitleTextBlock.Text = UiText.Format("Float ({0})", count);
+        CompactCountTextBlock.Text = count == 1 ? UiText.Get("1 file") : UiText.Format("{0} files", count);
 
         bool hasItems = count > 0;
         EmptyPlaceholderBorder.Visibility = hasItems ? Visibility.Collapsed : Visibility.Visible;
@@ -194,7 +195,7 @@ public partial class FloatingShelfWindow : Window
             Height = 112;
             ExpandedRoot.Visibility = Visibility.Collapsed;
             CompactRoot.Visibility = Visibility.Visible;
-            CompactCountTextBlock.Text = Items.Count == 1 ? "1 file" : $"{Items.Count} files";
+            CompactCountTextBlock.Text = Items.Count == 1 ? UiText.Get("1 file") : UiText.Format("{0} files", Items.Count);
         }
         else
         {

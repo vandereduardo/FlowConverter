@@ -14,6 +14,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using FlowConverter.Windows.Engines;
+using FlowConverter.Windows.Localization;
 using FlowConverter.Windows.Models;
 
 // Disambiguate WPF controls from Windows Forms controls
@@ -93,8 +94,8 @@ public partial class SettingsWindow : Window
     {
         string? executable = UniversalConversionEngine.FindExecutable("ffmpeg.exe");
         FfmpegStatusText.Text = executable == null
-            ? "Setup required for audio and video tools."
-            : "FFmpeg detected. Open configuration to check its version.";
+            ? UiText.Get("Setup required for audio and video tools.")
+            : UiText.Get("FFmpeg detected. Open configuration to check its version.");
         FfmpegStatusText.ToolTip = executable;
     }
 
@@ -139,7 +140,11 @@ public partial class SettingsWindow : Window
         var settings = FlowConverterSettings.Instance;
 
         // 1. General Tab
-        UsageCountTextBlock.Text = $"{settings.UsageCount} Conversions Done";
+        LanguageComboBox.ItemsSource = UiText.Languages;
+        LanguageComboBox.SelectedValue = settings.AppLanguage ?? UiText.Language;
+        LanguageRestartHint.Visibility = LanguageComboBox.SelectedValue as string == UiText.Language
+            ? Visibility.Collapsed : Visibility.Visible;
+        UsageCountTextBlock.Text = UiText.Format("{0} Conversions Done", settings.UsageCount);
         ThemeComboBox.SelectedIndex = settings.Theme == ConversionFanTheme.Metallic ? 1 : 0;
         SoundsCheckBox.IsChecked = settings.SoundsAndHapticsEnabled;
         FloatBehaviorComboBox.SelectedIndex = settings.FloatBehavior == FloatWheelBehavior.CreateNew ? 1 : 0;
@@ -253,6 +258,16 @@ public partial class SettingsWindow : Window
     #endregion
 
     #region Tab 0: General
+
+    private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_isInitializing || LanguageComboBox.SelectedValue is not string language) return;
+
+        var settings = FlowConverterSettings.Instance;
+        settings.AppLanguage = language;
+        settings.Save();
+        LanguageRestartHint.Visibility = language == UiText.Language ? Visibility.Collapsed : Visibility.Visible;
+    }
 
     private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -508,14 +523,14 @@ public partial class SettingsWindow : Window
         {
             _configuredPrinters.Add(printer);
         }
-        ActivePrintersCountTextBlock.Text = $"{_configuredPrinters.Count(p => p.ShowInWheel)} active on Radial Wheel";
+        ActivePrintersCountTextBlock.Text = UiText.Format("{0} active on Radial Wheel", _configuredPrinters.Count(p => p.ShowInWheel));
     }
 
     private void PrinterShowInWheel_Click(object sender, RoutedEventArgs e)
     {
         if (_isInitializing) return;
         FlowConverterSettings.Instance.Save();
-        ActivePrintersCountTextBlock.Text = $"{_configuredPrinters.Count(p => p.ShowInWheel)} active on Radial Wheel";
+        ActivePrintersCountTextBlock.Text = UiText.Format("{0} active on Radial Wheel", _configuredPrinters.Count(p => p.ShowInWheel));
     }
 
     private void MovePrinterUp_Click(object sender, RoutedEventArgs e)
@@ -743,7 +758,7 @@ public partial class SettingsWindow : Window
     private void AddFolder_Click(object sender, RoutedEventArgs e)
     {
         using var dialog = new System.Windows.Forms.FolderBrowserDialog();
-        dialog.Description = "Select a folder to authorize for FlowConverter";
+        dialog.Description = UiText.Get("Select a folder to authorize for FlowConverter");
         dialog.UseDescriptionForTitle = true;
         if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.SelectedPath))
         {
@@ -783,7 +798,7 @@ public partial class SettingsWindow : Window
             {
                 Title = group.Title(),
                 Glyph = group.IconGlyph(),
-                FormatsCount = $"{formatsInGroup.Count} formats"
+                FormatsCount = UiText.Format("{0} formats", formatsInGroup.Count)
             };
 
             foreach (var fmt in formatsInGroup)
@@ -792,7 +807,7 @@ public partial class SettingsWindow : Window
                 groupVm.Badges.Add(new FormatBadgeViewModel
                 {
                     Name = fmt.DisplayName(),
-                    TargetsText = $"{targetsCount} targets"
+                    TargetsText = UiText.Format("{0} targets", targetsCount)
                 });
             }
 

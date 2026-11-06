@@ -68,6 +68,8 @@ The codebase maintains strict conceptual parity between the `macos/` and `window
 
 Windows binds each Explorer drag to its source window and rebuilds the wheel before choosing an action when the drop payload changes. File arguments passed to the executable supply the initial wheel context.
 
+Windows saves the interface language in `AppLanguage` and loads it before building the WPF windows or tray menu. WPF text and formatted messages share the embedded `Localization/Strings.json` catalog. English provides the default and fallback. Applying a change on the next launch keeps all windows and menus in the same language.
+
 ---
 
 ## 4. Deep Dive: .3MF Slicer Profile Inheritance & Sanitization Pipeline

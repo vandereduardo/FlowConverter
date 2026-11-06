@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using FlowConverter.Windows.Interop;
 using FlowConverter.Windows.Models;
 using FlowConverter.Windows.Services;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Views;
 
@@ -136,9 +137,9 @@ public partial class RadialWheelWindow : Window
                     }
                     _petals.Add(new WheelPetalItem
                     {
-                        ShortLabel = "3MF Studio",
-                        SubLabel = "INSPECT",
-                        CenterDescription = "Open 3MF Inspector & Converter",
+                        ShortLabel = UiText.Get("3MF Studio"),
+                        SubLabel = UiText.Get("INSPECT"),
+                        CenterDescription = UiText.Get("Open 3MF Inspector & Converter"),
                         TargetTool = FileTool.Convert3MF
                     });
                 }
@@ -327,9 +328,9 @@ public partial class RadialWheelWindow : Window
 
         HubModeText.Text = _currentMode switch
         {
-            WheelMode.Conversions => "CONVERT",
-            WheelMode.FileTools => "TOOLS",
-            _ => "ACTIONS"
+            WheelMode.Conversions => UiText.Get("CONVERT"),
+            WheelMode.FileTools => UiText.Get("TOOLS"),
+            _ => UiText.Get("ACTIONS")
         };
 
         if (_highlightedIndex >= 0 && _highlightedIndex < _petals.Count)
@@ -340,18 +341,18 @@ public partial class RadialWheelWindow : Window
         {
             bool all3mf = _activeFiles.Count > 0 && _activeFiles.All(f => f.EndsWith(".3mf", StringComparison.OrdinalIgnoreCase));
             HubDescriptionText.Text = all3mf
-                ? "Choose 3D Printer"
+                ? UiText.Get("Choose 3D Printer")
                 : _currentMode switch
                 {
-                    WheelMode.Conversions => "Choose Format",
-                    WheelMode.FileTools => "Select File Tool",
-                    _ => "Quick Actions"
+                    WheelMode.Conversions => UiText.Get("Choose Format"),
+                    WheelMode.FileTools => UiText.Get("Select File Tool"),
+                    _ => UiText.Get("Quick Actions")
                 };
         }
 
         HubSubtleText.Text = _activeFiles.Count > 0
-            ? $"{_activeFiles.Count} item(s) · Hub=Mode"
-            : "Click Hub for Mode";
+            ? UiText.Format("{0} item(s) · Hub=Mode", _activeFiles.Count)
+            : UiText.Get("Click Hub for Mode");
     }
 
     private void UpdateHoverAtLocalPoint(Point pt)

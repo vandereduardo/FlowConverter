@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Models;
 
@@ -45,22 +46,22 @@ public static class QuickActionTypeExtensions
 {
     public static string DisplayName(this QuickActionType action) => action switch
     {
-        QuickActionType.Float => "Float",
-        QuickActionType.Share => "Share / Send To",
-        QuickActionType.Copy => "Copy",
-        QuickActionType.Move => "Move",
-        QuickActionType.CopyPath => "Copy Path",
-        QuickActionType.OpenTerminal => "Open Terminal",
+        QuickActionType.Float => UiText.Get("Float"),
+        QuickActionType.Share => UiText.Get("Share / Send To"),
+        QuickActionType.Copy => UiText.Get("Copy"),
+        QuickActionType.Move => UiText.Get("Move"),
+        QuickActionType.CopyPath => UiText.Get("Copy Path"),
+        QuickActionType.OpenTerminal => UiText.Get("Open Terminal"),
         _ => action.ToString()
     };
 
     public static string ShortWheelLabel(this QuickActionType action) => action switch
     {
-        QuickActionType.Float => "Float",
-        QuickActionType.Share => "Share",
-        QuickActionType.Copy => "Copy",
-        QuickActionType.Move => "Move",
-        QuickActionType.CopyPath => "Copy Path",
+        QuickActionType.Float => UiText.Get("Float"),
+        QuickActionType.Share => UiText.Get("Share"),
+        QuickActionType.Copy => UiText.Get("Copy"),
+        QuickActionType.Move => UiText.Get("Move"),
+        QuickActionType.CopyPath => UiText.Get("Copy Path"),
         QuickActionType.OpenTerminal => "Terminal",
         _ => action.ToString()
     };
@@ -78,12 +79,12 @@ public static class QuickActionTypeExtensions
 
     public static string Description(this QuickActionType action) => action switch
     {
-        QuickActionType.Float => "Float file or folder on screen drop shelf",
-        QuickActionType.Share => "Share or send files via Windows Share dialog",
-        QuickActionType.Copy => "Copy files and folders to destination",
-        QuickActionType.Move => "Move files and folders to chosen destination",
-        QuickActionType.CopyPath => "Copy absolute file and folder paths to clipboard",
-        QuickActionType.OpenTerminal => "Open terminal at selected folder path",
+        QuickActionType.Float => UiText.Get("Float file or folder on screen drop shelf"),
+        QuickActionType.Share => UiText.Get("Share or send files via Windows Share dialog"),
+        QuickActionType.Copy => UiText.Get("Copy files and folders to destination"),
+        QuickActionType.Move => UiText.Get("Move files and folders to chosen destination"),
+        QuickActionType.CopyPath => UiText.Get("Copy absolute file and folder paths to clipboard"),
+        QuickActionType.OpenTerminal => UiText.Get("Open terminal at selected folder path"),
         _ => action.DisplayName()
     };
 
@@ -136,6 +137,7 @@ public class FlowConverterSettings
     public bool LaunchAtStartup { get; set; } = false;
 
     public bool HasSeenWelcomeV2 { get; set; } = false;
+    public string? AppLanguage { get; set; }
 
     public string DefaultImageCompressionStrength { get; set; } = "balanced";
 

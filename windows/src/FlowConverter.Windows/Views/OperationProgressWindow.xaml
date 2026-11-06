@@ -1,7 +1,8 @@
 <Window x:Class="FlowConverter.Windows.Views.OperationProgressWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Flow Converter Operation"
+        xmlns:loc="clr-namespace:FlowConverter.Windows.Localization"
+        Title="{loc:Text Flow_Converter_Operation}"
         Width="400" Height="165"
         WindowStartupLocation="CenterScreen"
         Topmost="True"
@@ -135,7 +136,7 @@
                 <!-- Operation Title -->
                 <TextBlock x:Name="TitleTextBlock"
                            Grid.Column="1"
-                           Text="Converting Files…"
+                           Text="{loc:Text Converting_Files}"
                            FontSize="13.5"
                            FontWeight="SemiBold"
                            Foreground="#FFFFFF"
@@ -172,7 +173,7 @@
             <!-- Status Details -->
             <TextBlock x:Name="StatusTextBlock"
                        Grid.Row="1"
-                       Text="Processing…"
+                       Text="{loc:Text Processing}"
                        FontSize="11.5"
                        Foreground="#8E9BB5"
                        TextTrimming="CharacterEllipsis"
@@ -207,7 +208,7 @@
             <!-- Bottom Error / Dismiss Row -->
             <Grid Grid.Row="3" Margin="0,4,0,0">
                 <Button x:Name="CloseButton"
-                        Content="Close"
+                        Content="{loc:Text Close}"
                         Style="{StaticResource ProgressDismissButtonStyle}"
                         Click="CloseButton_Click"
                         Visibility="Collapsed"

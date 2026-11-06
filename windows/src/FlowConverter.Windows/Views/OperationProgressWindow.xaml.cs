@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Views;
 
@@ -24,15 +25,15 @@ public partial class OperationProgressWindow : Window
     public OperationProgressWindow(string title, int totalItems)
     {
         InitializeComponent();
-        _title = string.IsNullOrWhiteSpace(title) ? "Processing…" : title;
+        _title = string.IsNullOrWhiteSpace(title) ? UiText.Get("Processing…") : title;
         _totalItems = Math.Max(1, totalItems);
 
         TitleTextBlock.Text = _title;
-        ItemsBadgeTextBlock.Text = _totalItems == 1 ? "1 item" : $"{_totalItems} items";
-        StatusTextBlock.Text = "Initializing…";
+        ItemsBadgeTextBlock.Text = _totalItems == 1 ? "1 item" : UiText.Format("{0} items", _totalItems);
+        StatusTextBlock.Text = UiText.Get("Initializing…");
     }
 
-    public OperationProgressWindow() : this("Processing…", 1)
+    public OperationProgressWindow() : this(UiText.Get("Processing…"), 1)
     {
     }
 
@@ -71,8 +72,8 @@ public partial class OperationProgressWindow : Window
                 PercentTextBlock.Text = "100%";
                 StatusTextBlock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00E5FF"));
                 StatusTextBlock.Text = (outputPaths != null && outputPaths.Count > 0)
-                    ? $"Complete! {outputPaths.Count} file(s) saved."
-                    : "Completed successfully!";
+                    ? UiText.Format("Complete! {0} file(s) saved.", outputPaths.Count)
+                    : UiText.Get("Completed successfully!");
 
                 if (outputPaths != null && outputPaths.Count > 0)
                 {
@@ -101,8 +102,8 @@ public partial class OperationProgressWindow : Window
             {
                 StatusTextBlock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6B6B"));
                 StatusTextBlock.Text = errors.Count == 1
-                    ? $"Error: {errors[0]}"
-                    : $"Failed with {errors.Count} errors: {errors[0]}";
+                    ? UiText.Format("Error: {0}", errors[0])
+                    : UiText.Format("Failed with {0} errors: {1}", errors.Count, errors[0]);
                 CloseButton.Visibility = Visibility.Visible;
                 HeaderCloseButton.Visibility = Visibility.Visible;
             }

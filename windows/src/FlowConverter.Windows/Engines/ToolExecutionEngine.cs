@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using FlowConverter.Windows.Models;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Engines;
 
@@ -37,9 +38,9 @@ public static class ToolExecutionEngine
         switch (tool)
         {
             case FileTool.CreateArchive:
-                progressCallback?.Invoke(0.2, "Creating ZIP archive...");
+                progressCallback?.Invoke(0.2, UiText.Get("Creating ZIP archive..."));
                 outputs.Add(UniversalConversionEngine.PackItemsToArchive(inputPaths, ConversionFormat.Zip));
-                progressCallback?.Invoke(1.0, "Archive ready.");
+                progressCallback?.Invoke(1.0, UiText.Get("Archive ready."));
                 return outputs;
 
             case FileTool.CreatePDF:
@@ -48,29 +49,29 @@ public static class ToolExecutionEngine
                 string dir = Path.GetDirectoryName(first) ?? Environment.CurrentDirectory;
                 string baseName = Path.GetFileNameWithoutExtension(first);
                 string outPath = ThreeMFConverterEngine.UniqueOutputPath(dir, $"{baseName} Document", "pdf");
-                progressCallback?.Invoke(0.3, "Building PDF from images...");
+                progressCallback?.Invoke(0.3, UiText.Get("Building PDF from images..."));
                 UniversalConversionEngine.CreatePdfFromImages(inputPaths, outPath);
                 outputs.Add(outPath);
-                progressCallback?.Invoke(1.0, "PDF created.");
+                progressCallback?.Invoke(1.0, UiText.Get("PDF created."));
                 return outputs;
             }
 
             case FileTool.CreateCollage:
-                progressCallback?.Invoke(0.3, "Rendering photo collage...");
+                progressCallback?.Invoke(0.3, UiText.Get("Rendering photo collage..."));
                 outputs.Add(CreateImageCollage(inputPaths, options));
-                progressCallback?.Invoke(1.0, "Collage saved.");
+                progressCallback?.Invoke(1.0, UiText.Get("Collage saved."));
                 return outputs;
 
             case FileTool.JoinVideos:
-                progressCallback?.Invoke(0.3, "Joining video clips...");
+                progressCallback?.Invoke(0.3, UiText.Get("Joining video clips..."));
                 outputs.Add(JoinVideosWithFfmpeg(inputPaths));
-                progressCallback?.Invoke(1.0, "Videos joined.");
+                progressCallback?.Invoke(1.0, UiText.Get("Videos joined."));
                 return outputs;
 
             case FileTool.MergePDF:
-                progressCallback?.Invoke(0.3, "Merging PDF documents...");
+                progressCallback?.Invoke(0.3, UiText.Get("Merging PDF documents..."));
                 outputs.Add(MergePdfDocuments(inputPaths));
-                progressCallback?.Invoke(1.0, "PDF merged.");
+                progressCallback?.Invoke(1.0, UiText.Get("PDF merged."));
                 return outputs;
         }
 
@@ -81,7 +82,7 @@ public static class ToolExecutionEngine
             outputs.AddRange(ExecuteSingle(tool, src, options));
         }
 
-        progressCallback?.Invoke(1.0, "Done.");
+        progressCallback?.Invoke(1.0, UiText.Get("Done."));
         return outputs;
     }
 
@@ -544,7 +545,7 @@ public static class ToolExecutionEngine
     {
         string first = imagePaths[0];
         string dir = Path.GetDirectoryName(first) ?? Environment.CurrentDirectory;
-        string outPath = ThreeMFConverterEngine.UniqueOutputPath(dir, "Collage", "png");
+        string outPath = ThreeMFConverterEngine.UniqueOutputPath(dir, UiText.Get("Collage"), "png");
 
         var bitmaps = new List<Bitmap>();
         try
@@ -630,7 +631,7 @@ public static class ToolExecutionEngine
     {
         string? ffmpeg = UniversalConversionEngine.FindExecutable("ffmpeg.exe");
         if (ffmpeg == null)
-            throw new InvalidOperationException("FFmpeg is required. Open Settings → General → Media Tools (FFmpeg) to set it up.");
+            throw new InvalidOperationException(UiText.Get("FFmpeg is required. Open Settings → General → Media Tools (FFmpeg) to set it up."));
         UniversalConversionEngine.RunExternalProcess(ffmpeg, args);
     }
 }

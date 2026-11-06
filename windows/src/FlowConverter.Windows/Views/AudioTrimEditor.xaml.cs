@@ -7,6 +7,7 @@ using System.Windows.Media;
 using Rectangle = System.Windows.Shapes.Rectangle;
 using FlowConverter.Windows.Engines;
 using FlowConverter.Windows.Models;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Views;
 
@@ -43,7 +44,7 @@ public partial class AudioTrimEditor : UserControl
         _fileCount = fileCount;
         _options = options;
         InitializeComponent();
-        ThresholdLabel.Text = $"Silence threshold: {Threshold.Value:0} dB";
+        ThresholdLabel.Text = UiText.Format("Silence threshold: {0:0} dB", Threshold.Value);
         Loaded += async (_, _) => await LoadWaveformAsync();
         Unloaded += (_, _) =>
         {
@@ -55,7 +56,7 @@ public partial class AudioTrimEditor : UserControl
         _player.MediaFailed += (_, _) =>
         {
             StopPreview();
-            Status.Text = "Could not play the preview audio.";
+            Status.Text = UiText.Get("Could not play the preview audio.");
         };
     }
 
@@ -63,14 +64,14 @@ public partial class AudioTrimEditor : UserControl
     {
         if (UniversalConversionEngine.FindExecutable("ffmpeg.exe") == null)
         {
-            Status.Text = "Set up FFmpeg to load the waveform and trim this audio.";
-            SetupButton.Content = "Set up FFmpeg…";
+            Status.Text = UiText.Get("Set up FFmpeg to load the waveform and trim this audio.");
+            SetupButton.Content = UiText.Get("Set up FFmpeg…");
             SetupButton.Visibility = Visibility.Visible;
             return;
         }
 
         SetupButton.Visibility = Visibility.Collapsed;
-        Status.Text = "Reading audio waveform…";
+        Status.Text = UiText.Get("Reading audio waveform…");
         var token = _lifetime.Token;
         try
         {
@@ -78,7 +79,7 @@ public partial class AudioTrimEditor : UserControl
             token.ThrowIfCancellationRequested();
             (_duration, _peaks) = analysis;
             Total.Text = $"Total: {TimeLabel(_duration)}";
-            Status.Text = _fileCount > 1 ? "Previewing the first file. The selected times apply to all files." : "";
+            Status.Text = _fileCount > 1 ? UiText.Get("Previewing the first file. The selected times apply to all files.") : "";
             DrawWaveform();
             SetRange(0, _duration);
             Editor.IsEnabled = true;
@@ -89,8 +90,8 @@ public partial class AudioTrimEditor : UserControl
         {
             if (!token.IsCancellationRequested)
             {
-                Status.Text = $"Could not read the audio. {ex.Message}";
-                SetupButton.Content = "Check FFmpeg…";
+                Status.Text = UiText.Format("Could not read the audio. {0}", ex.Message);
+                SetupButton.Content = UiText.Get("Check FFmpeg…");
                 SetupButton.Visibility = Visibility.Visible;
             }
         }
@@ -99,7 +100,7 @@ public partial class AudioTrimEditor : UserControl
     private async void Setup_Click(object sender, RoutedEventArgs e)
     {
         SetupButton.IsEnabled = false;
-        FfmpegSetupWindow.ShowSetup(Window.GetWindow(this), "Trim Audio");
+        FfmpegSetupWindow.ShowSetup(Window.GetWindow(this), UiText.Get("Trim Audio"));
         await LoadWaveformAsync();
         SetupButton.IsEnabled = true;
     }
@@ -250,7 +251,7 @@ public partial class AudioTrimEditor : UserControl
         if (ThresholdLabel == null) return;
         StopPreview();
         _options.SilenceThresholdDb = e.NewValue;
-        ThresholdLabel.Text = $"Silence threshold: {e.NewValue:0} dB";
+        ThresholdLabel.Text = UiText.Format("Silence threshold: {0:0} dB", e.NewValue);
     }
 
     private async void Play_Click(object sender, RoutedEventArgs e)
@@ -264,8 +265,8 @@ public partial class AudioTrimEditor : UserControl
         using var request = new CancellationTokenSource();
         _preview = request;
         string temp = Path.Combine(Path.GetTempPath(), $"FlowConverter-preview-{Guid.NewGuid():N}.wav");
-        PlayButton.Content = "■  Stop Preview";
-        Status.Text = "Preparing audio preview…";
+        PlayButton.Content = UiText.Get("■  Stop Preview");
+        Status.Text = UiText.Get("Preparing audio preview…");
         try
         {
             await AudioTrimEngine.TrimAsync(_source, temp, _options.TrimStartSeconds,
@@ -275,7 +276,7 @@ public partial class AudioTrimEditor : UserControl
             _player.Open(new Uri(temp));
             _previewFile = temp;
             _player.Play();
-            Status.Text = "Playing selected range…";
+            Status.Text = UiText.Get("Playing selected range…");
         }
         catch (OperationCanceledException) when (request.IsCancellationRequested) { }
         catch (Exception ex)
@@ -306,8 +307,8 @@ public partial class AudioTrimEditor : UserControl
         }
         if (wasPreviewing)
         {
-            PlayButton.Content = "▶  Play Selected Range";
-            Status.Text = _fileCount > 1 ? "Previewing the first file. The selected times apply to all files." : "";
+            PlayButton.Content = UiText.Get("▶  Play Selected Range");
+            Status.Text = _fileCount > 1 ? UiText.Get("Previewing the first file. The selected times apply to all files.") : "";
         }
     }
 

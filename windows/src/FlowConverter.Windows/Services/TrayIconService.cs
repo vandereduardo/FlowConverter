@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Services;
 
@@ -27,25 +28,25 @@ public sealed class TrayIconService : IDisposable
         menu.Items.Add(titleItem);
         menu.Items.Add(new ToolStripSeparator());
 
-        menu.Items.Add("Summon Conversion Wheel (Alt)", null, (_, _) => SummonConvertWheelRequested?.Invoke());
-        menu.Items.Add("Summon File Tools Wheel (Shift)", null, (_, _) => SummonToolsWheelRequested?.Invoke());
-        menu.Items.Add("Summon Quick Actions Wheel (Ctrl)", null, (_, _) => SummonActionsWheelRequested?.Invoke());
+        menu.Items.Add(UiText.Get("Summon Conversion Wheel (Alt)"), null, (_, _) => SummonConvertWheelRequested?.Invoke());
+        menu.Items.Add(UiText.Get("Summon File Tools Wheel (Shift)"), null, (_, _) => SummonToolsWheelRequested?.Invoke());
+        menu.Items.Add(UiText.Get("Summon Quick Actions Wheel (Ctrl)"), null, (_, _) => SummonActionsWheelRequested?.Invoke());
         menu.Items.Add(new ToolStripSeparator());
 
-        menu.Items.Add("3D Printer .3MF Converter Studio…", null, (_, _) => Open3MfStudioRequested?.Invoke());
-        menu.Items.Add("New Float Shelf…", null, (_, _) => NewFloatShelfRequested?.Invoke());
+        menu.Items.Add(UiText.Get("3D Printer .3MF Converter Studio…"), null, (_, _) => Open3MfStudioRequested?.Invoke());
+        menu.Items.Add(UiText.Get("New Float Shelf…"), null, (_, _) => NewFloatShelfRequested?.Invoke());
         menu.Items.Add(new ToolStripSeparator());
 
-        menu.Items.Add("Getting Started…", null, (_, _) => OpenWelcomeRequested?.Invoke());
-        menu.Items.Add("Settings…", null, (_, _) => OpenSettingsRequested?.Invoke());
+        menu.Items.Add(UiText.Get("Getting Started…"), null, (_, _) => OpenWelcomeRequested?.Invoke());
+        menu.Items.Add(UiText.Get("Settings…"), null, (_, _) => OpenSettingsRequested?.Invoke());
         menu.Items.Add(new ToolStripSeparator());
 
-        menu.Items.Add("Quit Flow Converter", null, (_, _) => QuitRequested?.Invoke());
+        menu.Items.Add(UiText.Get("Quit Flow Converter"), null, (_, _) => QuitRequested?.Invoke());
 
         _notifyIcon = new NotifyIcon
         {
             Icon = _idleIcon,
-            Text = "Flow Converter — Alt+Drag to Convert",
+            Text = UiText.Get("Flow Converter — Alt+Drag to Convert"),
             ContextMenuStrip = menu,
             Visible = true
         };

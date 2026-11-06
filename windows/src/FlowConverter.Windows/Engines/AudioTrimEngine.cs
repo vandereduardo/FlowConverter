@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Engines;
 
@@ -30,7 +31,7 @@ internal static partial class AudioTrimEngine
             }
         }, token).ConfigureAwait(false);
 
-        if (blocks.Count == 0) throw new InvalidDataException("This file has no audio samples.");
+        if (blocks.Count == 0) throw new InvalidDataException(UiText.Get("This file has no audio samples."));
         int maximum = Math.Max(1, blocks.Max());
         int barCount = Math.Min(WaveformBarCount, blocks.Count);
         var peaks = new double[barCount];
@@ -91,7 +92,7 @@ internal static partial class AudioTrimEngine
         if (lastSilenceEnd < duration - 0.005) trailingStart = null;
         double audibleEnd = Math.Min(duration, silenceStart ?? trailingStart ?? duration);
         if (audibleEnd <= leadingEnd)
-            throw new InvalidOperationException("The selected range is silent at the current threshold.");
+            throw new InvalidOperationException(UiText.Get("The selected range is silent at the current threshold."));
 
         return (start + leadingEnd, audibleEnd - leadingEnd);
     }
@@ -109,7 +110,7 @@ internal static partial class AudioTrimEngine
     {
         token.ThrowIfCancellationRequested();
         string ffmpeg = UniversalConversionEngine.FindExecutable("ffmpeg.exe") ??
-            throw new InvalidOperationException("Set up FFmpeg in Settings → General → Media Tools (FFmpeg).");
+            throw new InvalidOperationException(UiText.Get("Set up FFmpeg in Settings → General → Media Tools (FFmpeg)."));
         var info = new ProcessStartInfo(ffmpeg)
         {
             UseShellExecute = false,
@@ -120,7 +121,7 @@ internal static partial class AudioTrimEngine
         foreach (string arg in new[] { "-hide_banner", "-nostdin", "-nostats" }) info.ArgumentList.Add(arg);
         foreach (string arg in args) info.ArgumentList.Add(arg);
 
-        using var process = Process.Start(info) ?? throw new IOException("Could not start FFmpeg.");
+        using var process = Process.Start(info) ?? throw new IOException(UiText.Get("Could not start FFmpeg."));
         using var registration = token.Register(() =>
         {
             try { process.Kill(); }
@@ -132,7 +133,7 @@ internal static partial class AudioTrimEngine
         await Task.WhenAll(output, error, process.WaitForExitAsync()).ConfigureAwait(false);
         token.ThrowIfCancellationRequested();
         if (process.ExitCode != 0)
-            throw new IOException(error.Result.Trim().Split('\n').LastOrDefault() ?? "FFmpeg could not process the audio.");
+            throw new IOException(error.Result.Trim().Split('\n').LastOrDefault() ?? UiText.Get("FFmpeg could not process the audio."));
         return error.Result;
     }
 }

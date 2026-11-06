@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using FlowConverter.Windows.Models;
 using FlowConverter.Windows.Services;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Engines;
 
@@ -42,7 +43,7 @@ public static class UniversalConversionEngine
         for (int i = 0; i < inputPaths.Count; i++)
         {
             string src = inputPaths[i];
-            progressCallback?.Invoke((double)i / inputPaths.Count, $"Converting {Path.GetFileName(src)} → {targetFormat.DisplayName()}");
+            progressCallback?.Invoke((double)i / inputPaths.Count, UiText.Format("Converting {0} → {1}", Path.GetFileName(src), targetFormat.DisplayName()));
             string outPath = ConvertSingle(src, targetFormat, options);
             outputs.Add(outPath);
         }
@@ -982,7 +983,7 @@ public static class UniversalConversionEngine
         string? ffmpeg = FindExecutable("ffmpeg.exe");
         if (ffmpeg == null)
         {
-            throw new InvalidOperationException("FFmpeg is required. Open Settings → General → Media Tools (FFmpeg) to set it up.");
+            throw new InvalidOperationException(UiText.Get("FFmpeg is required. Open Settings → General → Media Tools (FFmpeg) to set it up."));
         }
 
         var args = new List<string> { "-y", "-i", srcPath };

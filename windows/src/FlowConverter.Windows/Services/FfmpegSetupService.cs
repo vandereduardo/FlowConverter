@@ -4,6 +4,7 @@ using System.IO.Compression;
 using System.Net.Http;
 using System.Security.Cryptography;
 using FlowConverter.Windows.Models;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Services;
 
@@ -31,7 +32,7 @@ internal static class FfmpegSetupService
             CreateNoWindow = true,
             RedirectStandardOutput = true
         };
-        using var process = Process.Start(startInfo) ?? throw new IOException("Could not start FFmpeg.");
+        using var process = Process.Start(startInfo) ?? throw new IOException(UiText.Get("Could not start FFmpeg."));
         using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(10));
         try
         {
@@ -39,13 +40,13 @@ internal static class FfmpegSetupService
             await process.WaitForExitAsync(timeout.Token);
             string firstLine = output.Split('\n', 2)[0].Trim();
             if (process.ExitCode != 0 || !firstLine.StartsWith("ffmpeg version ", StringComparison.OrdinalIgnoreCase))
-                throw new InvalidDataException("The selected executable did not report an FFmpeg version.");
+                throw new InvalidDataException(UiText.Get("The selected executable did not report an FFmpeg version."));
             return firstLine;
         }
         catch (OperationCanceledException)
         {
             if (!process.HasExited) process.Kill();
-            throw new IOException("FFmpeg did not respond in time.");
+            throw new IOException(UiText.Get("FFmpeg did not respond in time."));
         }
     }
 
@@ -64,9 +65,9 @@ internal static class FfmpegSetupService
                 string archivePath = Path.Combine(staging, "ffmpeg.zip");
                 string checksum = (await Client.GetStringAsync(DownloadUrl + ".sha256", token)).Trim();
                 if (checksum.Length != 64 || !checksum.All(Uri.IsHexDigit))
-                    throw new InvalidDataException("The FFmpeg provider returned an invalid SHA-256 checksum.");
+                    throw new InvalidDataException(UiText.Get("The FFmpeg provider returned an invalid SHA-256 checksum."));
 
-                progress.Report("Downloading FFmpeg…");
+                progress.Report(UiText.Get("Downloading FFmpeg…"));
                 using (var response = await Client.GetAsync(DownloadUrl, HttpCompletionOption.ResponseHeadersRead, token))
                 {
                     response.EnsureSuccessStatusCode();
@@ -75,20 +76,20 @@ internal static class FfmpegSetupService
                     await source.CopyToAsync(destination, token);
                 }
 
-                progress.Report("Verifying and installing FFmpeg…");
+                progress.Report(UiText.Get("Verifying and installing FFmpeg…"));
                 string stagedExecutable = Path.Combine(staging, "ffmpeg.exe");
                 await using (var archiveStream = File.OpenRead(archivePath))
                 {
                     byte[] hash = await SHA256.HashDataAsync(archiveStream, token);
                     if (!Convert.ToHexString(hash).Equals(checksum, StringComparison.OrdinalIgnoreCase))
-                        throw new InvalidDataException("The FFmpeg download failed its SHA-256 check. Please try again.");
+                        throw new InvalidDataException(UiText.Get("The FFmpeg download failed its SHA-256 check. Please try again."));
 
                     archiveStream.Position = 0;
                     using var archive = new ZipArchive(archiveStream, ZipArchiveMode.Read, leaveOpen: true);
                     var executable = archive.Entries.SingleOrDefault(entry =>
                         entry.FullName.EndsWith("/bin/ffmpeg.exe", StringComparison.OrdinalIgnoreCase));
                     if (executable == null)
-                        throw new InvalidDataException("The FFmpeg archive did not contain ffmpeg.exe.");
+                        throw new InvalidDataException(UiText.Get("The FFmpeg archive did not contain ffmpeg.exe."));
                     await using var source = executable.Open();
                     await using var destination = File.Create(stagedExecutable);
                     await source.CopyToAsync(destination, token);

@@ -3,6 +3,7 @@ using System.Windows;
 using FlowConverter.Windows.Engines;
 using FlowConverter.Windows.Models;
 using FlowConverter.Windows.Services;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Views;
 
@@ -15,7 +16,7 @@ public partial class FfmpegSetupWindow : Window
         InitializeComponent();
         if (owner?.IsVisible == true) Owner = owner;
         WindowStartupLocation = Owner == null ? WindowStartupLocation.CenterScreen : WindowStartupLocation.CenterOwner;
-        if (operation != null) Heading.Text = $"Set up FFmpeg to use {operation}";
+        if (operation != null) Heading.Text = UiText.Format("Set up FFmpeg to use {0}", operation);
         Loaded += async (_, _) => await ShowDetectedVersionAsync();
     }
 
@@ -45,7 +46,7 @@ public partial class FfmpegSetupWindow : Window
 
         InstallButton.IsEnabled = false;
         BrowseButton.IsEnabled = false;
-        Status.Text = "Checking FFmpeg…";
+        Status.Text = UiText.Get("Checking FFmpeg…");
         try
         {
             Status.Text = await FfmpegSetupService.GetVersionAsync(executable);
@@ -53,7 +54,7 @@ public partial class FfmpegSetupWindow : Window
         }
         catch (Exception ex)
         {
-            Status.Text = $"The detected FFmpeg could not start. {ex.Message}";
+            Status.Text = UiText.Format("The detected FFmpeg could not start. {0}", ex.Message);
         }
         finally
         {
@@ -67,7 +68,7 @@ public partial class FfmpegSetupWindow : Window
         using var cancellation = new CancellationTokenSource();
         _installation = cancellation;
         SetBusy(true);
-        Status.Text = "Preparing the FFmpeg download…";
+        Status.Text = UiText.Get("Preparing the FFmpeg download…");
         var progress = new Progress<string>(message => Status.Text = message);
         bool installed = false;
         try
@@ -79,12 +80,12 @@ public partial class FfmpegSetupWindow : Window
         catch (OperationCanceledException)
         {
             Status.Text = cancellation.IsCancellationRequested
-                ? "Setup canceled. You can try again."
-                : "The download timed out. Please try again.";
+                ? UiText.Get("Setup canceled. You can try again.")
+                : UiText.Get("The download timed out. Please try again.");
         }
         catch (Exception ex)
         {
-            Status.Text = $"Could not install FFmpeg. {ex.Message}";
+            Status.Text = UiText.Format("Could not install FFmpeg. {0}", ex.Message);
         }
         finally
         {
@@ -99,14 +100,14 @@ public partial class FfmpegSetupWindow : Window
     {
         var picker = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Select ffmpeg.exe",
+            Title = UiText.Get("Select ffmpeg.exe"),
             Filter = "FFmpeg executable (ffmpeg.exe)|ffmpeg.exe",
             FileName = "ffmpeg.exe"
         };
         if (picker.ShowDialog(this) != true) return;
 
         SetBusy(true);
-        Status.Text = "Checking the selected executable…";
+        Status.Text = UiText.Get("Checking the selected executable…");
         bool selected = false;
         try
         {
@@ -116,7 +117,7 @@ public partial class FfmpegSetupWindow : Window
         }
         catch (Exception ex)
         {
-            Status.Text = $"Could not use the selected FFmpeg. {ex.Message}";
+            Status.Text = UiText.Format("Could not use the selected FFmpeg. {0}", ex.Message);
         }
         finally
         {
@@ -136,7 +137,7 @@ public partial class FfmpegSetupWindow : Window
         InstallButton.IsEnabled = !busy;
         BrowseButton.IsEnabled = !busy;
         InstallProgress.Visibility = busy ? Visibility.Visible : Visibility.Collapsed;
-        CloseButton.Content = _installation != null ? "Cancel download" : "Close";
+        CloseButton.Content = _installation != null ? UiText.Get("Cancel download") : UiText.Get("Close");
         CloseButton.IsEnabled = !busy || _installation != null;
     }
 

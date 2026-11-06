@@ -1,7 +1,8 @@
 <Window x:Class="FlowConverter.Windows.Views.FloatingShelfWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Float Drop Shelf"
+        xmlns:loc="clr-namespace:FlowConverter.Windows.Localization"
+        Title="{loc:Text Float_Drop_Shelf}"
         Width="290" Height="340"
         WindowStartupLocation="CenterScreen"
         Topmost="True"
@@ -100,13 +101,13 @@
 
         <!-- Context Menu for Items -->
         <ContextMenu x:Key="ItemContextMenu" Background="#141926" BorderBrush="#28344A" BorderThickness="1">
-            <MenuItem Header="Open" Click="MenuItemOpen_Click" Foreground="#FFFFFF" />
-            <MenuItem Header="Reveal in Explorer" Click="MenuItemReveal_Click" Foreground="#FFFFFF" />
+            <MenuItem Header="{loc:Text Open}" Click="MenuItemOpen_Click" Foreground="#FFFFFF" />
+            <MenuItem Header="{loc:Text Reveal_in_Explorer}" Click="MenuItemReveal_Click" Foreground="#FFFFFF" />
             <Separator Background="#28344A" />
-            <MenuItem Header="Copy File" Click="MenuItemCopyFile_Click" Foreground="#FFFFFF" />
-            <MenuItem Header="Copy Path" Click="MenuItemCopyPath_Click" Foreground="#FFFFFF" />
+            <MenuItem Header="{loc:Text Copy_File}" Click="MenuItemCopyFile_Click" Foreground="#FFFFFF" />
+            <MenuItem Header="{loc:Text Copy_Path}" Click="MenuItemCopyPath_Click" Foreground="#FFFFFF" />
             <Separator Background="#28344A" />
-            <MenuItem Header="Remove" Click="MenuItemRemove_Click" Foreground="#FF6B6B" />
+            <MenuItem Header="{loc:Text Remove}" Click="MenuItemRemove_Click" Foreground="#FF6B6B" />
         </ContextMenu>
     </Window.Resources>
 
@@ -164,7 +165,7 @@
                     <!-- Title -->
                     <TextBlock x:Name="TitleTextBlock"
                                Grid.Column="1"
-                               Text="Float (0)"
+                               Text="{loc:Text Float_0}"
                                FontSize="12.5"
                                FontWeight="SemiBold"
                                Foreground="#FFFFFF"
@@ -175,7 +176,7 @@
                             Grid.Column="2"
                             Style="{StaticResource HeaderIconButtonStyle}"
                             Click="ToggleViewMode_Click"
-                            ToolTip="Toggle Grid / List View"
+                            ToolTip="{loc:Text Toggle_Grid_List_View}"
                             Margin="0,0,4,0">
                         <TextBlock x:Name="ToggleViewModeIcon" Text="☰" FontSize="11" />
                     </Button>
@@ -186,7 +187,7 @@
                             Content="—"
                             Style="{StaticResource HeaderIconButtonStyle}"
                             Click="CollapseButton_Click"
-                            ToolTip="Collapse Float"
+                            ToolTip="{loc:Text Collapse_Float}"
                             Margin="0,0,4,0" />
 
                     <!-- Close Button -->
@@ -195,7 +196,7 @@
                             Content="✕"
                             Style="{StaticResource HeaderIconButtonStyle}"
                             Click="CloseButton_Click"
-                            ToolTip="Close Float Shelf" />
+                            ToolTip="{loc:Text Close_Float_Shelf}" />
                 </Grid>
 
                 <!-- Top Divider -->
@@ -218,10 +219,10 @@
                                   StrokeStartLineCap="Round" StrokeEndLineCap="Round"
                                   Width="24" Height="26" Stretch="Uniform"
                                   Opacity="0.6" HorizontalAlignment="Center" Margin="0,0,0,8" />
-                            <TextBlock Text="Drop files here to float"
+                            <TextBlock Text="{loc:Text Drop_files_here_to_float}"
                                        FontSize="11.5" FontWeight="SemiBold"
                                        Foreground="#8E9BB5" HorizontalAlignment="Center" />
-                            <TextBlock Text="Hold Ctrl while dragging"
+                            <TextBlock Text="{loc:Text Hold_Ctrl_while_dragging}"
                                        FontSize="10" Foreground="#5E6B82"
                                        HorizontalAlignment="Center" Margin="0,3,0,0" />
                         </StackPanel>
@@ -385,7 +386,7 @@
                                                     Content="✕"
                                                     Style="{StaticResource HeaderIconButtonStyle}"
                                                     Click="RemoveItemButton_Click"
-                                                    ToolTip="Remove from Shelf"
+                                                    ToolTip="{loc:Text Remove_from_Shelf}"
                                                     Margin="2,0,0,0"
                                                     VerticalAlignment="Center" />
                                         </Grid>
@@ -409,23 +410,23 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Column="0"
-                            Content="Copy All"
+                            Content="{loc:Text Copy_All}"
                             Style="{StaticResource FooterGhostButtonStyle}"
                             Click="CopyAll_Click"
-                            ToolTip="Copy all files to clipboard"
+                            ToolTip="{loc:Text Copy_all_files_to_clipboard}"
                             Margin="0,0,6,0" />
 
                     <Button Grid.Column="1"
-                            Content="Clear"
+                            Content="{loc:Text Clear}"
                             Style="{StaticResource FooterGhostButtonStyle}"
                             Click="Clear_Click"
-                            ToolTip="Clear shelf" />
+                            ToolTip="{loc:Text Clear_shelf}" />
 
                     <Button Grid.Column="3"
-                            Content="Convert All…"
+                            Content="{loc:Text Convert_All}"
                             Style="{StaticResource FooterCyanButtonStyle}"
                             Click="ConvertAll_Click"
-                            ToolTip="Launch radial conversion for all items" />
+                            ToolTip="{loc:Text Launch_radial_conversion_for_all_items}" />
                 </Grid>
             </Grid>
         </Border>
@@ -462,14 +463,14 @@
 
                 <!-- Files Count Badge -->
                 <TextBlock x:Name="CompactCountTextBlock"
-                           Text="0 files"
+                           Text="{loc:Text 0_files}"
                            FontSize="11.5"
                            FontWeight="Bold"
                            Foreground="#FFFFFF"
                            HorizontalAlignment="Center" />
 
                 <!-- Hint Text -->
-                <TextBlock Text="Click to expand"
+                <TextBlock Text="{loc:Text Click_to_expand}"
                            FontSize="9"
                            Foreground="#7E8DA5"
                            HorizontalAlignment="Center"

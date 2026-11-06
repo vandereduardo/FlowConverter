@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using FlowConverter.Windows.Engines;
 using FlowConverter.Windows.Interop;
+using FlowConverter.Windows.Localization;
 using FlowConverter.Windows.Models;
 using FlowConverter.Windows.Services;
 using FlowConverter.Windows.Views;
@@ -67,11 +68,24 @@ public partial class App : System.Windows.Application
 
         try
         {
+            var settings = FlowConverterSettings.Instance;
+            if (!UiText.IsSupported(settings.AppLanguage))
+            {
+                var picker = new LanguageSelectionWindow();
+                if (picker.ShowDialog() != true)
+                {
+                    Shutdown(0);
+                    return;
+                }
+                settings.AppLanguage = picker.SelectedLanguage;
+                settings.Save();
+            }
+            UiText.Apply(settings.AppLanguage!);
             InitializeApplication(e.Args);
         }
         catch (Exception ex)
         {
-            System.Windows.MessageBox.Show($"FlowConverter Startup Error:\n{ex.Message}", "Flow Converter", MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show(UiText.Format("FlowConverter Startup Error:\n{0}", ex.Message), "Flow Converter", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown(1);
         }
     }
@@ -122,7 +136,7 @@ public partial class App : System.Windows.Application
         {
             ShowWelcomeWindow();
         }
-        _trayService.ShowNotification("Flow Converter Active", "Hold Alt, Shift, or Ctrl while dragging any file!");
+        _trayService.ShowNotification(UiText.Get("Flow Converter Active"), UiText.Get("Hold Alt, Shift, or Ctrl while dragging any file!"));
     }
 
     private void OnSummonOrToggleWheel(WheelMode mode, Point cursorDip, IReadOnlyList<string> draggedFiles)
@@ -157,7 +171,7 @@ public partial class App : System.Windows.Application
         {
             var ofd = new Microsoft.Win32.OpenFileDialog
             {
-                Title = $"Select file(s) for {petal.CenterDescription}",
+                Title = UiText.Format("Select file(s) for {0}", petal.CenterDescription),
                 Multiselect = true
             };
             if (petal.TargetPrinter3D != null || petal.TargetTool == FileTool.Convert3MF)
@@ -174,7 +188,7 @@ public partial class App : System.Windows.Application
         if ((petal.TargetPrinter3D != null || petal.TargetTool == FileTool.Convert3MF) &&
             !files.All(IsThreeMfProject))
         {
-            System.Windows.MessageBox.Show("Select a .3mf project to use the 3MF Studio or printer converter.",
+            System.Windows.MessageBox.Show(UiText.Get("Select a .3mf project to use the 3MF Studio or printer converter."),
                 "Flow Converter", MessageBoxButton.OK, MessageBoxImage.Information);
             return;
         }
@@ -194,7 +208,7 @@ public partial class App : System.Windows.Application
                 {
                     try
                     {
-                        progressWin.UpdateProgress((double)i / files.Count, $"Converting {Path.GetFileName(files[i])} → {printer.Name}");
+                        progressWin.UpdateProgress((double)i / files.Count, UiText.Format("Converting {0} → {1}", Path.GetFileName(files[i]), printer.Name));
                         outs.Add(ThreeMFConverterEngine.Convert(files[i], printer));
                     }
                     catch (Exception ex)
@@ -215,10 +229,10 @@ public partial class App : System.Windows.Application
             var fmt = petal.TargetFormat.Value;
             if (fmt.Category() is SupportedFormatGroup.Audio or SupportedFormatGroup.Video &&
                 files.Any(File.Exists) &&
-                !await FfmpegSetupWindow.EnsureAvailableAsync(null, $"Convert to {fmt.DisplayName()}"))
+                !await FfmpegSetupWindow.EnsureAvailableAsync(null, UiText.Format("Convert to {0}", fmt.DisplayName())))
                 return;
 
-            var progressWin = new OperationProgressWindow($"Convert to {fmt.DisplayName()}", files.Count);
+            var progressWin = new OperationProgressWindow(UiText.Format("Convert to {0}", fmt.DisplayName()), files.Count);
             progressWin.Show();
 
             var outs = new List<string>();
@@ -309,14 +323,14 @@ public partial class App : System.Windows.Application
                 var sc = new StringCollection();
                 foreach (string f in files) sc.Add(f);
                 System.Windows.Clipboard.SetFileDropList(sc);
-                _trayService?.ShowNotification("Flow Converter", $"Copied {files.Count} file(s) to clipboard.");
+                _trayService?.ShowNotification("Flow Converter", UiText.Format("Copied {0} file(s) to clipboard.", files.Count));
                 break;
             }
 
             case QuickActionType.CopyPath:
             {
                 System.Windows.Clipboard.SetText(string.Join(Environment.NewLine, files));
-                _trayService?.ShowNotification("Flow Converter", "Copied file path(s) to clipboard.");
+                _trayService?.ShowNotification("Flow Converter", UiText.Get("Copied file path(s) to clipboard."));
                 break;
             }
 
@@ -324,7 +338,7 @@ public partial class App : System.Windows.Application
             {
                 using var fbd = new System.Windows.Forms.FolderBrowserDialog
                 {
-                    Description = "Choose destination folder to move files"
+                    Description = UiText.Get("Choose destination folder to move files")
                 };
                 if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
@@ -380,7 +394,7 @@ public partial class App : System.Windows.Application
     {
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
-            Title = "Selecione um arquivo .3MF para inspecionar e converter",
+            Title = UiText.Get("Select a .3MF file to inspect and convert"),
             Filter = "3MF 3D Print Projects (*.3mf)|*.3mf",
             Multiselect = true
         };
@@ -388,7 +402,7 @@ public partial class App : System.Windows.Application
         {
             if (!ofd.FileNames.All(IsThreeMfProject))
             {
-                System.Windows.MessageBox.Show("Select a .3mf project to open 3MF Studio.",
+                System.Windows.MessageBox.Show(UiText.Get("Select a .3mf project to open 3MF Studio."),
                     "Flow Converter", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }

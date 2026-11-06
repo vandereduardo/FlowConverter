@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Models;
 
@@ -27,13 +28,13 @@ public static class SupportedFormatGroupExtensions
 {
     public static string Title(this SupportedFormatGroup group) => group switch
     {
-        SupportedFormatGroup.Images => "Images",
-        SupportedFormatGroup.Documents => "Documents",
-        SupportedFormatGroup.Spreadsheets => "Spreadsheets",
-        SupportedFormatGroup.Audio => "Audio",
-        SupportedFormatGroup.Video => "Video",
-        SupportedFormatGroup.Archives => "Archives",
-        SupportedFormatGroup.Subtitles => "Subtitles",
+        SupportedFormatGroup.Images => UiText.Get("Images"),
+        SupportedFormatGroup.Documents => UiText.Get("Documents"),
+        SupportedFormatGroup.Spreadsheets => UiText.Get("Spreadsheets"),
+        SupportedFormatGroup.Audio => UiText.Get("Audio"),
+        SupportedFormatGroup.Video => UiText.Get("Video"),
+        SupportedFormatGroup.Archives => UiText.Get("Archives"),
+        SupportedFormatGroup.Subtitles => UiText.Get("Subtitles"),
         _ => group.ToString()
     };
 
@@ -260,10 +261,10 @@ public static class ConversionFormatExtensions
 
     public static string CenterDescription(this ConversionFormat f) => f switch
     {
-        ConversionFormat.Zip => "Pack into ZIP archive",
-        ConversionFormat.Tar => "Pack into TAR archive",
-        ConversionFormat.Gzip => "Pack into TAR.GZ archive",
-        _ => $"Convert to {f.DisplayName()}"
+        ConversionFormat.Zip => UiText.Get("Pack into ZIP archive"),
+        ConversionFormat.Tar => UiText.Get("Pack into TAR archive"),
+        ConversionFormat.Gzip => UiText.Get("Pack into TAR.GZ archive"),
+        _ => UiText.Format("Convert to {0}", f.DisplayName())
     };
 
     public static List<ConversionFormat> CompatibleOutputFormats(this ConversionFormat f)

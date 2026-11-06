@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using FlowConverter.Windows.Engines;
 using FlowConverter.Windows.Models;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Views;
 
@@ -50,13 +51,13 @@ public partial class ToolWorkspaceWindow : Window
         ToolIconText.Text = _tool.IconGlyph();
         ToolTitleText.Text = _tool.DisplayName();
         ToolSubtitleText.Text = _tool.CenterDescription();
-        FileCountBadgeText.Text = $"{_inputFiles.Count} file(s)";
-        ExecuteButton.Content = _tool == FileTool.Convert3MF ? "Converter .3MF" : $"Run {_tool.DisplayName()}";
+        FileCountBadgeText.Text = UiText.Format("{0} file(s)", _inputFiles.Count);
+        ExecuteButton.Content = _tool == FileTool.Convert3MF ? UiText.Get("Convert .3MF") : UiText.Format("Run {0}", _tool.DisplayName());
         if (_tool == FileTool.TrimAudio)
         {
-            Title = "Trim Audio";
+            Title = UiText.Get("Trim Audio");
             ToolIconText.FontFamily = new FontFamily("Segoe MDL2 Assets");
-            ExecuteButton.Content = "Apply & Save";
+            ExecuteButton.Content = UiText.Get("Apply & Save");
         }
 
         BuildEditorUI();
@@ -126,7 +127,7 @@ public partial class ToolWorkspaceWindow : Window
             : new ThreeMFProjectSummary { FileName = System.IO.Path.GetFileName(firstFile) };
 
         // Project Summary Card
-        var inspectCard = CreateSectionCard("Projeto .3MF Original Detectado");
+        var inspectCard = CreateSectionCard(UiText.Get("Original .3MF project detected"));
         var topGrid = new Grid { Margin = new Thickness(0, 6, 0, 0) };
         topGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(136) });
         topGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -177,31 +178,31 @@ public partial class ToolWorkspaceWindow : Window
         var metaStack = new StackPanel();
         metaStack.Children.Add(new TextBlock
         {
-            Text = $"Impressora Original: {_threeMfSummary.OriginalPrinterName}",
+            Text = UiText.Format("Original printer: {0}", _threeMfSummary.OriginalPrinterName),
             FontSize = 15,
             FontWeight = FontWeights.Bold,
             Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255))
         });
         metaStack.Children.Add(new TextBlock
         {
-            Text = $"Arquivo: {_threeMfSummary.FileName} · Fatiador: {_threeMfSummary.SlicerApplication}",
+            Text = UiText.Format("File: {0} · Slicer: {1}", _threeMfSummary.FileName, _threeMfSummary.SlicerApplication),
             FontSize = 12,
             Foreground = new SolidColorBrush(Color.FromRgb(160, 174, 192)),
             Margin = new Thickness(0, 3, 0, 8)
         });
 
         var specsWrap = new WrapPanel();
-        specsWrap.Children.Add(CreateSpecPill("Mesa", $"{_threeMfSummary.BedWidthMM:0}×{_threeMfSummary.BedDepthMM:0}×{_threeMfSummary.BedHeightMM:0} mm"));
-        specsWrap.Children.Add(CreateSpecPill("Bico", $"{_threeMfSummary.NozzleDiameterMM:0.0} mm"));
-        specsWrap.Children.Add(CreateSpecPill("Camada", $"{_threeMfSummary.LayerHeightMM:0.00} mm"));
-        specsWrap.Children.Add(CreateSpecPill("Paredes", $"{_threeMfSummary.WallLoops}"));
+        specsWrap.Children.Add(CreateSpecPill(UiText.Get("Build plate"), $"{_threeMfSummary.BedWidthMM:0}×{_threeMfSummary.BedDepthMM:0}×{_threeMfSummary.BedHeightMM:0} mm"));
+        specsWrap.Children.Add(CreateSpecPill(UiText.Get("Nozzle"), $"{_threeMfSummary.NozzleDiameterMM:0.0} mm"));
+        specsWrap.Children.Add(CreateSpecPill(UiText.Get("Layer"), $"{_threeMfSummary.LayerHeightMM:0.00} mm"));
+        specsWrap.Children.Add(CreateSpecPill(UiText.Get("Walls"), $"{_threeMfSummary.WallLoops}"));
         specsWrap.Children.Add(CreateSpecPill("Infill", _threeMfSummary.InfillDensity));
-        specsWrap.Children.Add(CreateSpecPill("Suporte", _threeMfSummary.SupportEnabled ? "Ativado" : "Desativado"));
-        specsWrap.Children.Add(CreateSpecPill("Placas / Peças", $"{_threeMfSummary.PlateCount} / {_threeMfSummary.ObjectCount}"));
+        specsWrap.Children.Add(CreateSpecPill(UiText.Get("Supports"), _threeMfSummary.SupportEnabled ? UiText.Get("Enabled") : UiText.Get("Disabled")));
+        specsWrap.Children.Add(CreateSpecPill(UiText.Get("Plates / Parts"), $"{_threeMfSummary.PlateCount} / {_threeMfSummary.ObjectCount}"));
         if (_threeMfSummary.EstimatedTimeSeconds > 0)
-            specsWrap.Children.Add(CreateSpecPill("Tempo Est.", _threeMfSummary.FormattedPrintTime));
+            specsWrap.Children.Add(CreateSpecPill(UiText.Get("Est. time"), _threeMfSummary.FormattedPrintTime));
         if (_threeMfSummary.TotalWeightGrams > 0)
-            specsWrap.Children.Add(CreateSpecPill("Peso", _threeMfSummary.FormattedWeight));
+            specsWrap.Children.Add(CreateSpecPill(UiText.Get("Weight"), _threeMfSummary.FormattedWeight));
 
         metaStack.Children.Add(specsWrap);
 
@@ -248,7 +249,7 @@ public partial class ToolWorkspaceWindow : Window
         WorkspaceContentPanel.Children.Add(inspectCard);
 
         // Target Printer Selection Card
-        var targetCard = CreateSectionCard("Escolha a Impressora 3D de Destino");
+        var targetCard = CreateSectionCard(UiText.Get("Choose the target 3D printer"));
         var targetPanel = (StackPanel)targetCard.Child;
 
         _targetPrinterCombo = new ComboBox
@@ -263,7 +264,7 @@ public partial class ToolWorkspaceWindow : Window
         // Quick Add Printer from 84-Model Catalog
         var addExpander = new Expander
         {
-            Header = "+ Adicionar Impressora do Catálogo (84 Modelos / 12 Marcas)",
+            Header = UiText.Get("+ Add printer from catalog (84 models / 12 brands)"),
             Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
             Margin = new Thickness(0, 4, 0, 6)
         };
@@ -290,7 +291,7 @@ public partial class ToolWorkspaceWindow : Window
 
         var addBtn = new Button
         {
-            Content = "Adicionar e Selecionar Impressora",
+            Content = UiText.Get("Add and select printer"),
             Height = 32,
             Background = new SolidColorBrush(Color.FromRgb(30, 41, 59)),
             Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
@@ -326,9 +327,9 @@ public partial class ToolWorkspaceWindow : Window
             }
         };
 
-        addStack.Children.Add(new TextBlock { Text = "Fabricante:", Foreground = Brushes.LightGray, FontSize = 11.5, Margin = new Thickness(0, 0, 0, 2) });
+        addStack.Children.Add(new TextBlock { Text = UiText.Get("Manufacturer:"), Foreground = Brushes.LightGray, FontSize = 11.5, Margin = new Thickness(0, 0, 0, 2) });
         addStack.Children.Add(brandCombo);
-        addStack.Children.Add(new TextBlock { Text = "Modelo:", Foreground = Brushes.LightGray, FontSize = 11.5, Margin = new Thickness(0, 0, 0, 2) });
+        addStack.Children.Add(new TextBlock { Text = UiText.Get("Model:"), Foreground = Brushes.LightGray, FontSize = 11.5, Margin = new Thickness(0, 0, 0, 2) });
         addStack.Children.Add(modelCombo);
         addStack.Children.Add(addBtn);
         addExpander.Content = addStack;
@@ -336,12 +337,12 @@ public partial class ToolWorkspaceWindow : Window
         WorkspaceContentPanel.Children.Add(targetCard);
 
         // Preset & Options Card
-        var optsCard = CreateSectionCard("Perfil de Otimização & Opções .3MF");
+        var optsCard = CreateSectionCard(UiText.Get("Optimization profile & .3MF options"));
         var optsPanel = (StackPanel)optsCard.Child;
 
         optsPanel.Children.Add(new TextBlock
         {
-            Text = "Preset de Impressão:",
+            Text = UiText.Get("Print preset:"),
             Foreground = Brushes.LightGray,
             FontSize = 12,
             Margin = new Thickness(0, 6, 0, 4)
@@ -361,14 +362,14 @@ public partial class ToolWorkspaceWindow : Window
 
         _recenter3MfCheck = new CheckBox
         {
-            Content = "Recentralizar peças automaticamente na mesa de destino (3D/3dmodel.model)",
+            Content = UiText.Get("Automatically recenter parts on the target build plate (3D/3dmodel.model)"),
             IsChecked = true,
             Foreground = Brushes.White,
             Margin = new Thickness(0, 4, 0, 8)
         };
         _preserveFilamentsCheck = new CheckBox
         {
-            Content = "Preservar slots de filamento multicoloridos, temperaturas e ajustes do autor (different_settings_to_system)",
+            Content = UiText.Get("Keep multicolor filament slots, temperatures, and project overrides (different_settings_to_system)"),
             IsChecked = true,
             Foreground = Brushes.White,
             Margin = new Thickness(0, 0, 0, 4)
@@ -379,8 +380,8 @@ public partial class ToolWorkspaceWindow : Window
 
         var dirs = ThreeMFConverterEngine.ProfileBaseDirectories();
         FooterStatusText.Text = dirs.Count > 0
-            ? $"Perfis oficiais detectados ({dirs.Count} diretórios Anycubic/Orca)"
-            : "Usando perfis embutidos Anycubic/Orca";
+            ? UiText.Format("Official profiles detected ({0} Anycubic/Orca folders)", dirs.Count)
+            : UiText.Get("Using bundled Anycubic/Orca profiles");
 
         WorkspaceContentPanel.Children.Add(optsCard);
     }
@@ -402,7 +403,7 @@ public partial class ToolWorkspaceWindow : Window
             var p = printers[i];
             _targetPrinterCombo.Items.Add(new ComboBoxItem
             {
-                Content = $"{p.Brand} — {p.Name} ({p.BedWidthMM:0}×{p.BedDepthMM:0}×{p.BedHeightMM:0} mm · Bico {p.NozzleDiameterMM:0.0}mm)",
+                Content = UiText.Format("{0} — {1} ({2:0}×{3:0}×{4:0} mm · Nozzle {5:0.0} mm)", p.Brand, p.Name, p.BedWidthMM, p.BedDepthMM, p.BedHeightMM, p.NozzleDiameterMM),
                 Tag = p
             });
             if (selectId != null && p.Id == selectId)
@@ -416,7 +417,7 @@ public partial class ToolWorkspaceWindow : Window
     // ========================================================================
     private void BuildVisualCropEditor()
     {
-        var card = CreateSectionCard("Interactive Visual Crop Studio (Drag on image to select crop region)");
+        var card = CreateSectionCard(UiText.Get("Interactive Visual Crop Studio (Drag on image to select crop region)"));
         var panel = (StackPanel)card.Child;
 
         var presetRow = new WrapPanel { Margin = new Thickness(0, 8, 0, 10) };
@@ -542,7 +543,7 @@ public partial class ToolWorkspaceWindow : Window
         Canvas.SetTop(_cropBoxRect, _options.Crop.NormalizedY * ch);
         _cropBoxRect.Width = Math.Max(12, _options.Crop.NormalizedWidth * cw);
         _cropBoxRect.Height = Math.Max(12, _options.Crop.NormalizedHeight * ch);
-        FooterStatusText.Text = $"Crop Area: X={_options.Crop.NormalizedX * 100:0}% Y={_options.Crop.NormalizedY * 100:0}% · W={_options.Crop.NormalizedWidth * 100:0}% H={_options.Crop.NormalizedHeight * 100:0}%";
+        FooterStatusText.Text = UiText.Format("Crop Area: X={0:0}% Y={1:0}% · W={2:0}% H={3:0}%", _options.Crop.NormalizedX * 100, _options.Crop.NormalizedY * 100, _options.Crop.NormalizedWidth * 100, _options.Crop.NormalizedHeight * 100);
     }
 
     // ========================================================================
@@ -553,7 +554,7 @@ public partial class ToolWorkspaceWindow : Window
         _options.TrimStartSeconds = 0.0;
         _options.TrimEndSeconds = 15.0;
 
-        var card = CreateSectionCard("Waveform Timeline Trimmer");
+        var card = CreateSectionCard(UiText.Get("Waveform Timeline Trimmer"));
         var panel = (StackPanel)card.Child;
 
         var waveCanvas = new Canvas
@@ -586,10 +587,10 @@ public partial class ToolWorkspaceWindow : Window
         }
         panel.Children.Add(waveCanvas);
 
-        var startLabel = new TextBlock { Text = "Start Time: 0.0 s", Foreground = Brushes.White, Margin = new Thickness(0, 4, 0, 4) };
+        var startLabel = new TextBlock { Text = UiText.Get("Start Time: 0.0 s"), Foreground = Brushes.White, Margin = new Thickness(0, 4, 0, 4) };
         var startSlider = new Slider { Minimum = 0, Maximum = 300, Value = 0, Margin = new Thickness(0, 0, 0, 10) };
 
-        var endLabel = new TextBlock { Text = "End Time: 15.0 s", Foreground = Brushes.White, Margin = new Thickness(0, 4, 0, 4) };
+        var endLabel = new TextBlock { Text = UiText.Get("End Time: 15.0 s"), Foreground = Brushes.White, Margin = new Thickness(0, 4, 0, 4) };
         var endSlider = new Slider { Minimum = 0.5, Maximum = 300, Value = 15.0, Margin = new Thickness(0, 0, 0, 10) };
 
         startSlider.ValueChanged += (_, _) =>
@@ -599,14 +600,14 @@ public partial class ToolWorkspaceWindow : Window
             {
                 endSlider.Value = _options.TrimStartSeconds + 1.0;
             }
-            startLabel.Text = $"Start Time: {_options.TrimStartSeconds:0.00} s";
-            FooterStatusText.Text = $"Trim Duration: {Math.Max(0.1, _options.TrimEndSeconds - _options.TrimStartSeconds):0.00} s";
+            startLabel.Text = UiText.Format("Start Time: {0:0.00} s", _options.TrimStartSeconds);
+            FooterStatusText.Text = UiText.Format("Trim Duration: {0:0.00} s", Math.Max(0.1, _options.TrimEndSeconds - _options.TrimStartSeconds));
         };
         endSlider.ValueChanged += (_, _) =>
         {
             _options.TrimEndSeconds = Math.Max(startSlider.Value + 0.2, endSlider.Value);
-            endLabel.Text = $"End Time: {_options.TrimEndSeconds:0.00} s";
-            FooterStatusText.Text = $"Trim Duration: {Math.Max(0.1, _options.TrimEndSeconds - _options.TrimStartSeconds):0.00} s";
+            endLabel.Text = UiText.Format("End Time: {0:0.00} s", _options.TrimEndSeconds);
+            FooterStatusText.Text = UiText.Format("Trim Duration: {0:0.00} s", Math.Max(0.1, _options.TrimEndSeconds - _options.TrimStartSeconds));
         };
 
         panel.Children.Add(startLabel);
@@ -622,12 +623,12 @@ public partial class ToolWorkspaceWindow : Window
     // ========================================================================
     private void BuildRedactionEditor()
     {
-        var card = CreateSectionCard("Interactive Redaction Studio (Draw boxes on canvas to redact sensitive regions)");
+        var card = CreateSectionCard(UiText.Get("Interactive Redaction Studio (Draw boxes on canvas to redact sensitive regions)"));
         var panel = (StackPanel)card.Child;
 
         var styleCombo = new ComboBox { Height = 32, Width = 220, HorizontalAlignment = HorizontalAlignment.Left, Margin = new Thickness(0, 8, 0, 10) };
-        styleCombo.Items.Add(new ComboBoxItem { Content = "Solid Black Box", Tag = RedactionStyle.Solid });
-        styleCombo.Items.Add(new ComboBoxItem { Content = "Gaussian Blur / Pixelate", Tag = RedactionStyle.Blur });
+        styleCombo.Items.Add(new ComboBoxItem { Content = UiText.Get("Solid Black Box"), Tag = RedactionStyle.Solid });
+        styleCombo.Items.Add(new ComboBoxItem { Content = UiText.Get("Gaussian Blur / Pixelate"), Tag = RedactionStyle.Blur });
         styleCombo.SelectedIndex = 0;
         styleCombo.SelectionChanged += (_, _) =>
         {
@@ -714,7 +715,7 @@ public partial class ToolWorkspaceWindow : Window
                 NormalizedH = Math.Clamp(h, 0.02, 1.0 - y),
                 Style = _options.DefaultRedactionStyle
             });
-            FooterStatusText.Text = $"{_options.RedactionRectangles.Count} redaction region(s) added";
+            FooterStatusText.Text = UiText.Format("{0} redaction region(s) added", _options.RedactionRectangles.Count);
         };
 
         panel.Children.Add(_redactOverlayCanvas);
@@ -726,20 +727,20 @@ public partial class ToolWorkspaceWindow : Window
     // ========================================================================
     private void BuildImageAdjustmentsEditor()
     {
-        var card = CreateSectionCard("Image Color & Exposure Adjustments");
+        var card = CreateSectionCard(UiText.Get("Image Color & Exposure Adjustments"));
         var panel = (StackPanel)card.Child;
 
-        AddSliderControl(panel, "Exposure", -1.0, 1.0, 0.0, v => _options.Adjustments.Exposure = v);
-        AddSliderControl(panel, "Brightness", -0.5, 0.5, 0.0, v => _options.Adjustments.Brightness = v);
-        AddSliderControl(panel, "Contrast", -0.5, 0.8, 0.0, v => _options.Adjustments.Contrast = v);
-        AddSliderControl(panel, "Saturation", -1.0, 1.0, 0.0, v => _options.Adjustments.Saturation = v);
+        AddSliderControl(panel, UiText.Get("Exposure"), -1.0, 1.0, 0.0, v => _options.Adjustments.Exposure = v);
+        AddSliderControl(panel, UiText.Get("Brightness"), -0.5, 0.5, 0.0, v => _options.Adjustments.Brightness = v);
+        AddSliderControl(panel, UiText.Get("Contrast"), -0.5, 0.8, 0.0, v => _options.Adjustments.Contrast = v);
+        AddSliderControl(panel, UiText.Get("Saturation"), -1.0, 1.0, 0.0, v => _options.Adjustments.Saturation = v);
 
         WorkspaceContentPanel.Children.Add(card);
     }
 
     private void BuildFrameImageEditor()
     {
-        var card = CreateSectionCard("Studio Frame & Gradient Backdrop");
+        var card = CreateSectionCard(UiText.Get("Studio Frame & Gradient Backdrop"));
         var panel = (StackPanel)card.Child;
 
         var combo = new ComboBox { Height = 34, Margin = new Thickness(0, 8, 0, 12) };
@@ -758,19 +759,19 @@ public partial class ToolWorkspaceWindow : Window
                 _options.FramePreset = p;
         };
         panel.Children.Add(combo);
-        AddSliderControl(panel, "Padding (px)", 16, 160, 48, v => _options.FramePadding = (int)v);
+        AddSliderControl(panel, UiText.Get("Padding (px)"), 16, 160, 48, v => _options.FramePadding = (int)v);
 
         WorkspaceContentPanel.Children.Add(card);
     }
 
     private void BuildCollageEditor()
     {
-        var card = CreateSectionCard("Photo Grid Collage Options");
+        var card = CreateSectionCard(UiText.Get("Photo Grid Collage Options"));
         var panel = (StackPanel)card.Child;
 
-        AddSliderControl(panel, "Grid Columns", 1, 6, 2, v => _options.CollageColumns = (int)v);
-        AddSliderControl(panel, "Canvas Width (px)", 800, 3840, 1920, v => _options.CollageCanvasWidth = (int)v);
-        AddSliderControl(panel, "Cell Spacing (px)", 0, 64, 16, v => _options.CollageSpacing = (int)v);
+        AddSliderControl(panel, UiText.Get("Grid Columns"), 1, 6, 2, v => _options.CollageColumns = (int)v);
+        AddSliderControl(panel, UiText.Get("Canvas Width (px)"), 800, 3840, 1920, v => _options.CollageCanvasWidth = (int)v);
+        AddSliderControl(panel, UiText.Get("Cell Spacing (px)"), 0, 64, 16, v => _options.CollageSpacing = (int)v);
 
         WorkspaceContentPanel.Children.Add(card);
     }
@@ -782,21 +783,21 @@ public partial class ToolWorkspaceWindow : Window
 
         if (_tool == FileTool.ChangeVideoSpeed)
         {
-            AddSliderControl(panel, "Playback Speed Multiplier (x)", 0.25, 4.0, 1.5, v => _options.VideoSpeedMultiplier = v);
+            AddSliderControl(panel, UiText.Get("Playback Speed Multiplier (x)"), 0.25, 4.0, 1.5, v => _options.VideoSpeedMultiplier = v);
         }
         else if (_tool == FileTool.NormalizeAudio)
         {
-            AddSliderControl(panel, "Target Loudness (LUFS)", -24.0, -8.0, -14.0, v => _options.TargetLufs = v);
+            AddSliderControl(panel, UiText.Get("Target Loudness (LUFS)"), -24.0, -8.0, -14.0, v => _options.TargetLufs = v);
         }
         else if (_tool == FileTool.Compress)
         {
-            AddSliderControl(panel, "Max Image Longest Edge (px)", 640, 3840, 1920, v => _options.CompressionMaxEdgePixels = (int)v);
+            AddSliderControl(panel, UiText.Get("Max Image Longest Edge (px)"), 640, 3840, 1920, v => _options.CompressionMaxEdgePixels = (int)v);
         }
         else
         {
             panel.Children.Add(new TextBlock
             {
-                Text = $"Selected {_inputFiles.Count} file(s) for {_tool.DisplayName()}. Click Execute below to run.",
+                Text = UiText.Format("Selected {0} file(s) for {1}. Click Execute below to run.", _inputFiles.Count, _tool.DisplayName()),
                 Foreground = Brushes.LightGray,
                 Margin = new Thickness(0, 8, 0, 4)
             });

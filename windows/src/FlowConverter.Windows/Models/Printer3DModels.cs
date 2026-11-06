@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FlowConverter.Windows.Localization;
 
 namespace FlowConverter.Windows.Models;
 
@@ -249,21 +250,21 @@ public static class ThreeMFOptimizationPresetExtensions
 {
     public static string DisplayName(this ThreeMFOptimizationPreset preset) => preset switch
     {
-        ThreeMFOptimizationPreset.KeepOriginal => "Manter Ajustes Originais do Projeto",
-        ThreeMFOptimizationPreset.StandardQuality => "Padrão Equilibrado (0.20mm · 2 Paredes · 15%)",
-        ThreeMFOptimizationPreset.DetailedFigure => "Boneco / Alta Qualidade (0.12mm · 3 Paredes)",
-        ThreeMFOptimizationPreset.FastEconomic => "Rápido e Econômico (0.24mm · 2 Paredes · 10%)",
-        ThreeMFOptimizationPreset.StrongMechanical => "Peça Mecânica / Forte (0.20mm · 4 Paredes · 35% Gyroid)",
+        ThreeMFOptimizationPreset.KeepOriginal => UiText.Get("Keep original project settings"),
+        ThreeMFOptimizationPreset.StandardQuality => UiText.Get("Balanced (0.20 mm · 2 walls · 15%)"),
+        ThreeMFOptimizationPreset.DetailedFigure => UiText.Get("Figurine / High quality (0.12 mm · 3 walls)"),
+        ThreeMFOptimizationPreset.FastEconomic => UiText.Get("Fast and economical (0.24 mm · 2 walls · 10%)"),
+        ThreeMFOptimizationPreset.StrongMechanical => UiText.Get("Mechanical part / Strong (0.20 mm · 4 walls · 35% gyroid)"),
         _ => preset.ToString()
     };
 
     public static string Description(this ThreeMFOptimizationPreset preset) => preset switch
     {
-        ThreeMFOptimizationPreset.KeepOriginal => "Preserves slicing process overrides, infill, and perimeter counts exactly as authored in the source project file.",
-        ThreeMFOptimizationPreset.StandardQuality => "Applies a balanced 0.20mm layer height with 2 walls and 15% grid/crosshatch infill for general-purpose printing.",
-        ThreeMFOptimizationPreset.DetailedFigure => "Applies fine 0.12mm layers with 3 walls and adaptive variable layer height for figurines and high-detail models.",
-        ThreeMFOptimizationPreset.FastEconomic => "Applies fast 0.24mm draft layers with 2 walls and 10% lightning/sparse infill to minimize material and print duration.",
-        ThreeMFOptimizationPreset.StrongMechanical => "Applies robust 0.20mm layers with 4 reinforced walls and 35% gyroid infill for mechanical, functional parts.",
+        ThreeMFOptimizationPreset.KeepOriginal => UiText.Get("Preserves slicing process overrides, infill, and perimeter counts exactly as authored in the source project file."),
+        ThreeMFOptimizationPreset.StandardQuality => UiText.Get("Applies a balanced 0.20mm layer height with 2 walls and 15% grid/crosshatch infill for general-purpose printing."),
+        ThreeMFOptimizationPreset.DetailedFigure => UiText.Get("Applies fine 0.12mm layers with 3 walls and adaptive variable layer height for figurines and high-detail models."),
+        ThreeMFOptimizationPreset.FastEconomic => UiText.Get("Applies fast 0.24mm draft layers with 2 walls and 10% lightning/sparse infill to minimize material and print duration."),
+        ThreeMFOptimizationPreset.StrongMechanical => UiText.Get("Applies robust 0.20mm layers with 4 reinforced walls and 35% gyroid infill for mechanical, functional parts."),
         _ => ""
     };
 }
