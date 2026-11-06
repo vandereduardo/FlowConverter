@@ -20,6 +20,7 @@ public partial class RadialWheelWindow : Window
     {
         public string ShortLabel { get; init; } = "";
         public string SubLabel { get; init; } = "";
+        public string IconGlyph { get; init; } = "";
         public string CenterDescription { get; init; } = "";
         public ConversionFormat? TargetFormat { get; init; }
         public FileTool? TargetTool { get; init; }
@@ -191,7 +192,7 @@ public partial class RadialWheelWindow : Window
                     _petals.Add(new WheelPetalItem
                     {
                         ShortLabel = tool.ShortWheelLabel(),
-                        SubLabel = tool.IconGlyph(),
+                        IconGlyph = tool.IconGlyph(),
                         CenterDescription = tool.CenterDescription(),
                         TargetTool = tool
                     });
@@ -206,7 +207,7 @@ public partial class RadialWheelWindow : Window
                     _petals.Add(new WheelPetalItem
                     {
                         ShortLabel = act.DisplayName(),
-                        SubLabel = act.IconGlyph(),
+                        IconGlyph = act.IconGlyph(),
                         CenterDescription = act.CenterDescription(),
                         TargetQuickAction = act
                     });
@@ -215,6 +216,8 @@ public partial class RadialWheelWindow : Window
             }
         }
     }
+
+    private static readonly FontFamily WheelIconFont = new("Segoe MDL2 Assets");
 
     private void RenderWheel()
     {
@@ -226,7 +229,7 @@ public partial class RadialWheelWindow : Window
         const double innerR = 58.0;
         const double baseOuterR = 158.0;
         const double activeOuterR = 166.0;
-        const double gapDegrees = 5.0;
+        const double gapDegrees = 2.0;
 
         bool metallic = FlowConverterSettings.Instance.Theme == ConversionFanTheme.Metallic;
         double stepDeg = 360.0 / count;
@@ -285,16 +288,20 @@ public partial class RadialWheelWindow : Window
                 IsHitTestVisible = false
             };
 
-            if (!string.IsNullOrWhiteSpace(_petals[i].SubLabel))
+            var petal = _petals[i];
+            bool hasIcon = !string.IsNullOrEmpty(petal.IconGlyph);
+            string caption = hasIcon ? petal.IconGlyph : petal.SubLabel;
+            if (!string.IsNullOrWhiteSpace(caption))
             {
                 labelStack.Children.Add(new TextBlock
                 {
-                    Text = _petals[i].SubLabel,
+                    Text = caption,
+                    FontFamily = hasIcon ? WheelIconFont : FontFamily,
                     Foreground = isHighlighted
                         ? Brushes.White
                         : new SolidColorBrush(Color.FromArgb(190, 0, 229, 255)),
-                    FontSize = 9.0,
-                    FontWeight = FontWeights.SemiBold,
+                    FontSize = hasIcon ? 15.0 : 9.0,
+                    FontWeight = hasIcon ? FontWeights.Normal : FontWeights.SemiBold,
                     TextAlignment = TextAlignment.Center,
                     TextTrimming = TextTrimming.CharacterEllipsis
                 });
@@ -302,7 +309,7 @@ public partial class RadialWheelWindow : Window
 
             labelStack.Children.Add(new TextBlock
             {
-                Text = _petals[i].ShortLabel,
+                Text = petal.ShortLabel,
                 Foreground = Brushes.White,
                 FontSize = isHighlighted ? 11.5 : 10.5,
                 FontWeight = FontWeights.Bold,

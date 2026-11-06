@@ -13,7 +13,7 @@ Built using **.NET 8 (`net8.0-windows`)**, **WPF**, and low-level **Win32 Intero
 | **Supported Formats** | 46 formats (7 categories) | 46 formats (7 categories) | 100% |
 | **Contextual File Tools** | 29 tools | 29 tools | 100% |
 | **3D Printer Catalog** | 84 models across 12 brands + custom | 84 models across 12 brands + custom | 100% |
-| **Radial Wheel Overlay** | `360×360` borderless `NSPanel` | `360×360` layered `WS_EX_NOACTIVATE` WPF Window | 100% |
+| **Radial Wheel Overlay** | `360×360` borderless `NSPanel` | `360×360` layered `WS_EX_NOACTIVATE` WPF window with narrow petal gaps and native Tools and Actions icons | 100% |
 | **Wheel Modes** | Conversions, File Tools, Quick Actions | Conversions, File Tools, Quick Actions | 100% |
 | **Center Hub Interaction** | Click cycles modes, hover shows details | Click cycles modes, hover shows details | 100% |
 | **Floating Drop Shelf** | Compact (`96×112`) & Expanded (`280×320`) | Compact (`96×112`) & Expanded (`280×320`) | 100% |
