@@ -13,6 +13,17 @@ namespace FlowConverter.Windows.Engines;
 
 public static class ToolExecutionEngine
 {
+    public static bool RequiresFfmpeg(FileTool tool, IReadOnlyList<string> paths) => tool switch
+    {
+        FileTool.MuteVideo or FileTool.TrimAudio or FileTool.TrimVideo or FileTool.ChangeVideoSpeed or
+        FileTool.CropVideo or FileTool.NormalizeAudio or FileTool.AudioChannels or FileTool.AudioToVideo or
+        FileTool.VideoSnapshots or FileTool.SplitVideo or FileTool.RedactVideo or FileTool.RedactAudio or
+        FileTool.JoinVideos => true,
+        FileTool.Compress or FileTool.RemoveMetadata => paths.Any(path =>
+            ConversionFormatHelper.Detect(path)?.Category() is SupportedFormatGroup.Audio or SupportedFormatGroup.Video),
+        _ => false
+    };
+
     public static List<string> ExecuteBatch(
         FileTool tool,
         IReadOnlyList<string> inputPaths,
@@ -610,7 +621,7 @@ public static class ToolExecutionEngine
     {
         string? ffmpeg = UniversalConversionEngine.FindExecutable("ffmpeg.exe");
         if (ffmpeg == null)
-            throw new InvalidOperationException("FFmpeg (ffmpeg.exe) is required for this media tool.");
+            throw new InvalidOperationException("FFmpeg is required. Open Settings → General → Media Tools (FFmpeg) to set it up.");
         UniversalConversionEngine.RunExternalProcess(ffmpeg, args);
     }
 }

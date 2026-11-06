@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using FlowConverter.Windows.Engines;
 using FlowConverter.Windows.Models;
 
 // Disambiguate WPF controls from Windows Forms controls
@@ -74,8 +75,33 @@ public partial class SettingsWindow : Window
 
         Loaded += OnWindowLoaded;
         Closed += OnWindowClosed;
+        Activated += (_, _) => RefreshFfmpegStatus();
 
         InitializeSettings();
+    }
+
+    internal void ShowMediaSettings()
+    {
+        Dispatcher.InvokeAsync(() =>
+        {
+            SelectTab(0);
+            MediaSettings.BringIntoView();
+        }, System.Windows.Threading.DispatcherPriority.Loaded);
+    }
+
+    private void RefreshFfmpegStatus()
+    {
+        string? executable = UniversalConversionEngine.FindExecutable("ffmpeg.exe");
+        FfmpegStatusText.Text = executable == null
+            ? "Setup required for audio and video tools."
+            : "FFmpeg detected. Open configuration to check its version.";
+        FfmpegStatusText.ToolTip = executable;
+    }
+
+    private void ConfigureFfmpeg_Click(object sender, RoutedEventArgs e)
+    {
+        FfmpegSetupWindow.ShowSetup(this);
+        RefreshFfmpegStatus();
     }
 
     protected override void OnSourceInitialized(EventArgs e)

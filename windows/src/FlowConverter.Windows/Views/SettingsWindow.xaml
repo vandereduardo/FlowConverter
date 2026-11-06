@@ -457,6 +457,21 @@
                                         </StackPanel>
                                         <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Content="Enable" Foreground="#F0F4FA" VerticalAlignment="Center" Click="StartupCheckBox_Click"/>
                                     </Grid>
+
+                                    <Border Height="1" Background="#233047" Margin="0,14"/>
+                                    <Grid x:Name="MediaSettings">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Margin="0,0,12,0">
+                                            <TextBlock Text="Media Tools (FFmpeg)" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
+                                            <TextBlock x:Name="FfmpegStatusText" FontSize="11" Foreground="#8A99B5"
+                                                       Margin="0,2,0,0" TextWrapping="Wrap"/>
+                                        </StackPanel>
+                                        <Button Grid.Column="1" Content="Configure FFmpeg…" Style="{StaticResource GhostButton}"
+                                                Click="ConfigureFfmpeg_Click" VerticalAlignment="Center"/>
+                                    </Grid>
                                 </StackPanel>
                             </Border>
                         </StackPanel>

@@ -7,6 +7,8 @@ Inspired by modern cockpit radial wheels (`//Flow` style), **FlowConverter** sum
 On Windows, the wheel uses narrow gaps between petals and displays native Windows icons above the Tools and Actions labels.
 Windows Settings uses dark input fields, dropdowns, and checkboxes.
 
+On Windows, **Settings → General → Media Tools (FFmpeg)** can install FFmpeg on demand or use an existing executable. Audio and video tools offer setup when needed and continue in the same session.
+
 ---
 
 ## ✨ Key Features

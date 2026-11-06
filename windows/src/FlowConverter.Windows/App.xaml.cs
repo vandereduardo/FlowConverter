@@ -196,6 +196,11 @@ public partial class App : System.Windows.Application
         if (petal.TargetFormat.HasValue)
         {
             var fmt = petal.TargetFormat.Value;
+            if (fmt.Category() is SupportedFormatGroup.Audio or SupportedFormatGroup.Video &&
+                files.Any(File.Exists) &&
+                !await FfmpegSetupWindow.EnsureAvailableAsync(null, $"Convert to {fmt.DisplayName()}"))
+                return;
+
             var progressWin = new OperationProgressWindow($"Convert to {fmt.DisplayName()}", files.Count);
             progressWin.Show();
 
@@ -233,6 +238,10 @@ public partial class App : System.Windows.Application
                 studio.Activate();
                 return;
             }
+
+            if (ToolExecutionEngine.RequiresFfmpeg(tool, files) &&
+                !await FfmpegSetupWindow.EnsureAvailableAsync(null, tool.DisplayName()))
+                return;
 
             var progressWin = new OperationProgressWindow(tool.DisplayName(), files.Count);
             progressWin.Show();
@@ -373,6 +382,11 @@ public partial class App : System.Windows.Application
             _welcomeWindow = new WelcomeWindow
             {
                 OnOpenSettings = ShowSettingsWindow,
+                OnOpenMediaSettings = () =>
+                {
+                    ShowSettingsWindow();
+                    _settingsWindow?.ShowMediaSettings();
+                },
                 OnOpen3MfStudio = Open3MfStudioDialog,
                 OnOpenFloatShelf = FloatingShelfWindow.CreateNewEmptyShelf,
                 OnSummonWheel = () => SummonWheelAtCursor(WheelMode.Conversions)

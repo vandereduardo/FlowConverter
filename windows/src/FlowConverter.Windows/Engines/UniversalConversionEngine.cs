@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using FlowConverter.Windows.Models;
+using FlowConverter.Windows.Services;
 
 namespace FlowConverter.Windows.Engines;
 
@@ -981,7 +982,7 @@ public static class UniversalConversionEngine
         string? ffmpeg = FindExecutable("ffmpeg.exe");
         if (ffmpeg == null)
         {
-            throw new InvalidOperationException("FFmpeg (ffmpeg.exe) was not found in Resources/Tools or system PATH. Install FFmpeg to convert audio/video formats.");
+            throw new InvalidOperationException("FFmpeg is required. Open Settings → General → Media Tools (FFmpeg) to set it up.");
         }
 
         var args = new List<string> { "-y", "-i", srcPath };
@@ -1049,6 +1050,10 @@ public static class UniversalConversionEngine
 
     public static string? FindExecutable(string exeName)
     {
+        if (exeName.Equals("ffmpeg.exe", StringComparison.OrdinalIgnoreCase) &&
+            FfmpegSetupService.GetPreferredExecutable() is { } preferred)
+            return preferred;
+
         string bundled = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "Tools", exeName);
         if (File.Exists(bundled)) return bundled;
 

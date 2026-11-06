@@ -98,6 +98,7 @@ windows/src/FlowConverter.Windows/
   - Native Windows Imaging Component (WIC) and GDI+ for high-performance image encoding/decoding.
   - Integrated `flow_office_converter.py` for headless Word, Excel, and PowerPoint conversions.
   - Support for `ffmpeg.exe` and `cwebp.exe` for media and modern image formats.
+  - Set up FFmpeg in **Settings → General → Media Tools (FFmpeg)**, through the welcome link, or when a media operation requests it. Choose **Set up now** to download the Windows Essentials build over HTTPS and verify its SHA-256, or select an existing `ffmpeg.exe`. The download installs for the current user under `%LOCALAPPDATA%\FlowConverter\Tools`, and the pending operation continues without restarting.
   - Built-in `System.IO.Compression` pipelines for ZIP/TAR archive operations.
 - **`ToolExecutionEngine.cs`**: Executes file operations for all 29 tools (PDF splitting/merging, volume normalization, metadata stripping, video trimming, image filters, and batch processing).
 - **`ThreeMFConverterEngine.cs`**: Complete 3D printing profile transformation engine (detailed below).

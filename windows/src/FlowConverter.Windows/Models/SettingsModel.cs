@@ -131,6 +131,7 @@ public class FlowConverterSettings
     public WheelModifierKey ActionsModifier { get; set; } = WheelModifierKey.Control;
 
     public string TerminalApplication { get; set; } = "wt.exe";
+    public string? FfmpegExecutablePath { get; set; }
 
     public bool LaunchAtStartup { get; set; } = false;
 

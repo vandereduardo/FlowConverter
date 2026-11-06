@@ -5,6 +5,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using FlowConverter.Windows.Engines;
 using FlowConverter.Windows.Models;
 
 namespace FlowConverter.Windows.Views;
@@ -18,6 +19,7 @@ public partial class WelcomeWindow : Window
     /// Optional callback invoked when the user clicks "Open Settings...".
     /// </summary>
     public Action? OnOpenSettings { get; set; }
+    public Action? OnOpenMediaSettings { get; set; }
     public Action? OnOpen3MfStudio { get; set; }
     public Action? OnOpenFloatShelf { get; set; }
     public Action? OnSummonWheel { get; set; }
@@ -25,7 +27,12 @@ public partial class WelcomeWindow : Window
     public WelcomeWindow()
     {
         InitializeComponent();
+        Activated += (_, _) => MediaSetupNote.Visibility = UniversalConversionEngine.FindExecutable("ffmpeg.exe") == null
+            ? Visibility.Visible
+            : Visibility.Collapsed;
     }
+
+    private void OpenMediaSettings_Click(object sender, RoutedEventArgs e) => OnOpenMediaSettings?.Invoke();
 
     private void Header_MouseDown(object sender, MouseButtonEventArgs e)
     {

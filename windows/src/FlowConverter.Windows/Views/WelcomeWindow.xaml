@@ -124,7 +124,8 @@
                 <RowDefinition Height="Auto" />
                 <!-- Feature Cards (2x2) -->
                 <RowDefinition Height="*" />
-                <!-- Footer Buttons -->
+                <!-- Optional media setup and footer buttons -->
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -243,8 +244,13 @@
                 </Border>
             </Grid>
 
+            <TextBlock x:Name="MediaSetupNote" Grid.Row="3" Visibility="Collapsed" Margin="0,0,0,10"
+                       FontSize="11" Foreground="#8C9BB4" TextWrapping="Wrap">
+                <Run Text="Editing audio or video? "/><Hyperlink Foreground="#00E5FF" Click="OpenMediaSettings_Click">Configure FFmpeg</Hyperlink>
+            </TextBlock>
+
             <!-- Bottom Actions -->
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />

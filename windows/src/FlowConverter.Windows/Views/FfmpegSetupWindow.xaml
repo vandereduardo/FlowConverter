@@ -1,0 +1,55 @@
+<Window x:Class="FlowConverter.Windows.Views.FfmpegSetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Set up FFmpeg" Width="460" SizeToContent="Height"
+        ResizeMode="NoResize" ShowInTaskbar="False"
+        Background="#101520" Foreground="#F0F4FA">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#1B2940" />
+            <Setter Property="BorderBrush" Value="#526687" />
+            <Setter Property="Foreground" Value="#F0F4FA" />
+            <Setter Property="Padding" Value="10,5" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Surface" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1"
+                                CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              RecognizesAccessKey="True" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Surface" Property="Background" Value="#253A56" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Surface" Property="BorderBrush" Value="#00E5FF" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Surface" Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel Margin="22">
+        <TextBlock x:Name="Heading" Text="Set up FFmpeg" FontSize="19" FontWeight="SemiBold"
+                   TextWrapping="Wrap" />
+        <TextBlock Text="FFmpeg enables audio and video tools. You can download it for this Windows user or select an existing ffmpeg.exe."
+                   Margin="0,8,0,0" Foreground="#9DAEC7" TextWrapping="Wrap" />
+        <TextBlock x:Name="Status" Text="Setup required" Margin="0,12,0,0"
+                   TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
+        <ProgressBar x:Name="InstallProgress" Height="4" Margin="0,8,0,0"
+                     IsIndeterminate="True" Visibility="Collapsed" Foreground="#00E5FF" />
+        <WrapPanel Margin="0,16,0,0">
+            <Button x:Name="InstallButton" Content="Set up now" Click="Install_Click" IsDefault="True"
+                    Margin="0,0,8,0" BorderBrush="#00E5FF" />
+            <Button x:Name="BrowseButton" Content="Select ffmpeg.exe…" Click="Browse_Click"
+                    Margin="0,0,8,0" />
+            <Button x:Name="CloseButton" Content="Close" Click="Close_Click" />
+        </WrapPanel>
+    </StackPanel>
+</Window>

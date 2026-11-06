@@ -177,4 +177,5 @@ When converting between printers with different bed dimensions (e.g., from an An
 - **No Remote Telemetry:** FlowConverter does not send analytics, telemetry, or crash reports to remote endpoints.
 - **Local File System Scope:** File modifications occur strictly on files explicitly dragged into the radial wheel or floating shelf, or selected via file picker dialogs.
 - **Process Isolation:** CLI conversions (`ffmpeg`, `cwebp`, `flow_office_converter.py`) execute within isolated sub-processes with standard output and error redirection.
+- **FFmpeg Setup on Windows:** Settings and media preflight share a setup dialog, and Welcome links to the Settings section when FFmpeg is absent. The installer verifies the provider's SHA-256 and tests the executable before moving it into the per-user tools directory. Resolution checks the validated user selection and managed location before the application tools directory, PATH, and WinGet, so pending operations can continue in the same process.
 - **Clean-Room License:** Released under the permissive [MIT License](../LICENSE).

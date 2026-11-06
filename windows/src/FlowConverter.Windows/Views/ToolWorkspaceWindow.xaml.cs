@@ -885,6 +885,13 @@ public partial class ToolWorkspaceWindow : Window
         }
 
         ExecuteButton.IsEnabled = false;
+        if (ToolExecutionEngine.RequiresFfmpeg(_tool, _inputFiles) &&
+            (!await FfmpegSetupWindow.EnsureAvailableAsync(this, _tool.DisplayName()) || !IsVisible))
+        {
+            ExecuteButton.IsEnabled = true;
+            return;
+        }
+
         var progressWin = new OperationProgressWindow(_tool.DisplayName(), _inputFiles.Count);
         progressWin.Show();
 
