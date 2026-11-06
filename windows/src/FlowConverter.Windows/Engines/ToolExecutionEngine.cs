@@ -442,23 +442,33 @@ public static class ToolExecutionEngine
     {
         using var src = new Bitmap(srcPath);
         using var dst = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
-        using (var g = Graphics.FromImage(dst))
-        {
-            float contrast = (float)Math.Max(0.2, 1.0 + adj.Contrast);
-            float brightness = (float)(adj.Brightness + adj.Exposure * 0.25);
-            var cm = new ColorMatrix(new float[][]
-            {
-                new[] { contrast, 0, 0, 0, 0 },
-                new[] { 0, contrast, 0, 0, 0 },
-                new[] { 0, 0, contrast, 0, 0 },
-                new[] { 0, 0, 0, 1f, 0 },
-                new[] { brightness, brightness, brightness, 0, 1f }
-            });
-            using var ia = new ImageAttributes();
-            ia.SetColorMatrix(cm);
-            g.DrawImage(src, new Rectangle(0, 0, src.Width, src.Height), 0, 0, src.Width, src.Height, GraphicsUnit.Pixel, ia);
-        }
+        DrawAdjustedImage(src, dst, adj);
         dst.Save(outPath, ImageFormat.Png);
+    }
+
+    internal static void DrawAdjustedImage(Bitmap source, Bitmap destination, ImageAdjustments adjustments)
+    {
+        float contrast = (float)Math.Max(0.2, 1.0 + adjustments.Contrast);
+        float brightness = (float)(adjustments.Brightness + adjustments.Exposure * 0.25);
+        float saturation = (float)Math.Max(0, 1.0 + adjustments.Saturation);
+        float red = (1 - saturation) * 0.2126f;
+        float green = (1 - saturation) * 0.7152f;
+        float blue = (1 - saturation) * 0.0722f;
+        var matrix = new ColorMatrix(new[]
+        {
+            new[] { (red + saturation) * contrast, red * contrast, red * contrast, 0, 0 },
+            new[] { green * contrast, (green + saturation) * contrast, green * contrast, 0, 0 },
+            new[] { blue * contrast, blue * contrast, (blue + saturation) * contrast, 0, 0 },
+            new[] { 0, 0, 0, 1f, 0 },
+            new[] { brightness, brightness, brightness, 0, 1f }
+        });
+        using var attributes = new ImageAttributes();
+        attributes.SetColorMatrix(matrix);
+        using var graphics = Graphics.FromImage(destination);
+        graphics.CompositingMode = CompositingMode.SourceCopy;
+        graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+        graphics.DrawImage(source, new Rectangle(0, 0, destination.Width, destination.Height),
+            0, 0, source.Width, source.Height, GraphicsUnit.Pixel, attributes);
     }
 
     public static void FrameImageFile(string srcPath, string outPath, FileToolExecutionOptions options)

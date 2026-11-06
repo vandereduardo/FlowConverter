@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using FlowConverter.Windows.Engines;
 using FlowConverter.Windows.Models;
 using FlowConverter.Windows.Localization;
@@ -760,12 +761,103 @@ public partial class ToolWorkspaceWindow : Window
         var card = CreateSectionCard(UiText.Get("Image Color & Exposure Adjustments"));
         var panel = (StackPanel)card.Child;
 
-        AddSliderControl(panel, UiText.Get("Exposure"), -1.0, 1.0, 0.0, v => _options.Adjustments.Exposure = v);
-        AddSliderControl(panel, UiText.Get("Brightness"), -0.5, 0.5, 0.0, v => _options.Adjustments.Brightness = v);
-        AddSliderControl(panel, UiText.Get("Contrast"), -0.5, 0.8, 0.0, v => _options.Adjustments.Contrast = v);
-        AddSliderControl(panel, UiText.Get("Saturation"), -1.0, 1.0, 0.0, v => _options.Adjustments.Saturation = v);
+        var layout = new Grid { Margin = new Thickness(0, 8, 0, 0) };
+        layout.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+        layout.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+        var previewPanel = new StackPanel { Margin = new Thickness(0, 0, 18, 0) };
+        var controls = new StackPanel();
+        Grid.SetColumn(controls, 1);
+        layout.Children.Add(previewPanel);
+        layout.Children.Add(controls);
+        panel.Children.Add(layout);
+
+        var preview = new Image { Stretch = Stretch.Uniform };
+        var status = new TextBlock { Foreground = Brushes.LightGray, TextWrapping = TextWrapping.Wrap };
+        previewPanel.Children.Add(new Border
+        {
+            Height = 310,
+            Background = new SolidColorBrush(Color.FromRgb(12, 16, 24)),
+            Child = new Grid { Children = { preview, status } }
+        });
+
+        var timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(33) };
+        if (_inputFiles.FirstOrDefault() is { } firstFile)
+            SetUpAdjustmentPreview(firstFile, preview, status, timer);
+        else
+            status.Text = UiText.Get("Image preview is unavailable.");
+
+        if (_inputFiles.Count > 1 && preview.Source != null)
+            previewPanel.Children.Add(new TextBlock
+            {
+                Text = UiText.Get("Preview of the first image. Adjustments apply to all selected images."),
+                Foreground = Brushes.LightGray, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0)
+            });
+
+        void SchedulePreview()
+        {
+            if (preview.Source != null) timer.Start();
+        }
+
+        AddSliderControl(controls, UiText.Get("Exposure"), -1.0, 1.0, 0.0, v => { _options.Adjustments.Exposure = v; SchedulePreview(); });
+        AddSliderControl(controls, UiText.Get("Brightness"), -0.5, 0.5, 0.0, v => { _options.Adjustments.Brightness = v; SchedulePreview(); });
+        AddSliderControl(controls, UiText.Get("Contrast"), -0.5, 0.8, 0.0, v => { _options.Adjustments.Contrast = v; SchedulePreview(); });
+        AddSliderControl(controls, UiText.Get("Saturation"), -1.0, 1.0, 0.0, v => { _options.Adjustments.Saturation = v; SchedulePreview(); });
 
         WorkspaceContentPanel.Children.Add(card);
+    }
+
+    private void SetUpAdjustmentPreview(string file, Image preview, TextBlock status, DispatcherTimer timer)
+    {
+        const System.Drawing.Imaging.PixelFormat format = System.Drawing.Imaging.PixelFormat.Format32bppArgb;
+        System.Drawing.Bitmap? thumbnail = null;
+        try
+        {
+            using var source = new System.Drawing.Bitmap(file);
+            double scale = Math.Min(1, 600.0 / Math.Max(source.Width, source.Height));
+            int width = Math.Max(1, (int)Math.Round(source.Width * scale));
+            int height = Math.Max(1, (int)Math.Round(source.Height * scale));
+            thumbnail = new System.Drawing.Bitmap(width, height, format);
+            ToolExecutionEngine.DrawAdjustedImage(source, thumbnail, new ImageAdjustments());
+        }
+        catch (Exception ex) when (ex is ArgumentException or IOException or UnauthorizedAccessException
+            or System.Runtime.InteropServices.ExternalException or OutOfMemoryException)
+        {
+            thumbnail?.Dispose();
+            status.Text = UiText.Get("Image preview is unavailable.");
+            return;
+        }
+
+        int w = thumbnail.Width;
+        int h = thumbnail.Height;
+        var pixels = new WriteableBitmap(w, h, 96, 96, PixelFormats.Bgra32, null);
+        preview.Source = pixels;
+        status.Visibility = Visibility.Collapsed;
+        void RenderPreview()
+        {
+            using var result = new System.Drawing.Bitmap(w, h, format);
+            ToolExecutionEngine.DrawAdjustedImage(thumbnail, result, _options.Adjustments);
+            var buffer = result.LockBits(new System.Drawing.Rectangle(0, 0, w, h),
+                System.Drawing.Imaging.ImageLockMode.ReadOnly, format);
+            try
+            {
+                pixels.WritePixels(new Int32Rect(0, 0, w, h), buffer.Scan0, buffer.Stride * h, buffer.Stride);
+            }
+            finally
+            {
+                result.UnlockBits(buffer);
+            }
+        }
+        timer.Tick += (_, _) =>
+        {
+            timer.Stop();
+            RenderPreview();
+        };
+        Closed += (_, _) =>
+        {
+            timer.Stop();
+            thumbnail.Dispose();
+        };
+        RenderPreview();
     }
 
     private void BuildFrameImageEditor()

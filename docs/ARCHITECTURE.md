@@ -72,6 +72,8 @@ Windows saves the interface language in `AppLanguage` and loads it before buildi
 
 The Windows image crop editor fits its canvas to the source pixel dimensions. It stores the selection as normalized coordinates and applies the selected aspect ratio to the pixel bounds of each exported image.
 
+The Windows image adjustment editor updates a thumbnail as sliders move and shares the same color transform with the full-resolution export.
+
 ---
 
 ## 4. Deep Dive: .3MF Slicer Profile Inheritance & Sanitization Pipeline

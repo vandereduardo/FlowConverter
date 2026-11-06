@@ -1,4 +1,6 @@
 {
+  "Image_preview_is_unavailable": ["Image preview is unavailable.","Prévia da imagem indisponível."],
+  "Preview_of_the_first_image": ["Preview of the first image. Adjustments apply to all selected images.","Prévia da primeira imagem. Os ajustes se aplicam a todas as imagens selecionadas."],
   "0_1_2_0_3_0": ["{0} — {1} ({2:0}×{3:0}×{4:0} mm · Nozzle {5:0.0} mm)","{0} — {1} ({2:0}×{3:0}×{4:0} mm · Bico {5:0.0}mm)"],
   "0_active_on_Radial_Wheel": ["{0} active on Radial Wheel","{0} ativas na roda radial"],
   "0_Conversions_Done": ["0 Conversions Done","0 conversões concluídas"],

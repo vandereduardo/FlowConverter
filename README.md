@@ -43,6 +43,7 @@ FlowConverter for Windows offers **English** and **Português (Brasil)** on firs
    - **Interactive Video & Image Redaction:** Draw black, blur, or pixelate boxes on a live video/image canvas with timeline scrubbing.
    - **Visual Image & Video Cropper:** Aspect-ratio presets and interactive crop handles.
      On Windows, the image preview preserves the source proportions, and the selected aspect ratio applies while dragging and saving.
+   - **Image Adjustments on Windows:** Preview exposure, brightness, contrast, and saturation while editing.
    - **Audio Visualizer:** Hardware-accelerated spectrum, waveform, and circular bar video generator for MP3/WAV/FLAC audio.
    - **PDF & QR Suite:** Merge, split, and organize PDF pages; extract text and images; scan and generate styled QR codes.
 
