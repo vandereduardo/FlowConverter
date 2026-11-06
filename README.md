@@ -5,6 +5,7 @@
 Inspired by modern cockpit radial wheels (`//Flow` style), **FlowConverter** summons an interactive radial wheel right under your cursor when dragging files while holding your modifier key (`⌥ Option` on macOS, `Alt` on Windows).
 
 On Windows, the wheel uses narrow gaps between petals and displays native Windows icons above the Tools and Actions labels.
+Windows Settings uses dark input fields, dropdowns, and checkboxes.
 
 ---
 

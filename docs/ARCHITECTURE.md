@@ -61,7 +61,7 @@ The codebase maintains strict conceptual parity between the `macos/` and `window
 | **Tool Execution Engine**| `ToolExecutionEngine.swift` | `Engines/ToolExecutionEngine.cs` | Batch executor for media redaction, audio trimming, collage generation, PDF merging/splitting, and QR processing. |
 | **3D Printer .3MF Engine**| `ToolExecutionEngine.swift` (`ThreeMFConverterEngine`) | `Engines/ThreeMFConverterEngine.cs` | Slicer profile inheritance walking, multi-color slot translation, project override preservation, and bed geometry recentering. |
 | **Interactive Studio** | `ToolWorkspaceWindow.swift` | `Views/ToolWorkspaceWindow.xaml`<br>`Views/ToolWorkspaceWindow.xaml.cs` | Visual workspace for audio waveform editing, video/image redaction, aspect-ratio cropping, QR generation, and 3MF inspection. |
-| **Preferences & Settings**| `SettingsWindow.swift` | `Models/SettingsModel.cs`<br>`Views/WelcomeWindow.xaml` | 7-tab configuration store persisted to JSON (`settings.json`). |
+| **Preferences & Settings**| `SettingsWindow.swift` | `Models/SettingsModel.cs`<br>`Views/SettingsWindow.xaml` | 7-tab configuration store persisted to JSON (`settings.json`). Windows Settings uses application-level dark templates for text inputs and dropdowns and a window-level template for checkboxes. |
 | **Acoustic Feedback** | `AppDelegate.swift` / `NSSound` | `Services/SoundService.cs`<br>`Services/AssetGenerator.cs` | Synthesizes and plays clean-room `HighlightSound.wav` (C6+G6 55ms chime) on petal mouse hover. |
 | **System Tray / Menu** | `AppDelegate.swift` (`NSStatusItem`) | `Services/TrayIconService.cs` (`NotifyIcon`) | Desktop tray icon providing quick wheel summon actions, 3MF studio launch, floating shelf creation, and settings access. |
 

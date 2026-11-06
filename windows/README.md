@@ -18,7 +18,7 @@ Built using **.NET 8 (`net8.0-windows`)**, **WPF**, and low-level **Win32 Intero
 | **Center Hub Interaction** | Click cycles modes, hover shows details | Click cycles modes, hover shows details | 100% |
 | **Floating Drop Shelf** | Compact (`96×112`) & Expanded (`280×320`) | Compact (`96×112`) & Expanded (`280×320`) | 100% |
 | **Interactive Tool Studio** | SwiftUI / AppKit interactive canvases | WPF interactive vector canvases & sliders | 100% |
-| **Settings Window** | 7-tab sidebar navigation | 7-tab sidebar navigation | 100% |
+| **Settings Window** | 7-tab sidebar navigation | 7-tab sidebar navigation with dark inputs, dropdowns, and checkboxes | 100% |
 | **Audio Feedback** | 44.1 kHz harmonic C6+G6 chime | 44.1 kHz harmonic C6+G6 chime | 100% |
 | **Visual Themes** | `Glass` & `Metallic` obsidian surfaces | `Glass` & `Metallic` obsidian surfaces | 100% |
 | **Headless CLI Mode** | CLI flags for inspection and conversion | `--inspect-3mf` and `--convert-3mf` CLI flags | 100% |
