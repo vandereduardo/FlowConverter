@@ -70,7 +70,7 @@ public partial class OperationProgressWindow : Window
             {
                 MainProgressBar.Value = 100;
                 PercentTextBlock.Text = "100%";
-                StatusTextBlock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00E5FF"));
+                StatusTextBlock.Foreground = ThemeBrushes.Get("ThemeAccent");
                 StatusTextBlock.Text = (outputPaths != null && outputPaths.Count > 0)
                     ? UiText.Format("Complete! {0} file(s) saved.", outputPaths.Count)
                     : UiText.Get("Completed successfully!");
@@ -100,7 +100,7 @@ public partial class OperationProgressWindow : Window
             }
             else
             {
-                StatusTextBlock.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6B6B"));
+                StatusTextBlock.Foreground = ThemeBrushes.Get("ThemeDanger");
                 StatusTextBlock.Text = errors.Count == 1
                     ? UiText.Format("Error: {0}", errors[0])
                     : UiText.Format("Failed with {0} errors: {1}", errors.Count, errors[0]);

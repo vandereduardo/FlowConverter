@@ -68,6 +68,8 @@ public partial class App : System.Windows.Application
 
         try
         {
+            EventManager.RegisterClassHandler(typeof(Window), FrameworkElement.LoadedEvent,
+                new RoutedEventHandler(ApplyNativeWindowTheme));
             var settings = FlowConverterSettings.Instance;
             if (!UiText.IsSupported(settings.AppLanguage))
             {
@@ -88,6 +90,12 @@ public partial class App : System.Windows.Application
             System.Windows.MessageBox.Show(UiText.Format("FlowConverter Startup Error:\n{0}", ex.Message), "Flow Converter", MessageBoxButton.OK, MessageBoxImage.Error);
             Shutdown(1);
         }
+    }
+
+    private static void ApplyNativeWindowTheme(object sender, RoutedEventArgs e)
+    {
+        if (sender is Window { WindowStyle: not WindowStyle.None } window)
+            NativeMethods.UseDarkWindowChrome(new System.Windows.Interop.WindowInteropHelper(window).Handle);
     }
 
     private void InitializeApplication(IReadOnlyList<string> launchArguments)

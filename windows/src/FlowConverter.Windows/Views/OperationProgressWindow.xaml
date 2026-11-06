@@ -14,10 +14,10 @@
         MouseDown="Window_MouseDown">
 
     <Window.Resources>
-        <!-- Modern Rounded Cyan ProgressBar Template -->
-        <Style x:Key="CyanProgressBarStyle" TargetType="ProgressBar">
-            <Setter Property="Background" Value="#1E2638" />
-            <Setter Property="Foreground" Value="#00E5FF" />
+        <!-- Rounded progress bar -->
+        <Style x:Key="OperationProgressBarStyle" TargetType="ProgressBar">
+            <Setter Property="Background" Value="{StaticResource ThemeControl}" />
+            <Setter Property="Foreground" Value="{StaticResource ThemeAccent}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Height" Value="7" />
             <Setter Property="Template">
@@ -41,13 +41,13 @@
 
         <!-- Dark Dismiss Button -->
         <Style x:Key="ProgressDismissButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#1C2333" />
-            <Setter Property="Foreground" Value="#C2D0E4" />
+            <Setter Property="Background" Value="{StaticResource ThemeControl}" />
+            <Setter Property="Foreground" Value="{StaticResource ThemeSecondaryText}" />
             <Setter Property="FontSize" Value="11.5" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="Padding" Value="14,4" />
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="BorderBrush" Value="#2F3C54" />
+            <Setter Property="BorderBrush" Value="{StaticResource ThemeOutline}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -62,9 +62,9 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="b" Property="Background" Value="#29354C" />
-                                <Setter TargetName="b" Property="BorderBrush" Value="#00E5FF" />
-                                <Setter Property="Foreground" Value="#FFFFFF" />
+                                <Setter TargetName="b" Property="Background" Value="{StaticResource ThemeHover}" />
+                                <Setter TargetName="b" Property="BorderBrush" Value="{StaticResource ThemeFocus}" />
+                                <Setter Property="Foreground" Value="{StaticResource ThemeText}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -74,7 +74,7 @@
 
         <Style x:Key="MiniCloseButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#7888A2" />
+            <Setter Property="Foreground" Value="{StaticResource ThemeMutedText}" />
             <Setter Property="FontSize" Value="11" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
@@ -85,8 +85,8 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="b" Property="Background" Value="#2A3345" />
-                                <Setter Property="Foreground" Value="#FFFFFF" />
+                                <Setter TargetName="b" Property="Background" Value="{StaticResource ThemeHover}" />
+                                <Setter Property="Foreground" Value="{StaticResource ThemeText}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -95,9 +95,9 @@
         </Style>
     </Window.Resources>
 
-    <!-- Outer Rounded Obsidian Card with Cyan Glow Border -->
-    <Border Background="#121622"
-            BorderBrush="#00E5FF"
+    <!-- Outer card -->
+    <Border Background="{StaticResource ThemeWindow}"
+            BorderBrush="{StaticResource ThemeOutline}"
             BorderThickness="1.5"
             CornerRadius="12"
             Margin="6">
@@ -128,9 +128,9 @@
 
                 <!-- Cockpit Indicator Glyph -->
                 <Border Grid.Column="0" Width="18" Height="18" CornerRadius="9"
-                        Background="#192538" BorderBrush="#00E5FF" BorderThickness="1.2"
+                        Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeOutline}" BorderThickness="1.2"
                         Margin="0,0,8,0" VerticalAlignment="Center">
-                    <Ellipse Width="6" Height="6" Fill="#00E5FF" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <Ellipse Width="6" Height="6" Fill="{StaticResource ThemeAccent}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                 </Border>
 
                 <!-- Operation Title -->
@@ -139,15 +139,15 @@
                            Text="{loc:Text Converting_Files}"
                            FontSize="13.5"
                            FontWeight="SemiBold"
-                           Foreground="#FFFFFF"
+                           Foreground="{StaticResource ThemeText}"
                            VerticalAlignment="Center"
                            TextTrimming="CharacterEllipsis" />
 
                 <!-- Items Badge -->
                 <Border x:Name="ItemsBadgeBorder"
                         Grid.Column="2"
-                        Background="#1C2436"
-                        BorderBrush="#2B374E"
+                        Background="{StaticResource ThemeControl}"
+                        BorderBrush="{StaticResource ThemeBorder}"
                         BorderThickness="1"
                         CornerRadius="4"
                         Padding="6,1"
@@ -156,7 +156,7 @@
                     <TextBlock x:Name="ItemsBadgeTextBlock"
                                Text="1 item"
                                FontSize="10.5"
-                               Foreground="#8C9AB5" />
+                               Foreground="{StaticResource ThemeSecondaryText}" />
                 </Border>
 
                 <!-- Top Close Button (for manual dismiss on error) -->
@@ -175,7 +175,7 @@
                        Grid.Row="1"
                        Text="{loc:Text Processing}"
                        FontSize="11.5"
-                       Foreground="#8E9BB5"
+                       Foreground="{StaticResource ThemeSecondaryText}"
                        TextTrimming="CharacterEllipsis"
                        VerticalAlignment="Center"
                        Margin="0,4,0,4" />
@@ -192,14 +192,14 @@
                              Minimum="0"
                              Maximum="100"
                              Value="0"
-                             Style="{StaticResource CyanProgressBarStyle}" />
+                             Style="{StaticResource OperationProgressBarStyle}" />
 
                 <TextBlock x:Name="PercentTextBlock"
                            Grid.Column="1"
                            Text="0%"
                            FontSize="11.5"
                            FontWeight="SemiBold"
-                           Foreground="#00E5FF"
+                           Foreground="{StaticResource ThemeAccent}"
                            Width="42"
                            TextAlignment="Right"
                            VerticalAlignment="Center" />

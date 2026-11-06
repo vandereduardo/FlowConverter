@@ -57,7 +57,6 @@ public partial class ToolWorkspaceWindow : Window
         if (_tool == FileTool.TrimAudio)
         {
             Title = UiText.Get("Trim Audio");
-            ToolIconText.FontFamily = new FontFamily("Segoe MDL2 Assets");
             ExecuteButton.Content = UiText.Get("Apply & Save");
         }
 
@@ -138,8 +137,8 @@ public partial class ToolWorkspaceWindow : Window
             Width = 120,
             Height = 120,
             CornerRadius = new CornerRadius(10),
-            Background = new SolidColorBrush(Color.FromRgb(14, 19, 30)),
-            BorderBrush = new SolidColorBrush(Color.FromRgb(42, 54, 79)),
+            Background = ThemeBrushes.Get("ThemeCanvas"),
+            BorderBrush = ThemeBrushes.Get("ThemeOutline"),
             BorderThickness = new Thickness(1),
             HorizontalAlignment = HorizontalAlignment.Left
         };
@@ -166,7 +165,7 @@ public partial class ToolWorkspaceWindow : Window
             thumbBorder.Child = new TextBlock
             {
                 Text = "🖨 3MF",
-                Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
+                Foreground = ThemeBrushes.Get("ThemeAccent"),
                 FontSize = 18,
                 FontWeight = FontWeights.Bold,
                 HorizontalAlignment = HorizontalAlignment.Center,
@@ -182,13 +181,13 @@ public partial class ToolWorkspaceWindow : Window
             Text = UiText.Format("Original printer: {0}", _threeMfSummary.OriginalPrinterName),
             FontSize = 15,
             FontWeight = FontWeights.Bold,
-            Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255))
+            Foreground = ThemeBrushes.Get("ThemeAccent")
         });
         metaStack.Children.Add(new TextBlock
         {
             Text = UiText.Format("File: {0} · Slicer: {1}", _threeMfSummary.FileName, _threeMfSummary.SlicerApplication),
             FontSize = 12,
-            Foreground = new SolidColorBrush(Color.FromRgb(160, 174, 192)),
+            Foreground = ThemeBrushes.Get("ThemeSecondaryText"),
             Margin = new Thickness(0, 3, 0, 8)
         });
 
@@ -216,7 +215,7 @@ public partial class ToolWorkspaceWindow : Window
                 try { c = (Color)ColorConverter.ConvertFromString(fil.ColorHex); } catch { }
                 var badge = new Border
                 {
-                    Background = new SolidColorBrush(Color.FromRgb(24, 32, 48)),
+                    Background = ThemeBrushes.Get("ThemeControl"),
                     BorderBrush = new SolidColorBrush(c),
                     BorderThickness = new Thickness(1.5),
                     CornerRadius = new CornerRadius(6),
@@ -234,7 +233,7 @@ public partial class ToolWorkspaceWindow : Window
                 sp.Children.Add(new TextBlock
                 {
                     Text = $"#{fil.SlotIndex} {fil.FilamentType}",
-                    Foreground = Brushes.White,
+                    Foreground = ThemeBrushes.Get("ThemeText"),
                     FontSize = 11,
                     FontWeight = FontWeights.SemiBold
                 });
@@ -266,7 +265,7 @@ public partial class ToolWorkspaceWindow : Window
         var addExpander = new Expander
         {
             Header = UiText.Get("+ Add printer from catalog (84 models / 12 brands)"),
-            Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
+            Foreground = ThemeBrushes.Get("ThemeAccent"),
             Margin = new Thickness(0, 4, 0, 6)
         };
         var addStack = new StackPanel { Margin = new Thickness(0, 8, 0, 4) };
@@ -294,8 +293,8 @@ public partial class ToolWorkspaceWindow : Window
         {
             Content = UiText.Get("Add and select printer"),
             Height = 32,
-            Background = new SolidColorBrush(Color.FromRgb(30, 41, 59)),
-            Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
+            Background = ThemeBrushes.Get("ThemeControl"),
+            Foreground = ThemeBrushes.Get("ThemeAccent"),
             HorizontalAlignment = HorizontalAlignment.Left,
             Padding = new Thickness(14, 4, 14, 4)
         };
@@ -328,9 +327,9 @@ public partial class ToolWorkspaceWindow : Window
             }
         };
 
-        addStack.Children.Add(new TextBlock { Text = UiText.Get("Manufacturer:"), Foreground = Brushes.LightGray, FontSize = 11.5, Margin = new Thickness(0, 0, 0, 2) });
+        addStack.Children.Add(new TextBlock { Text = UiText.Get("Manufacturer:"), Foreground = ThemeBrushes.Get("ThemeSecondaryText"), FontSize = 11.5, Margin = new Thickness(0, 0, 0, 2) });
         addStack.Children.Add(brandCombo);
-        addStack.Children.Add(new TextBlock { Text = UiText.Get("Model:"), Foreground = Brushes.LightGray, FontSize = 11.5, Margin = new Thickness(0, 0, 0, 2) });
+        addStack.Children.Add(new TextBlock { Text = UiText.Get("Model:"), Foreground = ThemeBrushes.Get("ThemeSecondaryText"), FontSize = 11.5, Margin = new Thickness(0, 0, 0, 2) });
         addStack.Children.Add(modelCombo);
         addStack.Children.Add(addBtn);
         addExpander.Content = addStack;
@@ -344,7 +343,7 @@ public partial class ToolWorkspaceWindow : Window
         optsPanel.Children.Add(new TextBlock
         {
             Text = UiText.Get("Print preset:"),
-            Foreground = Brushes.LightGray,
+            Foreground = ThemeBrushes.Get("ThemeSecondaryText"),
             FontSize = 12,
             Margin = new Thickness(0, 6, 0, 4)
         });
@@ -365,14 +364,14 @@ public partial class ToolWorkspaceWindow : Window
         {
             Content = UiText.Get("Automatically recenter parts on the target build plate (3D/3dmodel.model)"),
             IsChecked = true,
-            Foreground = Brushes.White,
+            Foreground = ThemeBrushes.Get("ThemeText"),
             Margin = new Thickness(0, 4, 0, 8)
         };
         _preserveFilamentsCheck = new CheckBox
         {
             Content = UiText.Get("Keep multicolor filament slots, temperatures, and project overrides (different_settings_to_system)"),
             IsChecked = true,
-            Foreground = Brushes.White,
+            Foreground = ThemeBrushes.Get("ThemeText"),
             Margin = new Thickness(0, 0, 0, 4)
         };
 
@@ -435,8 +434,8 @@ public partial class ToolWorkspaceWindow : Window
                 Content = pr.Label,
                 Padding = new Thickness(12, 5, 12, 5),
                 Margin = new Thickness(0, 0, 8, 6),
-                Background = new SolidColorBrush(Color.FromRgb(28, 37, 54)),
-                Foreground = Brushes.White
+                Background = ThemeBrushes.Get("ThemeControl"),
+                Foreground = ThemeBrushes.Get("ThemeText")
             };
             btn.Click += (_, _) =>
             {
@@ -473,7 +472,7 @@ public partial class ToolWorkspaceWindow : Window
         {
             Width = 560,
             Height = 340,
-            Background = new SolidColorBrush(Color.FromRgb(12, 16, 24)),
+            Background = ThemeBrushes.Get("ThemeCanvas"),
             ClipToBounds = true,
             Cursor = Cursors.Cross,
             Margin = new Thickness(0, 4, 0, 8)
@@ -484,9 +483,9 @@ public partial class ToolWorkspaceWindow : Window
 
         _cropBoxRect = new System.Windows.Shapes.Rectangle
         {
-            Stroke = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
+            Stroke = ThemeBrushes.Get("ThemeAccent"),
             StrokeThickness = 2.2,
-            Fill = new SolidColorBrush(Color.FromArgb(45, 0, 229, 255))
+            Fill = ThemeBrushes.Get("ThemeSelectionWash")
         };
         _cropOverlayCanvas.Children.Add(_cropBoxRect);
         UpdateCropVisualBox();
@@ -598,7 +597,7 @@ public partial class ToolWorkspaceWindow : Window
         {
             Width = 680,
             Height = 120,
-            Background = new SolidColorBrush(Color.FromRgb(12, 16, 26)),
+            Background = ThemeBrushes.Get("ThemeCanvas"),
             Margin = new Thickness(0, 10, 0, 14)
         };
 
@@ -614,8 +613,8 @@ public partial class ToolWorkspaceWindow : Window
                 RadiusX = 2,
                 RadiusY = 2,
                 Fill = new LinearGradientBrush(
-                    Color.FromRgb(0, 229, 255),
-                    Color.FromRgb(255, 107, 13),
+                    ThemeBrushes.Get("ThemeAccent").Color,
+                    ThemeBrushes.Get("ThemeWarmAccent").Color,
                     90.0)
             };
             Canvas.SetLeft(bar, 10 + i * 6.9);
@@ -624,10 +623,10 @@ public partial class ToolWorkspaceWindow : Window
         }
         panel.Children.Add(waveCanvas);
 
-        var startLabel = new TextBlock { Text = UiText.Get("Start Time: 0.0 s"), Foreground = Brushes.White, Margin = new Thickness(0, 4, 0, 4) };
+        var startLabel = new TextBlock { Text = UiText.Get("Start Time: 0.0 s"), Foreground = ThemeBrushes.Get("ThemeText"), Margin = new Thickness(0, 4, 0, 4) };
         var startSlider = new Slider { Minimum = 0, Maximum = 300, Value = 0, Margin = new Thickness(0, 0, 0, 10) };
 
-        var endLabel = new TextBlock { Text = UiText.Get("End Time: 15.0 s"), Foreground = Brushes.White, Margin = new Thickness(0, 4, 0, 4) };
+        var endLabel = new TextBlock { Text = UiText.Get("End Time: 15.0 s"), Foreground = ThemeBrushes.Get("ThemeText"), Margin = new Thickness(0, 4, 0, 4) };
         var endSlider = new Slider { Minimum = 0.5, Maximum = 300, Value = 15.0, Margin = new Thickness(0, 0, 0, 10) };
 
         startSlider.ValueChanged += (_, _) =>
@@ -678,7 +677,7 @@ public partial class ToolWorkspaceWindow : Window
         {
             Width = 560,
             Height = 320,
-            Background = new SolidColorBrush(Color.FromRgb(14, 18, 28)),
+            Background = ThemeBrushes.Get("ThemeCanvas"),
             ClipToBounds = true,
             Cursor = Cursors.Cross
         };
@@ -692,7 +691,7 @@ public partial class ToolWorkspaceWindow : Window
             _redactDragStart = ClampCanvasPoint(_redactOverlayCanvas, e.GetPosition(_redactOverlayCanvas));
             _activeRedactRectShape = new System.Windows.Shapes.Rectangle
             {
-                Stroke = new SolidColorBrush(Color.FromRgb(255, 107, 13)),
+                Stroke = ThemeBrushes.Get("ThemeWarmAccent"),
                 StrokeThickness = 2,
                 Fill = new SolidColorBrush(Color.FromArgb(190, 0, 0, 0)),
                 IsHitTestVisible = false
@@ -774,11 +773,11 @@ public partial class ToolWorkspaceWindow : Window
         panel.Children.Add(layout);
 
         var preview = new Image { Stretch = Stretch.Uniform };
-        var status = new TextBlock { Foreground = Brushes.LightGray, TextWrapping = TextWrapping.Wrap };
+        var status = new TextBlock { Foreground = ThemeBrushes.Get("ThemeSecondaryText"), TextWrapping = TextWrapping.Wrap };
         previewPanel.Children.Add(new Border
         {
             Height = 310,
-            Background = new SolidColorBrush(Color.FromRgb(12, 16, 24)),
+            Background = ThemeBrushes.Get("ThemeCanvas"),
             Child = new Grid { Children = { preview, status } }
         });
 
@@ -792,7 +791,7 @@ public partial class ToolWorkspaceWindow : Window
             previewPanel.Children.Add(new TextBlock
             {
                 Text = UiText.Get("Preview of the first image. Adjustments apply to all selected images."),
-                Foreground = Brushes.LightGray, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0)
+                Foreground = ThemeBrushes.Get("ThemeSecondaryText"), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 6, 0, 0)
             });
 
         void SchedulePreview()
@@ -922,7 +921,7 @@ public partial class ToolWorkspaceWindow : Window
             panel.Children.Add(new TextBlock
             {
                 Text = UiText.Format("Selected {0} file(s) for {1}. Click Execute below to run.", _inputFiles.Count, _tool.DisplayName()),
-                Foreground = Brushes.LightGray,
+                Foreground = ThemeBrushes.Get("ThemeSecondaryText"),
                 Margin = new Thickness(0, 8, 0, 4)
             });
         }
@@ -935,7 +934,7 @@ public partial class ToolWorkspaceWindow : Window
         var lbl = new TextBlock
         {
             Text = $"{title}: {initial:0.##}",
-            Foreground = Brushes.White,
+            Foreground = ThemeBrushes.Get("ThemeText"),
             Margin = new Thickness(0, 6, 0, 4)
         };
         var slider = new Slider
@@ -962,14 +961,14 @@ public partial class ToolWorkspaceWindow : Window
             Text = heading,
             FontSize = 14,
             FontWeight = FontWeights.Bold,
-            Foreground = new SolidColorBrush(Color.FromRgb(0, 229, 255)),
+            Foreground = ThemeBrushes.Get("ThemeAccent"),
             Margin = new Thickness(0, 0, 0, 6)
         });
 
         return new Border
         {
-            Background = new SolidColorBrush(Color.FromRgb(19, 25, 38)),
-            BorderBrush = new SolidColorBrush(Color.FromRgb(36, 46, 68)),
+            Background = ThemeBrushes.Get("ThemeCard"),
+            BorderBrush = ThemeBrushes.Get("ThemeBorder"),
             BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(10),
             Padding = new Thickness(16, 14, 16, 14),
@@ -984,19 +983,19 @@ public partial class ToolWorkspaceWindow : Window
         sp.Children.Add(new TextBlock
         {
             Text = $"{label}: ",
-            Foreground = new SolidColorBrush(Color.FromRgb(148, 163, 184)),
+            Foreground = ThemeBrushes.Get("ThemeSecondaryText"),
             FontSize = 11
         });
         sp.Children.Add(new TextBlock
         {
             Text = value,
-            Foreground = Brushes.White,
+            Foreground = ThemeBrushes.Get("ThemeText"),
             FontSize = 11,
             FontWeight = FontWeights.SemiBold
         });
         return new Border
         {
-            Background = new SolidColorBrush(Color.FromRgb(26, 34, 52)),
+            Background = ThemeBrushes.Get("ThemeControl"),
             CornerRadius = new CornerRadius(5),
             Padding = new Thickness(8, 3, 8, 3),
             Margin = new Thickness(0, 0, 6, 5),

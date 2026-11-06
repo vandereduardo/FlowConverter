@@ -9,6 +9,7 @@ public sealed class TrayIconService : IDisposable
 {
     private readonly NotifyIcon _notifyIcon;
     private readonly Icon _idleIcon;
+    private readonly ContextMenuStrip _menu;
 
     public event Action? SummonConvertWheelRequested;
     public event Action? SummonToolsWheelRequested;
@@ -27,7 +28,13 @@ public sealed class TrayIconService : IDisposable
         using var icon = new Icon(iconStream, SystemInformation.SmallIconSize);
         _idleIcon = (Icon)icon.Clone();
 
-        var menu = new ContextMenuStrip();
+        var menu = _menu = new ContextMenuStrip
+        {
+            BackColor = MenuColors.FromTheme("ThemeCard"),
+            ForeColor = MenuColors.FromTheme("ThemeText"),
+            Renderer = new ToolStripProfessionalRenderer(new MenuColors()) { RoundedEdges = false },
+            ShowImageMargin = false
+        };
         var titleItem = new ToolStripMenuItem("Flow Converter (Windows)") { Enabled = false };
         menu.Items.Add(titleItem);
         menu.Items.Add(new ToolStripSeparator());
@@ -71,6 +78,25 @@ public sealed class TrayIconService : IDisposable
     {
         _notifyIcon.Visible = false;
         _notifyIcon.Dispose();
+        _menu.Dispose();
         _idleIcon.Dispose();
+    }
+
+    private sealed class MenuColors : ProfessionalColorTable
+    {
+        public MenuColors() => UseSystemColors = false;
+
+        public override Color ToolStripDropDownBackground => FromTheme("ThemeCard");
+        public override Color MenuBorder => FromTheme("ThemeOutline");
+        public override Color MenuItemBorder => FromTheme("ThemeOutline");
+        public override Color MenuItemSelected => FromTheme("ThemeHover");
+        public override Color SeparatorDark => FromTheme("ThemeBorder");
+        public override Color SeparatorLight => FromTheme("ThemeBorder");
+
+        public static Color FromTheme(string key)
+        {
+            var color = ThemeBrushes.Get(key).Color;
+            return Color.FromArgb(color.A, color.R, color.G, color.B);
+        }
     }
 }

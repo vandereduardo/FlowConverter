@@ -6,8 +6,8 @@
         Width="820" Height="660"
         MinWidth="720" MinHeight="540"
         WindowStartupLocation="CenterScreen"
-        Background="#0D111A"
-        Foreground="#F0F4FA">
+        Background="{StaticResource ThemeWindow}"
+        Foreground="{StaticResource ThemeText}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,24 +16,24 @@
         </Grid.RowDefinitions>
 
         <!-- Header Bar -->
-        <Border Grid.Row="0" Background="#131926" BorderBrush="#222C42" BorderThickness="0,0,0,1" Padding="22,16">
+        <Border Grid.Row="0" Background="{StaticResource ThemeWindow}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="0,0,0,1" Padding="22,16">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Border Background="#1A00E5FF" BorderBrush="#00E5FF" BorderThickness="1" CornerRadius="8" Padding="10,6" Margin="0,0,14,0">
-                        <TextBlock x:Name="ToolIconText" Text="🛠" FontSize="18" Foreground="#00E5FF"/>
+                    <Border Background="{StaticResource ThemeSelectionWash}" BorderBrush="{StaticResource ThemeOutline}" BorderThickness="1" CornerRadius="8" Padding="10,6" Margin="0,0,14,0">
+                        <TextBlock x:Name="ToolIconText" FontFamily="Segoe MDL2 Assets" FontSize="18" Foreground="{StaticResource ThemeAccent}"/>
                     </Border>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock x:Name="ToolTitleText" Text="{loc:Text 3MF_Printer_Converter}" FontSize="18" FontWeight="Bold" Foreground="#FFFFFF"/>
-                        <TextBlock x:Name="ToolSubtitleText" Text="{loc:Text Inspect_and_convert_3MF_projects_across}" FontSize="12" Foreground="#94A3B8" Margin="0,2,0,0"/>
+                        <TextBlock x:Name="ToolTitleText" Text="{loc:Text 3MF_Printer_Converter}" FontSize="18" FontWeight="Bold" Foreground="{StaticResource ThemeText}"/>
+                        <TextBlock x:Name="ToolSubtitleText" Text="{loc:Text Inspect_and_convert_3MF_projects_across}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                     </StackPanel>
                 </StackPanel>
 
-                <Border Grid.Column="1" Background="#1B2336" CornerRadius="6" Padding="10,5" VerticalAlignment="Center">
-                    <TextBlock x:Name="FileCountBadgeText" Text="{loc:Text 1_file_selected}" Foreground="#00E5FF" FontSize="11.5" FontWeight="SemiBold"/>
+                <Border Grid.Column="1" Background="{StaticResource ThemeCard}" CornerRadius="6" Padding="10,5" VerticalAlignment="Center">
+                    <TextBlock x:Name="FileCountBadgeText" Text="{loc:Text 1_file_selected}" Foreground="{StaticResource ThemeAccent}" FontSize="11.5" FontWeight="SemiBold"/>
                 </Border>
             </Grid>
         </Border>
@@ -44,7 +44,7 @@
         </ScrollViewer>
 
         <!-- Footer Bar -->
-        <Border Grid.Row="2" Background="#131926" BorderBrush="#222C42" BorderThickness="0,1,0,0" Padding="22,14">
+        <Border Grid.Row="2" Background="{StaticResource ThemeWindow}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="0,1,0,0" Padding="22,14">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -52,22 +52,22 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="FooterStatusText"
                            Text="{loc:Text Ready_to_process}"
-                           Foreground="#94A3B8"
+                           Foreground="{StaticResource ThemeSecondaryText}"
                            FontSize="12"
                            VerticalAlignment="Center"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <Button Content="{loc:Text Cancel}"
                             Width="100" Height="36"
                             Margin="0,0,10,0"
-                            Background="#1E2638"
-                            Foreground="#E2E8F0"
-                            BorderBrush="#334155"
+                            Background="{StaticResource ThemeControl}"
+                            Foreground="{StaticResource ThemeText}"
+                            BorderBrush="{StaticResource ThemeOutline}"
                             Click="OnCancelClick"/>
                     <Button x:Name="ExecuteButton"
                             Content="{loc:Text Execute_Tool}"
                             Width="170" Height="36"
-                            Background="#00E5FF"
-                            Foreground="#090D16"
+                            Background="{StaticResource ThemeAccent}"
+                            Foreground="{StaticResource ThemeOnAccent}"
                             FontWeight="Bold"
                             BorderThickness="0"
                             Click="OnExecuteClick"/>

@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -104,24 +103,6 @@ public partial class SettingsWindow : Window
         FfmpegSetupWindow.ShowSetup(this);
         RefreshFfmpegStatus();
     }
-
-    protected override void OnSourceInitialized(EventArgs e)
-    {
-        base.OnSourceInitialized(e);
-        try
-        {
-            var helper = new System.Windows.Interop.WindowInteropHelper(this);
-            int darkMode = 1;
-            DwmSetWindowAttribute(helper.Handle, 20, ref darkMode, sizeof(int));
-        }
-        catch
-        {
-            // Fallback gracefully on older OS versions
-        }
-    }
-
-    [DllImport("dwmapi.dll", PreserveSig = true)]
-    private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
     private void OnWindowLoaded(object sender, RoutedEventArgs e)
     {
@@ -241,16 +222,16 @@ public partial class SettingsWindow : Window
             }
             if (button.Template?.FindName("ButtonBorder", button) is Border border)
             {
-                border.Background = isActive ? new SolidColorBrush(Color.FromRgb(0x18, 0x24, 0x38)) : Brushes.Transparent;
+                border.Background = isActive ? ThemeBrushes.Get("ThemeHover") : Brushes.Transparent;
             }
             if (button.Template?.FindName("NavText", button) is TextBlock text)
             {
-                text.Foreground = isActive ? new SolidColorBrush(Color.FromRgb(0x00, 0xE5, 0xFF)) : new SolidColorBrush(Color.FromRgb(0x8A, 0x99, 0xB5));
+                text.Foreground = isActive ? ThemeBrushes.Get("ThemeAccent") : ThemeBrushes.Get("ThemeSecondaryText");
                 text.FontWeight = isActive ? FontWeights.SemiBold : FontWeights.Normal;
             }
             if (button.Template?.FindName("NavIcon", button) is TextBlock icon)
             {
-                icon.Foreground = isActive ? new SolidColorBrush(Color.FromRgb(0x00, 0xE5, 0xFF)) : new SolidColorBrush(Color.FromRgb(0x8A, 0x99, 0xB5));
+                icon.Foreground = isActive ? ThemeBrushes.Get("ThemeAccent") : ThemeBrushes.Get("ThemeSecondaryText");
             }
         }
     }

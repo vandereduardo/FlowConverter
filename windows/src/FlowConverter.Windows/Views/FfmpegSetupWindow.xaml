@@ -4,12 +4,12 @@
         xmlns:loc="clr-namespace:FlowConverter.Windows.Localization"
         Title="{loc:Text Set_up_FFmpeg_2}" Width="460" SizeToContent="Height"
         ResizeMode="NoResize" ShowInTaskbar="False"
-        Background="#101520" Foreground="#F0F4FA">
+        Background="{StaticResource ThemeWindow}" Foreground="{StaticResource ThemeText}">
     <Window.Resources>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#1B2940" />
-            <Setter Property="BorderBrush" Value="#526687" />
-            <Setter Property="Foreground" Value="#F0F4FA" />
+            <Setter Property="Background" Value="{StaticResource ThemeControl}" />
+            <Setter Property="BorderBrush" Value="{StaticResource ThemeFocus}" />
+            <Setter Property="Foreground" Value="{StaticResource ThemeText}" />
             <Setter Property="Padding" Value="10,5" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -22,10 +22,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Surface" Property="Background" Value="#253A56" />
+                                <Setter TargetName="Surface" Property="Background" Value="{StaticResource ThemeHover}" />
                             </Trigger>
                             <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Surface" Property="BorderBrush" Value="#00E5FF" />
+                                <Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource ThemeFocus}" />
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Surface" Property="Opacity" Value="0.5" />
@@ -40,14 +40,14 @@
         <TextBlock x:Name="Heading" Text="{loc:Text Set_up_FFmpeg_2}" FontSize="19" FontWeight="SemiBold"
                    TextWrapping="Wrap" />
         <TextBlock Text="{loc:Text FFmpeg_enables_audio_and_video_tools}"
-                   Margin="0,8,0,0" Foreground="#9DAEC7" TextWrapping="Wrap" />
+                   Margin="0,8,0,0" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap" />
         <TextBlock x:Name="Status" Text="{loc:Text Setup_required}" Margin="0,12,0,0"
                    TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite" />
         <ProgressBar x:Name="InstallProgress" Height="4" Margin="0,8,0,0"
-                     IsIndeterminate="True" Visibility="Collapsed" Foreground="#00E5FF" />
+                     IsIndeterminate="True" Visibility="Collapsed" Foreground="{StaticResource ThemeAccent}" />
         <WrapPanel Margin="0,16,0,0">
             <Button x:Name="InstallButton" Content="{loc:Text Set_up_now}" Click="Install_Click" IsDefault="True"
-                    Margin="0,0,8,0" BorderBrush="#00E5FF" />
+                    Margin="0,0,8,0" BorderBrush="{StaticResource ThemeOutline}" />
             <Button x:Name="BrowseButton" Content="{loc:Text Select_ffmpeg_exe}" Click="Browse_Click"
                     Margin="0,0,8,0" />
             <Button x:Name="CloseButton" Content="{loc:Text Close}" Click="Close_Click" />

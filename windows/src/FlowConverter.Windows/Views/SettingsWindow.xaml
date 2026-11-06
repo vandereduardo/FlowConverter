@@ -10,25 +10,11 @@
         Width="820" Height="580"
         MinWidth="820" MinHeight="580"
         WindowStartupLocation="CenterScreen"
-        Background="#0F131D"
-        Foreground="#F0F4FA"
+        Background="{StaticResource ThemeWindow}"
+        Foreground="{StaticResource ThemeText}"
         FontFamily="Segoe UI, Segoe UI Variable Display, sans-serif">
 
     <Window.Resources>
-        <!-- Solid Brushes -->
-        <SolidColorBrush x:Key="BackgroundDarkBrush" Color="#0F131D"/>
-        <SolidColorBrush x:Key="SidebarBackgroundBrush" Color="#141926"/>
-        <SolidColorBrush x:Key="CardBackgroundBrush" Color="#161D2C"/>
-        <SolidColorBrush x:Key="CardBorderBrush" Color="#222E42"/>
-        <SolidColorBrush x:Key="AccentCyanBrush" Color="#00E5FF"/>
-        <SolidColorBrush x:Key="AccentCyanHoverBrush" Color="#33E5FF"/>
-        <SolidColorBrush x:Key="TextPrimaryBrush" Color="#F0F4FA"/>
-        <SolidColorBrush x:Key="TextSecondaryBrush" Color="#8A99B5"/>
-        <SolidColorBrush x:Key="TextMutedBrush" Color="#556885"/>
-        <SolidColorBrush x:Key="InputBackgroundBrush" Color="#121722"/>
-        <SolidColorBrush x:Key="InputBorderBrush" Color="#26354D"/>
-        <SolidColorBrush x:Key="DangerRedBrush" Color="#FF4D4D"/>
-
         <!-- Dark ScrollBar Style -->
         <Style x:Key="ScrollBarThumbStyle" TargetType="Thumb">
             <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -36,13 +22,13 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Thumb">
-                        <Border CornerRadius="3" Background="#2A374E" Margin="1,0"/>
+                        <Border CornerRadius="3" Background="{StaticResource ThemeBorder}" Margin="1,0"/>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" Value="#3D5070"/>
+                                <Setter Property="Background" Value="{StaticResource ThemeOutline}"/>
                             </Trigger>
                             <Trigger Property="IsDragging" Value="true">
-                                <Setter Property="Background" Value="#00E5FF"/>
+                                <Setter Property="Background" Value="{StaticResource ThemeAccent}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -52,7 +38,7 @@
 
         <Style TargetType="ScrollBar">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#2A384F"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeBorder}"/>
             <Setter Property="Width" Value="6"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -71,73 +57,33 @@
 
         <!-- Dark ComboBox Style (inherits custom dark ControlTemplate from App.xaml) -->
         <Style x:Key="DarkComboBox" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-            <Setter Property="Background" Value="#141C2B"/>
-            <Setter Property="Foreground" Value="#F0F4FA"/>
-            <Setter Property="BorderBrush" Value="#2B3B55"/>
+            <Setter Property="Background" Value="{StaticResource ThemeCard}"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeText}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ThemeOutline}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="8,4"/>
             <Setter Property="Height" Value="32"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="12.5"/>
-        </Style>
-
-        <Style TargetType="CheckBox">
-            <Setter Property="Foreground" Value="#F0F4FA"/>
-            <Setter Property="Background" Value="#141C2B"/>
-            <Setter Property="BorderBrush" Value="#8A99B5"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
-                        <StackPanel x:Name="Layout" Orientation="Horizontal" Background="Transparent">
-                            <Border x:Name="Box" Width="14" Height="14" CornerRadius="2"
-                                    Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="1" VerticalAlignment="Center">
-                                <Path x:Name="CheckMark" Data="M 0,4 L 3,7 L 8,1"
-                                      Stroke="#00E5FF" StrokeThickness="1.6"
-                                      HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed"/>
-                            </Border>
-                            <ContentPresenter x:Name="Label" Margin="5,0,0,0" VerticalAlignment="Center"
-                                              RecognizesAccessKey="True"/>
-                        </StackPanel>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="HasContent" Value="False">
-                                <Setter TargetName="Label" Property="Visibility" Value="Collapsed"/>
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Box" Property="BorderBrush" Value="#00E5FF"/>
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Box" Property="BorderBrush" Value="#00E5FF"/>
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Layout" Property="Opacity" Value="0.5"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
 
         <!-- Dark TextBox Style (inherits custom dark ControlTemplate from App.xaml) -->
         <Style x:Key="DarkTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
-            <Setter Property="Background" Value="#141C2B"/>
-            <Setter Property="Foreground" Value="#F0F4FA"/>
-            <Setter Property="BorderBrush" Value="#2B3B55"/>
+            <Setter Property="Background" Value="{StaticResource ThemeCard}"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeText}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ThemeOutline}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="8,4"/>
             <Setter Property="Height" Value="32"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="12.5"/>
-            <Setter Property="CaretBrush" Value="#00E5FF"/>
+            <Setter Property="CaretBrush" Value="{StaticResource ThemeAccent}"/>
         </Style>
 
         <!-- Primary Button Style -->
         <Style x:Key="PrimaryAccentButton" TargetType="Button">
-            <Setter Property="Background" Value="#00E5FF"/>
-            <Setter Property="Foreground" Value="#08101A"/>
+            <Setter Property="Background" Value="{StaticResource ThemeAccent}"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeCanvas}"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Padding" Value="14,6"/>
@@ -152,10 +98,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#33EBFB"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ThemeAccentHover}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#00B8CC"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ThemeAccentPressed}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.4"/>
@@ -168,9 +114,9 @@
 
         <!-- Ghost Button Style -->
         <Style x:Key="GhostButton" TargetType="Button">
-            <Setter Property="Background" Value="#172132"/>
-            <Setter Property="Foreground" Value="#C2D2E8"/>
-            <Setter Property="BorderBrush" Value="#24334B"/>
+            <Setter Property="Background" Value="{StaticResource ThemeControl}"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeSecondaryText}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ThemeBorder}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="FontSize" Value="11.5"/>
             <Setter Property="Padding" Value="10,4"/>
@@ -184,12 +130,12 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#1E2D42"/>
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#00E5FF"/>
-                                <Setter Property="Foreground" Value="#00E5FF"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ThemeHover}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ThemeFocus}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ThemeAccent}"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#141D2B"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ThemeCard}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -199,9 +145,9 @@
 
         <!-- Small Icon Button Style -->
         <Style x:Key="SmallIconButton" TargetType="Button">
-            <Setter Property="Background" Value="#162030"/>
-            <Setter Property="Foreground" Value="#8A99B5"/>
-            <Setter Property="BorderBrush" Value="#223147"/>
+            <Setter Property="Background" Value="{StaticResource ThemeCard}"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeSecondaryText}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ThemeBorder}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Width" Value="26"/>
             <Setter Property="Height" Value="26"/>
@@ -214,9 +160,9 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#23344D"/>
-                                <Setter Property="Foreground" Value="#00E5FF"/>
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#00E5FF"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ThemeBorder}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ThemeAccent}"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{StaticResource ThemeFocus}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -227,7 +173,7 @@
         <!-- Danger Icon Button Style -->
         <Style x:Key="DangerIconButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="#FF6B6B"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeDanger}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Width" Value="26"/>
             <Setter Property="Height" Value="26"/>
@@ -240,8 +186,8 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#33FF4D4D"/>
-                                <Setter Property="Foreground" Value="#FFA3A3"/>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource ThemeDangerWash}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ThemeDanger}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -267,16 +213,16 @@
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Border x:Name="ActiveIndicator" Grid.Column="0" Background="#00E5FF" CornerRadius="1.5" Visibility="Collapsed"/>
-                                <TextBlock x:Name="NavIcon" Grid.Column="1" Text="{TemplateBinding Tag}" FontFamily="Segoe MDL2 Assets" FontSize="13.5" Foreground="#8A99B5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="NavText" Grid.Column="2" Text="{TemplateBinding Content}" FontSize="12" Foreground="#8A99B5" VerticalAlignment="Center" Margin="2,0,0,0"/>
+                                <Border x:Name="ActiveIndicator" Grid.Column="0" Background="{StaticResource ThemeAccent}" CornerRadius="1.5" Visibility="Collapsed"/>
+                                <TextBlock x:Name="NavIcon" Grid.Column="1" Text="{TemplateBinding Tag}" FontFamily="Segoe MDL2 Assets" FontSize="13.5" Foreground="{StaticResource ThemeSecondaryText}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="NavText" Grid.Column="2" Text="{TemplateBinding Content}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" VerticalAlignment="Center" Margin="2,0,0,0"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="#182234"/>
-                                <Setter TargetName="NavText" Property="Foreground" Value="#F0F4FA"/>
-                                <Setter TargetName="NavIcon" Property="Foreground" Value="#00E5FF"/>
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource ThemeCard}"/>
+                                <Setter TargetName="NavText" Property="Foreground" Value="{StaticResource ThemeText}"/>
+                                <Setter TargetName="NavIcon" Property="Foreground" Value="{StaticResource ThemeAccent}"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -285,7 +231,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Background="#0F131D">
+    <Grid Background="{StaticResource ThemeWindow}">
         <Grid.ColumnDefinitions>
             <!-- Sidebar: Width 210 -->
             <ColumnDefinition Width="210"/>
@@ -294,7 +240,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- LEFT SIDEBAR -->
-        <Border Grid.Column="0" Background="#141926" BorderBrush="#1E2638" BorderThickness="0,0,1,0">
+        <Border Grid.Column="0" Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeControl}" BorderThickness="0,0,1,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <!-- Brand Header -->
@@ -308,15 +254,14 @@
                 <!-- Brand Header -->
                 <StackPanel Grid.Row="0" Margin="14,16,14,12">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border Width="26" Height="26" CornerRadius="13" Background="#162D3E" BorderBrush="#00E5FF" BorderThickness="1.2" Margin="0,0,9,0">
-                            <TextBlock Text="FC" Foreground="#00E5FF" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
+                        <Image Width="26" Height="26" Margin="0,0,9,0"
+                               Source="/FlowConverter;component/Resources/AppIcon.ico"/>
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="FLOW CONVERTER" Foreground="#00E5FF" FontSize="11.5" FontWeight="Bold"/>
-                            <TextBlock Text="{loc:Text Settings_Preferences}" Foreground="#8A99B5" FontSize="10"/>
+                            <TextBlock Text="FLOW CONVERTER" Foreground="{StaticResource ThemeAccent}" FontSize="11.5" FontWeight="Bold"/>
+                            <TextBlock Text="{loc:Text Settings_Preferences}" Foreground="{StaticResource ThemeSecondaryText}" FontSize="10"/>
                         </StackPanel>
                     </StackPanel>
-                    <Border Height="1" Background="#1E2638" Margin="0,14,0,0"/>
+                    <Border Height="1" Background="{StaticResource ThemeControl}" Margin="0,14,0,0"/>
                 </StackPanel>
 
                 <!-- Navigation Tabs -->
@@ -332,15 +277,15 @@
 
                 <!-- Footer Status -->
                 <StackPanel Grid.Row="2" Margin="14,10,14,14" Opacity="0.8">
-                    <Border Height="1" Background="#1E2638" Margin="0,0,0,10"/>
-                    <TextBlock Text="{loc:Text Open_Source_Unlocked_MIT}" Foreground="#5A6B85" FontSize="10" FontWeight="SemiBold"/>
-                    <TextBlock Text="{loc:Text Clean_Room_Windows_Parity}" Foreground="#3F4D63" FontSize="9" Margin="0,1,0,0"/>
+                    <Border Height="1" Background="{StaticResource ThemeControl}" Margin="0,0,0,10"/>
+                    <TextBlock Text="{loc:Text Open_Source_Unlocked_MIT}" Foreground="{StaticResource ThemeMutedText}" FontSize="10" FontWeight="SemiBold"/>
+                    <TextBlock Text="{loc:Text Clean_Room_Windows_Parity}" Foreground="{StaticResource ThemeMutedText}" FontSize="9" Margin="0,1,0,0"/>
                 </StackPanel>
             </Grid>
         </Border>
 
         <!-- RIGHT CONTENT AREA -->
-        <Grid Grid.Column="1" Background="#0F131D">
+        <Grid Grid.Column="1" Background="{StaticResource ThemeWindow}">
             <TabControl x:Name="MainTabControl" Background="Transparent" BorderThickness="0" Padding="0">
                 <TabControl.ItemContainerStyle>
                     <Style TargetType="TabItem">
@@ -353,32 +298,32 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="24,20,24,24">
                             <!-- Section Title -->
-                            <TextBlock Text="{loc:Text General_Settings}" FontSize="19" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                            <TextBlock Text="{loc:Text Application_behavior_visual_themes_and_startup}" FontSize="12" Foreground="#8A99B5" Margin="0,2,0,16"/>
+                            <TextBlock Text="{loc:Text General_Settings}" FontSize="19" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                            <TextBlock Text="{loc:Text Application_behavior_visual_themes_and_startup}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,16"/>
 
                             <!-- Status Card: Open Source Unlocked -->
-                            <Border Background="#131D2D" BorderBrush="#1F334E" BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,0,0,16">
+                            <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeHover}" BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,0,0,16">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border Grid.Column="0" Width="36" Height="36" CornerRadius="18" Background="#162D3E" BorderBrush="#00E5FF" BorderThickness="1.2" Margin="0,0,12,0">
-                                        <TextBlock Text="&#xEA18;" FontFamily="Segoe MDL2 Assets" FontSize="17" Foreground="#00E5FF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="0" Width="36" Height="36" CornerRadius="18" Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeOutline}" BorderThickness="1.2" Margin="0,0,12,0">
+                                        <TextBlock Text="&#xEA18;" FontFamily="Segoe MDL2 Assets" FontSize="17" Foreground="{StaticResource ThemeAccent}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,12,0">
-                                        <TextBlock Text="{loc:Text Open_Source_Unlocked_MIT_Edition}" FontWeight="Bold" FontSize="13" Foreground="#F0F4FA"/>
-                                        <TextBlock Text="{loc:Text Unlimited_conversions_batch_drops_all_29}" FontSize="11.5" Foreground="#8A99B5" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                                        <TextBlock Text="{loc:Text Open_Source_Unlocked_MIT_Edition}" FontWeight="Bold" FontSize="13" Foreground="{StaticResource ThemeText}"/>
+                                        <TextBlock Text="{loc:Text Unlimited_conversions_batch_drops_all_29}" FontSize="11.5" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap" Margin="0,2,0,0"/>
                                     </StackPanel>
-                                    <Border Grid.Column="2" Background="#122738" BorderBrush="#00E5FF" BorderThickness="1" CornerRadius="5" Padding="10,5" VerticalAlignment="Center">
-                                        <TextBlock x:Name="UsageCountTextBlock" Text="{loc:Text 0_Conversions_Done}" FontSize="11.5" FontWeight="SemiBold" Foreground="#00E5FF"/>
+                                    <Border Grid.Column="2" Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeOutline}" BorderThickness="1" CornerRadius="5" Padding="10,5" VerticalAlignment="Center">
+                                        <TextBlock x:Name="UsageCountTextBlock" Text="{loc:Text 0_Conversions_Done}" FontSize="11.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeAccent}"/>
                                     </Border>
                                 </Grid>
                             </Border>
 
                             <!-- Settings Form Card -->
-                            <Border Background="#161D2C" BorderBrush="#222E42" BorderThickness="1" CornerRadius="8" Padding="16,14">
+                            <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="8" Padding="16,14">
                                 <StackPanel>
                                     <Grid Margin="0,0,0,14">
                                         <Grid.ColumnDefinitions>
@@ -386,16 +331,16 @@
                                             <ColumnDefinition Width="220"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Margin="0,0,12,0">
-                                            <TextBlock Text="{loc:Text App_Language}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
+                                            <TextBlock Text="{loc:Text App_Language}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
                                             <TextBlock x:Name="LanguageRestartHint" Text="{loc:Text Restart_FlowConverter_to_apply_the_selected}"
-                                                       FontSize="11" Foreground="#00E5FF" TextWrapping="Wrap"
+                                                       FontSize="11" Foreground="{StaticResource ThemeAccent}" TextWrapping="Wrap"
                                                        Visibility="Collapsed" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="LanguageComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}"
                                                   DisplayMemberPath="Name" SelectedValuePath="Code" VerticalAlignment="Top"
                                                   SelectionChanged="LanguageComboBox_SelectionChanged"/>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Theme Selector -->
                                     <Grid Margin="0,0,0,14">
@@ -404,15 +349,15 @@
                                             <ColumnDefinition Width="220"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Radial_Wheel_Theme}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Visual_appearance_of_the_radial_petals}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Radial_Wheel_Theme}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Visual_appearance_of_the_radial_petals}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="ThemeComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="ThemeComboBox_SelectionChanged">
                                             <ComboBoxItem Content="{loc:Text Glass_Translucent}"/>
                                             <ComboBoxItem Content="{loc:Text Metallic_High_Contrast}"/>
                                         </ComboBox>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Sound & Haptic Toggle -->
                                     <Grid Margin="0,0,0,14">
@@ -421,12 +366,12 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Sound_Audio_Feedback}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Play_55ms_harmonic_chime_C6_G6}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Sound_Audio_Feedback}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Play_55ms_harmonic_chime_C6_G6}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
-                                        <CheckBox x:Name="SoundsCheckBox" Grid.Column="1" Content="{loc:Text Enable}" Foreground="#F0F4FA" VerticalAlignment="Center" Click="SoundsCheckBox_Click"/>
+                                        <CheckBox x:Name="SoundsCheckBox" Grid.Column="1" Content="{loc:Text Enable}" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center" Click="SoundsCheckBox_Click"/>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Floating Shelf Behavior -->
                                     <Grid Margin="0,0,0,14">
@@ -435,15 +380,15 @@
                                             <ColumnDefinition Width="220"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Floating_Drop_Shelf_Behavior}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Behavior_when_dropping_files_onto_the}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Floating_Drop_Shelf_Behavior}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Behavior_when_dropping_files_onto_the}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="FloatBehaviorComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="FloatBehaviorComboBox_SelectionChanged">
                                             <ComboBoxItem Content="{loc:Text Add_to_Existing_Shelf}"/>
                                             <ComboBoxItem Content="{loc:Text Create_New_Shelf_Window}"/>
                                         </ComboBox>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Terminal Selector -->
                                     <Grid Margin="0,0,0,14">
@@ -452,8 +397,8 @@
                                             <ColumnDefinition Width="220"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Terminal_Application}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Command_line_terminal_launched_by_Open}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Terminal_Application}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Command_line_terminal_launched_by_Open}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="TerminalComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" IsEditable="True" LostFocus="TerminalComboBox_LostFocus" SelectionChanged="TerminalComboBox_SelectionChanged">
                                             <ComboBoxItem Content="wt.exe"/>
@@ -461,7 +406,7 @@
                                             <ComboBoxItem Content="cmd.exe"/>
                                         </ComboBox>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Startup Toggle -->
                                     <Grid>
@@ -470,21 +415,21 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Launch_at_Windows_Startup}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Start_Flow_Converter_in_tray_automatically}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Launch_at_Windows_Startup}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Start_Flow_Converter_in_tray_automatically}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
-                                        <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Content="{loc:Text Enable}" Foreground="#F0F4FA" VerticalAlignment="Center" Click="StartupCheckBox_Click"/>
+                                        <CheckBox x:Name="StartupCheckBox" Grid.Column="1" Content="{loc:Text Enable}" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center" Click="StartupCheckBox_Click"/>
                                     </Grid>
 
-                                    <Border Height="1" Background="#233047" Margin="0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,14"/>
                                     <Grid x:Name="MediaSettings">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Margin="0,0,12,0">
-                                            <TextBlock Text="{loc:Text Media_Tools_FFmpeg}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock x:Name="FfmpegStatusText" FontSize="11" Foreground="#8A99B5"
+                                            <TextBlock Text="{loc:Text Media_Tools_FFmpeg}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock x:Name="FfmpegStatusText" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}"
                                                        Margin="0,2,0,0" TextWrapping="Wrap"/>
                                         </StackPanel>
                                         <Button Grid.Column="1" Content="{loc:Text Configure_FFmpeg}" Style="{StaticResource GhostButton}"
@@ -507,16 +452,16 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="{loc:Text 3D_Printers_3MF_Profile_Converter}" FontSize="19" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                    <TextBlock Text="{loc:Text Checked_printers_appear_as_petals_on}" FontSize="12" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                    <TextBlock Text="{loc:Text 3D_Printers_3MF_Profile_Converter}" FontSize="19" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                    <TextBlock Text="{loc:Text Checked_printers_appear_as_petals_on}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                 </StackPanel>
                                 <Button Grid.Column="1" Style="{StaticResource GhostButton}" Content="{loc:Text Restore_Defaults}" Click="RestorePrinters_Click" VerticalAlignment="Center"/>
                             </Grid>
 
                             <!-- Add Printer Card -->
-                            <Border Background="#161D2C" BorderBrush="#222E42" BorderThickness="1" CornerRadius="8" Padding="14" Margin="0,0,0,16">
+                            <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="8" Padding="14" Margin="0,0,0,16">
                                 <StackPanel>
-                                    <TextBlock Text="{loc:Text Add_3D_Printer_to_Catalog}" FontSize="13" FontWeight="SemiBold" Foreground="#00E5FF" Margin="0,0,0,12"/>
+                                    <TextBlock Text="{loc:Text Add_3D_Printer_to_Catalog}" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource ThemeAccent}" Margin="0,0,0,12"/>
 
                                     <!-- Row 1: Brand & Model Selection -->
                                     <Grid Margin="0,0,0,10">
@@ -526,11 +471,11 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock Text="{loc:Text Manufacturer}" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="{loc:Text Manufacturer}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <ComboBox x:Name="ManufacturerComboBox" Style="{StaticResource DarkComboBox}" SelectionChanged="ManufacturerComboBox_SelectionChanged"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="2">
-                                            <TextBlock Text="{loc:Text Preset_Model_from_84_Catalog_Profiles}" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="{loc:Text Preset_Model_from_84_Catalog_Profiles}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <ComboBox x:Name="PresetModelComboBox" Style="{StaticResource DarkComboBox}" SelectionChanged="PresetModelComboBox_SelectionChanged">
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
@@ -549,11 +494,11 @@
                                             <ColumnDefinition Width="160"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock Text="{loc:Text Full_Model_Name_Slicer_Profile_ID}" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="{loc:Text Full_Model_Name_Slicer_Profile_ID}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <TextBox x:Name="PrinterNameTextBox" Style="{StaticResource DarkTextBox}"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="2">
-                                            <TextBlock Text="{loc:Text Wheel_Petal_Label}" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="{loc:Text Wheel_Petal_Label}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <TextBox x:Name="ShortWheelNameTextBox" Style="{StaticResource DarkTextBox}"/>
                                         </StackPanel>
                                     </Grid>
@@ -574,19 +519,19 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0">
-                                            <TextBlock Text="{loc:Text Width_X}" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="{loc:Text Width_X}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <TextBox x:Name="BedWidthTextBox" Style="{StaticResource DarkTextBox}" Text="260"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="2">
-                                            <TextBlock Text="{loc:Text Depth_Y}" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="{loc:Text Depth_Y}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <TextBox x:Name="BedDepthTextBox" Style="{StaticResource DarkTextBox}" Text="260"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="4">
-                                            <TextBlock Text="{loc:Text Height_Z}" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="{loc:Text Height_Z}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <TextBox x:Name="BedHeightTextBox" Style="{StaticResource DarkTextBox}" Text="260"/>
                                         </StackPanel>
                                         <StackPanel Grid.Column="6">
-                                            <TextBlock Text="{loc:Text Nozzle}" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="{loc:Text Nozzle}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <ComboBox x:Name="NozzleComboBox" Style="{StaticResource DarkComboBox}">
                                                 <ComboBoxItem Content="0.2 mm"/>
                                                 <ComboBoxItem Content="0.4 mm"/>
@@ -595,7 +540,7 @@
                                             </ComboBox>
                                         </StackPanel>
                                         <StackPanel Grid.Column="8">
-                                            <TextBlock Text="Firmware" FontSize="11" Foreground="#8A99B5" Margin="0,0,0,4"/>
+                                            <TextBlock Text="Firmware" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,0,4"/>
                                             <ComboBox x:Name="FirmwareComboBox" Style="{StaticResource DarkComboBox}">
                                                 <ComboBoxItem Content="klipper"/>
                                                 <ComboBoxItem Content="marlin"/>
@@ -613,15 +558,15 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Text="{loc:Text Configured_3D_Printers}" FontSize="13" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                <TextBlock x:Name="ActivePrintersCountTextBlock" Grid.Column="1" Text="{loc:Text 8_active_on_Radial_Wheel}" FontSize="11.5" Foreground="#00E5FF"/>
+                                <TextBlock Text="{loc:Text Configured_3D_Printers}" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                <TextBlock x:Name="ActivePrintersCountTextBlock" Grid.Column="1" Text="{loc:Text 8_active_on_Radial_Wheel}" FontSize="11.5" Foreground="{StaticResource ThemeAccent}"/>
                             </Grid>
 
                             <!-- Configured Printers ItemsControl -->
                             <ItemsControl x:Name="PrintersItemsControl">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Background="#141C2B" BorderBrush="#1F2A3D" BorderThickness="1" CornerRadius="6" Margin="0,0,0,6" Padding="10,8">
+                                        <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeControl}" BorderThickness="1" CornerRadius="6" Margin="0,0,0,6" Padding="10,8">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="Auto"/>
@@ -630,18 +575,18 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <CheckBox Grid.Column="0" IsChecked="{Binding ShowInWheel, Mode=TwoWay}" Click="PrinterShowInWheel_Click" VerticalAlignment="Center" Margin="0,0,8,0" ToolTip="{loc:Text Show_this_printer_directly_on_the}"/>
-                                                <TextBlock Grid.Column="1" Text="&#xE749;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#00E5FF" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                <TextBlock Grid.Column="1" Text="&#xE749;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{StaticResource ThemeAccent}" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                                 <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="12.5" Foreground="#F0F4FA"/>
-                                                        <Border Background="#162D3E" BorderBrush="#00E5FF" BorderThickness="0.8" CornerRadius="3" Padding="5,1" Margin="8,0,0,0">
-                                                            <TextBlock Text="{Binding Brand}" FontSize="10" FontWeight="SemiBold" Foreground="#00E5FF"/>
+                                                        <TextBlock Text="{Binding Name}" FontWeight="SemiBold" FontSize="12.5" Foreground="{StaticResource ThemeText}"/>
+                                                        <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeOutline}" BorderThickness="0.8" CornerRadius="3" Padding="5,1" Margin="8,0,0,0">
+                                                            <TextBlock Text="{Binding Brand}" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource ThemeAccent}"/>
                                                         </Border>
-                                                        <Border Background="#1A2436" CornerRadius="3" Padding="5,1" Margin="6,0,0,0">
-                                                            <TextBlock Text="{Binding ShortWheelName, StringFormat='Wheel: &quot;{0}&quot;'}" FontSize="10" Foreground="#8A99B5"/>
+                                                        <Border Background="{StaticResource ThemeControl}" CornerRadius="3" Padding="5,1" Margin="6,0,0,0">
+                                                            <TextBlock Text="{Binding ShortWheelName, StringFormat='Wheel: &quot;{0}&quot;'}" FontSize="10" Foreground="{StaticResource ThemeSecondaryText}"/>
                                                         </Border>
                                                     </StackPanel>
-                                                    <TextBlock Text="{Binding DimensionsSummary}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                                    <TextBlock Text="{Binding DimensionsSummary}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                                 </StackPanel>
                                                 <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center">
                                                     <Button Style="{StaticResource SmallIconButton}" Content="&#xE74A;" FontFamily="Segoe MDL2 Assets" FontSize="10" ToolTip="{loc:Text Move_Up_in_Wheel_Order}" Click="MovePrinterUp_Click" Tag="{Binding}" Margin="0,0,4,0"/>
@@ -661,10 +606,10 @@
                 <TabItem>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="24,20,24,24">
-                            <TextBlock Text="{loc:Text Wheel_Shortcuts}" FontSize="19" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                            <TextBlock Text="{loc:Text Choose_modifier_keys_to_summon_each}" FontSize="12" Foreground="#8A99B5" Margin="0,2,0,16"/>
+                            <TextBlock Text="{loc:Text Wheel_Shortcuts}" FontSize="19" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                            <TextBlock Text="{loc:Text Choose_modifier_keys_to_summon_each}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,16"/>
 
-                            <Border Background="#161D2C" BorderBrush="#222E42" BorderThickness="1" CornerRadius="8" Padding="16,14" Margin="0,0,0,16">
+                            <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="8" Padding="16,14" Margin="0,0,0,16">
                                 <StackPanel>
                                     <!-- Conversion Wheel Row -->
                                     <Grid Margin="0,0,0,14">
@@ -673,14 +618,14 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="150"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="&#xE895;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#00E5FF" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                        <TextBlock Grid.Column="0" Text="&#xE895;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{StaticResource ThemeAccent}" VerticalAlignment="Center" Margin="0,0,12,0"/>
                                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Conversion_Wheel}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Summons_compatible_output_formats_and_3MF}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Conversion_Wheel}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Summons_compatible_output_formats_and_3MF}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="ConversionModifierComboBox" Grid.Column="2" Style="{StaticResource DarkComboBox}" SelectionChanged="ModifierComboBox_SelectionChanged"/>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Tools Wheel Row -->
                                     <Grid Margin="0,0,0,14">
@@ -689,14 +634,14 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="150"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="&#xE790;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#00E5FF" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                        <TextBlock Grid.Column="0" Text="&#xE790;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{StaticResource ThemeAccent}" VerticalAlignment="Center" Margin="0,0,12,0"/>
                                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text File_Tools_Wheel}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Summons_contextual_tools_Compress_Redact_Crop}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text File_Tools_Wheel}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Summons_contextual_tools_Compress_Redact_Crop}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="ToolsModifierComboBox" Grid.Column="2" Style="{StaticResource DarkComboBox}" SelectionChanged="ModifierComboBox_SelectionChanged"/>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Actions Wheel Row -->
                                     <Grid>
@@ -705,10 +650,10 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="150"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="&#xE71B;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#00E5FF" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                                        <TextBlock Grid.Column="0" Text="&#xE71B;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{StaticResource ThemeAccent}" VerticalAlignment="Center" Margin="0,0,12,0"/>
                                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Quick_Actions_Wheel}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Summons_actions_Float_Share_Copy_Move}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Quick_Actions_Wheel}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Summons_actions_Float_Share_Copy_Move}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="ActionsModifierComboBox" Grid.Column="2" Style="{StaticResource DarkComboBox}" SelectionChanged="ModifierComboBox_SelectionChanged"/>
                                     </Grid>
@@ -716,10 +661,10 @@
                             </Border>
 
                             <!-- Hint Box -->
-                            <Border Background="#121824" BorderBrush="#1C2738" BorderThickness="1" CornerRadius="6" Padding="12,10">
+                            <Border Background="{StaticResource ThemeCanvas}" BorderBrush="{StaticResource ThemeControl}" BorderThickness="1" CornerRadius="6" Padding="12,10">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="#00E5FF" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                    <TextBlock Text="{loc:Text Tip_Press_and_hold_the_designated}" FontSize="11.5" Foreground="#8A99B5" TextWrapping="Wrap"/>
+                                    <TextBlock Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{StaticResource ThemeAccent}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                    <TextBlock Text="{loc:Text Tip_Press_and_hold_the_designated}" FontSize="11.5" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Border>
                         </StackPanel>
@@ -736,13 +681,13 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="{loc:Text Conversion_Defaults}" FontSize="19" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                    <TextBlock Text="{loc:Text Configure_default_quality_parameters_and_media}" FontSize="12" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                    <TextBlock Text="{loc:Text Conversion_Defaults}" FontSize="19" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                    <TextBlock Text="{loc:Text Configure_default_quality_parameters_and_media}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                 </StackPanel>
                                 <Button Grid.Column="1" Style="{StaticResource GhostButton}" Content="{loc:Text Restore_Defaults}" Click="RestoreConversionDefaults_Click" VerticalAlignment="Center"/>
                             </Grid>
 
-                            <Border Background="#161D2C" BorderBrush="#222E42" BorderThickness="1" CornerRadius="8" Padding="16,14">
+                            <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="8" Padding="16,14">
                                 <StackPanel>
                                     <!-- Quality Selector -->
                                     <Grid Margin="0,0,0,14">
@@ -751,8 +696,8 @@
                                             <ColumnDefinition Width="200"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Default_Conversion_Quality}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Global_encoding_profile_applied_to_images}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Default_Conversion_Quality}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Global_encoding_profile_applied_to_images}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="QualityComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="QualityComboBox_SelectionChanged">
                                             <ComboBoxItem Content="{loc:Text Compact_Smaller_size}"/>
@@ -760,7 +705,7 @@
                                             <ComboBoxItem Content="{loc:Text High_Fidelity}"/>
                                         </ComboBox>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Preserve Metadata -->
                                     <Grid Margin="0,0,0,14">
@@ -769,12 +714,12 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Preserve_Metadata}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Keep_EXIF_ID3_author_and_creation}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Preserve_Metadata}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Keep_EXIF_ID3_author_and_creation}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
-                                        <CheckBox x:Name="PreserveMetadataCheckBox" Grid.Column="1" Content="{loc:Text Enable}" Foreground="#F0F4FA" VerticalAlignment="Center" Click="PreserveMetadataCheckBox_Click"/>
+                                        <CheckBox x:Name="PreserveMetadataCheckBox" Grid.Column="1" Content="{loc:Text Enable}" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center" Click="PreserveMetadataCheckBox_Click"/>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- Audio Bitrate -->
                                     <Grid Margin="0,0,0,14">
@@ -783,8 +728,8 @@
                                             <ColumnDefinition Width="200"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Audio_Bitrate}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Default_target_bitrate_for_MP3_M4A}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Audio_Bitrate}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Default_target_bitrate_for_MP3_M4A}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="AudioBitrateComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="AudioBitrateComboBox_SelectionChanged">
                                             <ComboBoxItem Content="128 kbps"/>
@@ -793,7 +738,7 @@
                                             <ComboBoxItem Content="320 kbps"/>
                                         </ComboBox>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- GIF FPS -->
                                     <Grid Margin="0,0,0,14">
@@ -802,8 +747,8 @@
                                             <ColumnDefinition Width="200"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text GIF_Frame_Rate_FPS}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Framerate_for_video_to_GIF_animated}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text GIF_Frame_Rate_FPS}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Framerate_for_video_to_GIF_animated}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="GifFpsComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="GifFpsComboBox_SelectionChanged">
                                             <ComboBoxItem Content="10 fps"/>
@@ -812,7 +757,7 @@
                                             <ComboBoxItem Content="30 fps"/>
                                         </ComboBox>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <!-- GIF Width -->
                                     <Grid>
@@ -821,8 +766,8 @@
                                             <ColumnDefinition Width="200"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text GIF_Resolution_Width}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Default_width_for_output_GIF_animations}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text GIF_Resolution_Width}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Default_width_for_output_GIF_animations}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="GifWidthComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="GifWidthComboBox_SelectionChanged">
                                             <ComboBoxItem Content="360 px"/>
@@ -841,13 +786,13 @@
                 <TabItem>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="24,20,24,24">
-                            <TextBlock Text="{loc:Text Compression_Settings}" FontSize="19" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                            <TextBlock Text="{loc:Text Default_presets_applied_when_running_file}" FontSize="12" Foreground="#8A99B5" Margin="0,2,0,16"/>
+                            <TextBlock Text="{loc:Text Compression_Settings}" FontSize="19" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                            <TextBlock Text="{loc:Text Default_presets_applied_when_running_file}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,16"/>
 
                             <!-- Image Compression Card -->
-                            <Border Background="#161D2C" BorderBrush="#222E42" BorderThickness="1" CornerRadius="8" Padding="16,14" Margin="0,0,0,16">
+                            <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="8" Padding="16,14" Margin="0,0,0,16">
                                 <StackPanel>
-                                    <TextBlock Text="{loc:Text Image_Compression}" FontSize="13" FontWeight="SemiBold" Foreground="#00E5FF" Margin="0,0,0,12"/>
+                                    <TextBlock Text="{loc:Text Image_Compression}" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource ThemeAccent}" Margin="0,0,0,12"/>
 
                                     <Grid Margin="0,0,0,14">
                                         <Grid.ColumnDefinitions>
@@ -855,15 +800,15 @@
                                             <ColumnDefinition Width="200"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Default_Image_Compression_Strength}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Quality_vs_size_reduction_preset}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Default_Image_Compression_Strength}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Quality_vs_size_reduction_preset}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="ImageStrengthComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="CompressionOption_Changed">
                                             <ComboBoxItem Content="{loc:Text balanced}"/>
                                             <ComboBoxItem Content="{loc:Text strong}"/>
                                         </ComboBox>
                                     </Grid>
-                                    <Border Height="1" Background="#1E283A" Margin="0,0,0,14"/>
+                                    <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,14"/>
 
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -871,8 +816,8 @@
                                             <ColumnDefinition Width="200"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Default_Image_Max_Size}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text Maximum_pixel_dimension_constraint_for_images}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Default_Image_Max_Size}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text Maximum_pixel_dimension_constraint_for_images}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="ImageSizeComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="CompressionOption_Changed">
                                             <ComboBoxItem Content="{loc:Text large}"/>
@@ -884,9 +829,9 @@
                             </Border>
 
                             <!-- Video Compression Card -->
-                            <Border Background="#161D2C" BorderBrush="#222E42" BorderThickness="1" CornerRadius="8" Padding="16,14">
+                            <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="8" Padding="16,14">
                                 <StackPanel>
-                                    <TextBlock Text="{loc:Text Video_Compression}" FontSize="13" FontWeight="SemiBold" Foreground="#00E5FF" Margin="0,0,0,12"/>
+                                    <TextBlock Text="{loc:Text Video_Compression}" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource ThemeAccent}" Margin="0,0,0,12"/>
 
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -894,8 +839,8 @@
                                             <ColumnDefinition Width="200"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                            <TextBlock Text="{loc:Text Default_Video_Compression_Strength}" FontSize="12.5" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                            <TextBlock Text="{loc:Text H_264_CRF_encoding_profile_for}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Default_Video_Compression_Strength}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                            <TextBlock Text="{loc:Text H_264_CRF_encoding_profile_for}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="VideoStrengthComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="CompressionOption_Changed">
                                             <ComboBoxItem Content="{loc:Text balanced}"/>
@@ -918,27 +863,27 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0">
-                                    <TextBlock Text="{loc:Text Authorized_Folders}" FontSize="19" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                                    <TextBlock Text="{loc:Text FlowConverter_saves_results_beside_the_original}" FontSize="12" Foreground="#8A99B5" Margin="0,2,0,0"/>
+                                    <TextBlock Text="{loc:Text Authorized_Folders}" FontSize="19" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                                    <TextBlock Text="{loc:Text FlowConverter_saves_results_beside_the_original}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                 </StackPanel>
                                 <Button Grid.Column="1" Style="{StaticResource PrimaryAccentButton}" Content="{loc:Text Add_Folder}" Click="AddFolder_Click" VerticalAlignment="Center"/>
                             </Grid>
 
-                            <Border Background="#161D2C" BorderBrush="#222E42" BorderThickness="1" CornerRadius="8" Padding="14">
+                            <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="8" Padding="14">
                                 <StackPanel>
-                                    <TextBlock x:Name="FoldersEmptyTextBlock" Text="{loc:Text No_authorized_folders_configured_Standard_local}" FontSize="12" Foreground="#8A99B5" FontStyle="Italic" Visibility="Collapsed" Margin="4,4,4,8"/>
+                                    <TextBlock x:Name="FoldersEmptyTextBlock" Text="{loc:Text No_authorized_folders_configured_Standard_local}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" FontStyle="Italic" Visibility="Collapsed" Margin="4,4,4,8"/>
                                     <ItemsControl x:Name="FoldersItemsControl">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Background="#141C2B" BorderBrush="#1F2A3D" BorderThickness="1" CornerRadius="6" Margin="0,0,0,6" Padding="10,8">
+                                                <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeControl}" BorderThickness="1" CornerRadius="6" Margin="0,0,0,6" Padding="10,8">
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="Auto"/>
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="Auto"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <TextBlock Grid.Column="0" Text="&#xE8B7;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="#00E5FF" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                        <TextBlock Grid.Column="1" Text="{Binding}" FontSize="12" Foreground="#F0F4FA" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                                                        <TextBlock Grid.Column="0" Text="&#xE8B7;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{StaticResource ThemeAccent}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                        <TextBlock Grid.Column="1" Text="{Binding}" FontSize="12" Foreground="{StaticResource ThemeText}" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
                                                         <Button Grid.Column="2" Style="{StaticResource DangerIconButton}" Content="&#xE74D;" FontFamily="Segoe MDL2 Assets" FontSize="12" ToolTip="{loc:Text Remove_Folder_Authorization}" Click="RemoveFolder_Click" Tag="{Binding}"/>
                                                     </Grid>
                                                 </Border>
@@ -955,19 +900,19 @@
                 <TabItem>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                         <StackPanel Margin="24,20,24,24">
-                            <TextBlock Text="{loc:Text Supported_Formats_Matrix_46_Formats}" FontSize="19" FontWeight="SemiBold" Foreground="#F0F4FA"/>
-                            <TextBlock Text="{loc:Text All_7_format_categories_and_their}" FontSize="12" Foreground="#8A99B5" Margin="0,2,0,16"/>
+                            <TextBlock Text="{loc:Text Supported_Formats_Matrix_46_Formats}" FontSize="19" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
+                            <TextBlock Text="{loc:Text All_7_format_categories_and_their}" FontSize="12" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,16"/>
 
                             <ItemsControl x:Name="FormatMatrixItemsControl">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Border Background="#161D2C" BorderBrush="#222E42" BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,0,0,12">
+                                        <Border Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="8" Padding="14,12" Margin="0,0,0,12">
                                             <StackPanel>
                                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <TextBlock Text="{Binding Glyph}" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="#00E5FF" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                                                    <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold" Foreground="#F0F4FA" VerticalAlignment="Center"/>
-                                                    <Border Background="#162D3E" CornerRadius="4" Padding="6,2" Margin="10,0,0,0" VerticalAlignment="Center">
-                                                        <TextBlock Text="{Binding FormatsCount}" FontSize="10" FontWeight="SemiBold" Foreground="#00E5FF"/>
+                                                    <TextBlock Text="{Binding Glyph}" FontFamily="Segoe MDL2 Assets" FontSize="15" Foreground="{StaticResource ThemeAccent}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                                    <TextBlock Text="{Binding Title}" FontSize="13.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center"/>
+                                                    <Border Background="{StaticResource ThemeCard}" CornerRadius="4" Padding="6,2" Margin="10,0,0,0" VerticalAlignment="Center">
+                                                        <TextBlock Text="{Binding FormatsCount}" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource ThemeAccent}"/>
                                                     </Border>
                                                 </StackPanel>
                                                 <ItemsControl ItemsSource="{Binding Badges}">
@@ -978,10 +923,10 @@
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
-                                                            <Border Background="#121824" BorderBrush="#1F2A3D" BorderThickness="1" CornerRadius="5" Width="106" Margin="0,0,8,8" Padding="8,6">
+                                                            <Border Background="{StaticResource ThemeCanvas}" BorderBrush="{StaticResource ThemeControl}" BorderThickness="1" CornerRadius="5" Width="106" Margin="0,0,8,8" Padding="8,6">
                                                                 <StackPanel HorizontalAlignment="Center">
-                                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="11.5" Foreground="#00E5FF" HorizontalAlignment="Center"/>
-                                                                    <TextBlock Text="{Binding TargetsText}" FontSize="9.5" Foreground="#8A99B5" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="11.5" Foreground="{StaticResource ThemeAccent}" HorizontalAlignment="Center"/>
+                                                                    <TextBlock Text="{Binding TargetsText}" FontSize="9.5" Foreground="{StaticResource ThemeSecondaryText}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
                                                                 </StackPanel>
                                                             </Border>
                                                         </DataTemplate>

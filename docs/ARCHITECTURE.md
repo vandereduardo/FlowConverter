@@ -74,6 +74,8 @@ The Windows image crop editor fits its canvas to the source pixel dimensions. It
 
 The Windows image adjustment editor updates a thumbnail as sliders move and shares the same color transform with the full-resolution export.
 
+Windows application screens use shared WPF brushes and control templates from `App.xaml`. Programmatically drawn editor controls and the tray menu read the same palette. The radial wheel has its own light palette for contrast over the desktop.
+
 Windows photo redaction shares the crop editor's fitted image canvas. Selections are clipped to the preview bounds and their normalized edges are mapped to the source pixels on export.
 
 ---

@@ -5,6 +5,17 @@ namespace FlowConverter.Windows.Interop;
 
 public static class NativeMethods
 {
+    [DllImport("dwmapi.dll")]
+    private static extern int DwmSetWindowAttribute(IntPtr window, int attribute, ref int value, int size);
+
+    internal static void UseDarkWindowChrome(IntPtr window)
+    {
+        if (window == IntPtr.Zero) return;
+        int enabled = 1;
+        if (DwmSetWindowAttribute(window, 20, ref enabled, sizeof(int)) != 0)
+            DwmSetWindowAttribute(window, 19, ref enabled, sizeof(int));
+    }
+
     public const int GWL_EXSTYLE = -20;
     public const int WS_EX_TOOLWINDOW = 0x00000080;
     public const int WS_EX_TOPMOST = 0x00000008;

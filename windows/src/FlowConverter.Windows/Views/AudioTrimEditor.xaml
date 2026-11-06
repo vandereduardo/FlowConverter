@@ -4,8 +4,8 @@
         xmlns:loc="clr-namespace:FlowConverter.Windows.Localization">
     <UserControl.Resources>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#263449"/>
-            <Setter Property="Foreground" Value="#F0F4FA"/>
+            <Setter Property="Background" Value="{StaticResource ThemeControl}"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeText}"/>
             <Setter Property="Padding" Value="9,5"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -19,7 +19,7 @@
                                 <Setter TargetName="Surface" Property="Opacity" Value="0.84"/>
                             </Trigger>
                             <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter TargetName="Surface" Property="BorderBrush" Value="#F0F4FA"/>
+                                <Setter TargetName="Surface" Property="BorderBrush" Value="{StaticResource ThemeText}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Surface" Property="Opacity" Value="0.4"/>
@@ -30,17 +30,17 @@
             </Setter>
         </Style>
         <Style x:Key="TimeCard" TargetType="Border">
-            <Setter Property="Background" Value="#171F2D"/>
+            <Setter Property="Background" Value="{StaticResource ThemeCard}"/>
             <Setter Property="CornerRadius" Value="8"/>
             <Setter Property="Padding" Value="10"/>
         </Style>
         <Style x:Key="TimeTitle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#9DAEC7"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeSecondaryText}"/>
             <Setter Property="FontSize" Value="10"/>
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
         <Style x:Key="TimeValue" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#00E5FF"/>
+            <Setter Property="Foreground" Value="{StaticResource ThemeAccent}"/>
             <Setter Property="FontFamily" Value="Consolas"/>
             <Setter Property="FontSize" Value="17"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -50,21 +50,21 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
             <Button x:Name="SetupButton" Content="{loc:Text Set_up_FFmpeg}" Click="Setup_Click" Visibility="Collapsed"
-                    Background="#00E5FF" Foreground="#101520" Margin="0,0,10,0"/>
-            <TextBlock x:Name="Status" Text="{loc:Text Reading_audio_waveform}" Foreground="#9DAEC7"
+                    Background="{StaticResource ThemeAccent}" Foreground="{StaticResource ThemeOnAccent}" Margin="0,0,10,0"/>
+            <TextBlock x:Name="Status" Text="{loc:Text Reading_audio_waveform}" Foreground="{StaticResource ThemeSecondaryText}"
                        VerticalAlignment="Center" AutomationProperties.LiveSetting="Polite" TextWrapping="Wrap"/>
         </StackPanel>
 
         <StackPanel x:Name="Editor" IsEnabled="False">
             <DockPanel Margin="0,0,0,12">
-                <TextBlock x:Name="Total" DockPanel.Dock="Right" Foreground="#9DAEC7" VerticalAlignment="Center"/>
+                <TextBlock x:Name="Total" DockPanel.Dock="Right" Foreground="{StaticResource ThemeSecondaryText}" VerticalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="PlayButton" Content="{loc:Text Play_Selected_Range}" Click="Play_Click"
-                            Background="#00E5FF" Foreground="#101520" Margin="0,0,8,0"/>
+                            Background="{StaticResource ThemeAccent}" Foreground="{StaticResource ThemeOnAccent}" Margin="0,0,8,0"/>
                     <Button Content="{loc:Text Reset_Full_Audio}" Click="Reset_Click"/>
                 </StackPanel>
             </DockPanel>
-            <Border Background="#101B25" CornerRadius="8" Padding="2" Margin="0,0,0,14">
+            <Border Background="{StaticResource ThemeCanvas}" CornerRadius="8" Padding="2" Margin="0,0,0,14">
                 <Grid Height="176" ClipToBounds="True">
                     <Canvas x:Name="Waveform" IsHitTestVisible="False"/>
                     <Canvas x:Name="Timeline" Background="Transparent" SizeChanged="Timeline_SizeChanged"
@@ -107,12 +107,12 @@
                 </Border>
             </UniformGrid>
             <TextBlock Text="{loc:Text Drag_either_bar_to_set_the}"
-                       Foreground="#9DAEC7" Margin="0,12,0,12" TextWrapping="Wrap"/>
-            <Border Height="1" Background="#29374B" Margin="0,0,0,12"/>
-            <CheckBox x:Name="TrimSilence" Content="{loc:Text Trim_silent_ends_automatically}" Foreground="#F0F4FA"
+                       Foreground="{StaticResource ThemeSecondaryText}" Margin="0,12,0,12" TextWrapping="Wrap"/>
+            <Border Height="1" Background="{StaticResource ThemeBorder}" Margin="0,0,0,12"/>
+            <CheckBox x:Name="TrimSilence" Content="{loc:Text Trim_silent_ends_automatically}" Foreground="{StaticResource ThemeText}"
                       Checked="TrimSilence_Changed" Unchecked="TrimSilence_Changed"/>
             <DockPanel x:Name="SilenceOptions" Margin="0,8,0,0" Visibility="Collapsed">
-                <TextBlock x:Name="ThresholdLabel" DockPanel.Dock="Left" Foreground="#9DAEC7" Margin="0,0,12,0"/>
+                <TextBlock x:Name="ThresholdLabel" DockPanel.Dock="Left" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,0,12,0"/>
                 <Slider x:Name="Threshold" Minimum="-80" Maximum="-10" Value="-45" TickFrequency="1"
                         IsSnapToTickEnabled="True" ValueChanged="Threshold_Changed"
                         AutomationProperties.Name="{loc:Text Silence_threshold_in_decibels}"/>

@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="FlowConverter · Language / Idioma" Width="420" SizeToContent="Height"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
-        Background="#101520" Foreground="#F0F4FA">
+        Background="{StaticResource ThemeWindow}" Foreground="{StaticResource ThemeText}">
     <StackPanel Margin="24">
         <TextBlock Text="Choose your language" FontSize="20" FontWeight="SemiBold"/>
-        <TextBlock Text="Escolha seu idioma" FontSize="15" Foreground="#9DAEC7" Margin="0,4,0,16"/>
+        <TextBlock Text="Escolha seu idioma" FontSize="15" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,4,0,16"/>
         <ComboBox x:Name="LanguagePicker" DisplayMemberPath="Name" SelectedValuePath="Code"
                   AutomationProperties.Name="Language / Idioma" Height="34"/>
         <Button Content="Continue / Continuar" IsDefault="True" Click="Continue_Click"
                 HorizontalAlignment="Right" Margin="0,18,0,0" Padding="12,6"
-                Background="#00E5FF" Foreground="#101520" FontWeight="SemiBold"/>
+                Background="{StaticResource ThemeAccent}" Foreground="{StaticResource ThemeOnAccent}" FontWeight="SemiBold"/>
     </StackPanel>
 </Window>

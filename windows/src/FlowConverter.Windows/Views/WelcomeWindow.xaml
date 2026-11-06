@@ -12,10 +12,10 @@
         ShowInTaskbar="True">
 
     <Window.Resources>
-        <!-- Modern Cyan Primary Button -->
+        <!-- Primary button -->
         <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#E9E1D7" />
-            <Setter Property="Foreground" Value="#241F1B" />
+            <Setter Property="Background" Value="{StaticResource ThemeAccent}" />
+            <Setter Property="Foreground" Value="{StaticResource ThemeOnAccent}" />
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="FontSize" Value="13" />
             <Setter Property="Padding" Value="18,8" />
@@ -32,10 +32,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#FFF8EF" />
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ThemeAccentHover}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#D0C5B9" />
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ThemeAccentPressed}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -45,13 +45,13 @@
 
         <!-- Dark Outlined Button -->
         <Style x:Key="DarkOutlineButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#302C29" />
-            <Setter Property="Foreground" Value="#DBD3CA" />
+            <Setter Property="Background" Value="{StaticResource ThemeControl}" />
+            <Setter Property="Foreground" Value="{StaticResource ThemeSecondaryText}" />
             <Setter Property="FontWeight" Value="Medium" />
             <Setter Property="FontSize" Value="12.5" />
             <Setter Property="Padding" Value="14,8" />
             <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="BorderBrush" Value="#504944" />
+            <Setter Property="BorderBrush" Value="{StaticResource ThemeOutline}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -66,12 +66,12 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#3D3732" />
-                                <Setter TargetName="border" Property="BorderBrush" Value="#82766C" />
-                                <Setter Property="Foreground" Value="#FFFFFF" />
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ThemeHover}" />
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ThemeFocus}" />
+                                <Setter Property="Foreground" Value="{StaticResource ThemeText}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#282421" />
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource ThemePressed}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -82,7 +82,7 @@
         <!-- Close Window Button -->
         <Style x:Key="WindowCloseButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#B8AEA5" />
+            <Setter Property="Foreground" Value="{StaticResource ThemeMutedText}" />
             <Setter Property="FontSize" Value="13" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
@@ -93,12 +93,12 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="btnBorder" Property="Background" Value="#433C37" />
-                                <Setter Property="Foreground" Value="#FFFFFF" />
+                                <Setter TargetName="btnBorder" Property="Background" Value="{StaticResource ThemeHover}" />
+                                <Setter Property="Foreground" Value="{StaticResource ThemeText}" />
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="btnBorder" Property="Background" Value="#E53935" />
-                                <Setter Property="Foreground" Value="#FFFFFF" />
+                                <Setter TargetName="btnBorder" Property="Background" Value="{StaticResource ThemeDangerFill}" />
+                                <Setter Property="Foreground" Value="{StaticResource ThemeText}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -108,8 +108,8 @@
     </Window.Resources>
 
     <!-- Outer Glow & Window Container -->
-    <Border Background="#211F1D"
-            BorderBrush="#655C54"
+    <Border Background="{StaticResource ThemeWindow}"
+            BorderBrush="{StaticResource ThemeOutline}"
             BorderThickness="1.2"
             CornerRadius="14"
             Margin="6">
@@ -146,7 +146,7 @@
                     <TextBlock Text="{loc:Text Flow_Converter_for_Windows}"
                                FontSize="18"
                                FontWeight="Bold"
-                               Foreground="#FFFFFF" />
+                               Foreground="{StaticResource ThemeText}" />
                 </StackPanel>
 
                 <!-- Close Button -->
@@ -162,7 +162,7 @@
             <TextBlock Grid.Row="1"
                        Text="{loc:Text Cockpit_Radial_File_Converter_Floating_Shelf}"
                        FontSize="12"
-                       Foreground="#C0B6AC"
+                       Foreground="{StaticResource ThemeSecondaryText}"
                        Margin="46,4,0,16" />
 
             <!-- Feature Cards: 2x2 Grid -->
@@ -180,68 +180,68 @@
 
                 <!-- Card 1: Alt + Drag -->
                 <Border Grid.Row="0" Grid.Column="0"
-                        Background="#2B2825" BorderBrush="#49423D" BorderThickness="1" CornerRadius="9" Padding="12,10">
+                        Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="9" Padding="12,10">
                     <StackPanel>
                         <DockPanel Margin="0,0,0,5">
-                            <Border Background="#E9E1D7" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
-                                <TextBlock Text="{loc:Text Alt_Drag}" FontSize="10.5" FontWeight="Bold" Foreground="#241F1B" />
+                            <Border Background="{StaticResource ThemeAccent}" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
+                                <TextBlock Text="{loc:Text Alt_Drag}" FontSize="10.5" FontWeight="Bold" Foreground="{StaticResource ThemeOnAccent}" />
                             </Border>
-                            <TextBlock Text="{loc:Text Radial_Conversion}" FontSize="12.5" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            <TextBlock Text="{loc:Text Radial_Conversion}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center" TextWrapping="Wrap" />
                         </DockPanel>
                         <TextBlock Text="{loc:Text Convert_across_46_image_audio_video}"
-                                   FontSize="11" Foreground="#C7BEB5" TextWrapping="Wrap" LineHeight="15" />
+                                   FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap" LineHeight="15" />
                     </StackPanel>
                 </Border>
 
                 <!-- Card 2: Shift + Drag -->
                 <Border Grid.Row="0" Grid.Column="2"
-                        Background="#2B2825" BorderBrush="#49423D" BorderThickness="1" CornerRadius="9" Padding="12,10">
+                        Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="9" Padding="12,10">
                     <StackPanel>
                         <DockPanel Margin="0,0,0,5">
-                            <Border Background="#E9E1D7" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
-                                <TextBlock Text="{loc:Text Shift_Drag}" FontSize="10.5" FontWeight="Bold" Foreground="#241F1B" />
+                            <Border Background="{StaticResource ThemeAccent}" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
+                                <TextBlock Text="{loc:Text Shift_Drag}" FontSize="10.5" FontWeight="Bold" Foreground="{StaticResource ThemeOnAccent}" />
                             </Border>
-                            <TextBlock Text="{loc:Text 29_File_Tools}" FontSize="12.5" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            <TextBlock Text="{loc:Text 29_File_Tools}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center" TextWrapping="Wrap" />
                         </DockPanel>
                         <TextBlock Text="{loc:Text Interactive_workspace_compress_crop_redact_adjust}"
-                                   FontSize="11" Foreground="#C7BEB5" TextWrapping="Wrap" LineHeight="15" />
+                                   FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap" LineHeight="15" />
                     </StackPanel>
                 </Border>
 
                 <!-- Card 3: Ctrl + Drag -->
                 <Border Grid.Row="2" Grid.Column="0"
-                        Background="#2B2825" BorderBrush="#49423D" BorderThickness="1" CornerRadius="9" Padding="12,10">
+                        Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="9" Padding="12,10">
                     <StackPanel>
                         <DockPanel Margin="0,0,0,5">
-                            <Border Background="#E9E1D7" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
-                                <TextBlock Text="{loc:Text Ctrl_Drag}" FontSize="10.5" FontWeight="Bold" Foreground="#241F1B" />
+                            <Border Background="{StaticResource ThemeAccent}" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
+                                <TextBlock Text="{loc:Text Ctrl_Drag}" FontSize="10.5" FontWeight="Bold" Foreground="{StaticResource ThemeOnAccent}" />
                             </Border>
-                            <TextBlock Text="{loc:Text Quick_Actions_Shelf}" FontSize="12.5" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            <TextBlock Text="{loc:Text Quick_Actions_Shelf}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center" TextWrapping="Wrap" />
                         </DockPanel>
                         <TextBlock Text="{loc:Text Floating_drop_shelf_Share_Send_To}"
-                                   FontSize="11" Foreground="#C7BEB5" TextWrapping="Wrap" LineHeight="15" />
+                                   FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap" LineHeight="15" />
                     </StackPanel>
                 </Border>
 
                 <!-- Card 4: .3MF Engine -->
                 <Border Grid.Row="2" Grid.Column="2"
-                        Background="#2B2825" BorderBrush="#49423D" BorderThickness="1" CornerRadius="9" Padding="12,10">
+                        Background="{StaticResource ThemeCard}" BorderBrush="{StaticResource ThemeBorder}" BorderThickness="1" CornerRadius="9" Padding="12,10">
                     <StackPanel>
                         <DockPanel Margin="0,0,0,5">
-                            <Border Background="#80523A" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
-                                <TextBlock Text="{loc:Text 3MF_Engine}" FontSize="10.5" FontWeight="Bold" Foreground="#FFFFFF" />
+                            <Border Background="{StaticResource ThemeTag}" CornerRadius="4" Padding="6,2" Margin="0,0,8,0">
+                                <TextBlock Text="{loc:Text 3MF_Engine}" FontSize="10.5" FontWeight="Bold" Foreground="{StaticResource ThemeText}" />
                             </Border>
-                            <TextBlock Text="Anycubic / Orca / Bambu" FontSize="12.5" FontWeight="SemiBold" Foreground="#FFFFFF" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            <TextBlock Text="Anycubic / Orca / Bambu" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center" TextWrapping="Wrap" />
                         </DockPanel>
                         <TextBlock Text="{loc:Text Cross_slicer_profile_engine_with_automatic}"
-                                   FontSize="11" Foreground="#C7BEB5" TextWrapping="Wrap" LineHeight="15" />
+                                   FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap" LineHeight="15" />
                     </StackPanel>
                 </Border>
             </Grid>
 
             <TextBlock x:Name="MediaSetupNote" Grid.Row="3" Visibility="Collapsed" Margin="0,0,0,10"
-                       FontSize="11" Foreground="#C7BEB5" TextWrapping="Wrap">
-                <Run Text="{loc:Text Editing_audio_or_video}"/><Hyperlink Foreground="#E9E1D7" Click="OpenMediaSettings_Click"><Run Text="{loc:Text Configure_FFmpeg_2}"/></Hyperlink>
+                       FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap">
+                <Run Text="{loc:Text Editing_audio_or_video}"/><Hyperlink Foreground="{StaticResource ThemeAccent}" Click="OpenMediaSettings_Click"><Run Text="{loc:Text Configure_FFmpeg_2}"/></Hyperlink>
             </TextBlock>
 
             <!-- Bottom Actions -->

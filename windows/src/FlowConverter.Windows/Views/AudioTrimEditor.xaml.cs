@@ -15,10 +15,10 @@ public partial class AudioTrimEditor : UserControl
 {
     private const double HandleWidth = 14;
     private const double HandleInset = HandleWidth / 2;
-    private static readonly Brush Cyan = new SolidColorBrush(Color.FromRgb(0, 229, 255));
-    private static readonly Brush Shade = new SolidColorBrush(Color.FromArgb(195, 10, 15, 24));
+    private static readonly Brush SelectionBrush = ThemeBrushes.Get("ThemeAccent");
+    private static readonly Brush Shade = ThemeBrushes.Get("ThemeWaveformShade");
     private static readonly Brush WaveBrush = new LinearGradientBrush(
-        Color.FromRgb(0, 229, 255), Color.FromRgb(255, 107, 13), 90);
+        ThemeBrushes.Get("ThemeAccent").Color, ThemeBrushes.Get("ThemeWarmAccent").Color, 90);
 
     private enum DragTarget { None, Start, End, Range }
 
@@ -167,17 +167,17 @@ public partial class AudioTrimEditor : UserControl
         double height = Timeline.ActualHeight;
         AddBar(Timeline, 0, 0, left, height, Shade);
         AddBar(Timeline, right, 0, Timeline.ActualWidth - right, height, Shade);
-        AddBar(Timeline, left, 0, right - left, 2, Cyan);
-        AddBar(Timeline, left, height - 2, right - left, 2, Cyan);
+        AddBar(Timeline, left, 0, right - left, 2, SelectionBrush);
+        AddBar(Timeline, left, height - 2, right - left, 2, SelectionBrush);
         DrawHandle(left, height);
         DrawHandle(right, height);
     }
 
     private void DrawHandle(double x, double height)
     {
-        AddBar(Timeline, x - HandleInset, 0, HandleWidth, height, Cyan, 5);
-        AddBar(Timeline, x - 2.5, height / 2 - 11, 1.5, 22, Brushes.White, 0.75);
-        AddBar(Timeline, x + 1, height / 2 - 11, 1.5, 22, Brushes.White, 0.75);
+        AddBar(Timeline, x - HandleInset, 0, HandleWidth, height, SelectionBrush, 5);
+        AddBar(Timeline, x - 2.5, height / 2 - 11, 1.5, 22, ThemeBrushes.Get("ThemeOnAccent"), 0.75);
+        AddBar(Timeline, x + 1, height / 2 - 11, 1.5, 22, ThemeBrushes.Get("ThemeOnAccent"), 0.75);
     }
 
     private static void AddBar(Canvas canvas, double x, double y, double width, double height, Brush fill, double radius = 0)
