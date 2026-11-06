@@ -9,6 +9,8 @@ Windows Settings uses dark input fields, dropdowns, and checkboxes.
 
 On Windows, **Settings → General → Media Tools (FFmpeg)** can install FFmpeg on demand or use an existing executable. Audio and video tools offer setup when needed and continue in the same session.
 
+Opening a file directly with FlowConverter on Windows shows tools for that file. Opening only `.3mf` projects shows the printer conversion wheel.
+
 ---
 
 ## ✨ Key Features

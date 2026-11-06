@@ -66,6 +66,8 @@ The codebase maintains strict conceptual parity between the `macos/` and `window
 | **Acoustic Feedback** | `AppDelegate.swift` / `NSSound` | `Services/SoundService.cs`<br>`Services/AssetGenerator.cs` | Synthesizes and plays clean-room `HighlightSound.wav` (C6+G6 55ms chime) on petal mouse hover. |
 | **System Tray / Menu** | `AppDelegate.swift` (`NSStatusItem`) | `Services/TrayIconService.cs` (`NotifyIcon`) | Desktop tray icon providing quick wheel summon actions, 3MF studio launch, floating shelf creation, and settings access. |
 
+Windows binds each Explorer drag to its source window and rebuilds the wheel before choosing an action when the drop payload changes. File arguments passed to the executable supply the initial wheel context.
+
 ---
 
 ## 4. Deep Dive: .3MF Slicer Profile Inheritance & Sanitization Pipeline

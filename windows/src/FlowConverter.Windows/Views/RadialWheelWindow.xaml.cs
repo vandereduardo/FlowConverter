@@ -85,6 +85,7 @@ public partial class RadialWheelWindow : Window
         if (cleaned.Count > 0 && !cleaned.SequenceEqual(_activeFiles, StringComparer.OrdinalIgnoreCase))
         {
             _activeFiles = cleaned;
+            _highlightedIndex = -1;
             RebuildPetals();
             RenderWheel();
         }
@@ -436,7 +437,7 @@ public partial class RadialWheelWindow : Window
             e.Data.GetData(DataFormats.FileDrop) is string[] files &&
             files.Length > 0)
         {
-            _activeFiles = files.ToList();
+            UpdateFilesAndRebuild(files);
         }
         UpdateHoverAtLocalPoint(e.GetPosition(this));
         CommitHighlightedIfAny();

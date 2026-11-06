@@ -19,6 +19,7 @@ public sealed class DragGestureMonitor
     private readonly DispatcherTimer _timer;
     private bool _wasMouseDown;
     private NativeMethods.POINT _mouseDownOrigin;
+    private IntPtr _dragSourceWindow;
     private bool _isDragging;
     private bool _prevAltDown;
     private bool _prevShiftDown;
@@ -67,6 +68,8 @@ public sealed class DragGestureMonitor
         {
             _wasMouseDown = true;
             _mouseDownOrigin = pt;
+            _dragSourceWindow = NativeMethods.GetRootWindowAt(pt);
+            _cachedDragFiles.Clear();
             _isDragging = false;
         }
         else if (leftDown && _wasMouseDown)
@@ -99,6 +102,7 @@ public sealed class DragGestureMonitor
             {
                 DragReleased?.Invoke();
             }
+            _cachedDragFiles.Clear();
         }
     }
 
@@ -144,9 +148,9 @@ public sealed class DragGestureMonitor
 
     private void TryCaptureExplorerSelection()
     {
+        if (_dragSourceWindow == IntPtr.Zero) return;
         try
         {
-            IntPtr fgHwnd = NativeMethods.GetForegroundWindow();
             Type? shellType = Type.GetTypeFromProgID("Shell.Application");
             if (shellType == null) return;
 
@@ -163,7 +167,7 @@ public sealed class DragGestureMonitor
                 try
                 {
                     long hwndVal = Convert.ToInt64(win.HWND);
-                    if (fgHwnd != IntPtr.Zero && hwndVal != fgHwnd.ToInt64())
+                    if (hwndVal != _dragSourceWindow.ToInt64())
                     {
                         continue;
                     }

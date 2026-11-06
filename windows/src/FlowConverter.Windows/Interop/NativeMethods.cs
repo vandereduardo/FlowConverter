@@ -42,7 +42,12 @@ public static class NativeMethods
     public static extern bool DestroyIcon(IntPtr hIcon);
 
     [DllImport("user32.dll")]
-    public static extern IntPtr GetForegroundWindow();
+    public static extern IntPtr WindowFromPoint(POINT point);
+
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetAncestor(IntPtr window, uint flags);
+
+    public static IntPtr GetRootWindowAt(POINT point) => GetAncestor(WindowFromPoint(point), 2); // GA_ROOT
 
     public static bool IsKeyDown(int vKey)
     {

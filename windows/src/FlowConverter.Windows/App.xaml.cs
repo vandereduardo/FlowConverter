@@ -67,7 +67,7 @@ public partial class App : System.Windows.Application
 
         try
         {
-            InitializeApplication();
+            InitializeApplication(e.Args);
         }
         catch (Exception ex)
         {
@@ -76,7 +76,7 @@ public partial class App : System.Windows.Application
         }
     }
 
-    private void InitializeApplication()
+    private void InitializeApplication(IReadOnlyList<string> launchArguments)
     {
 
         AssetGenerator.EnsureHighlightSoundWav();
@@ -112,7 +112,16 @@ public partial class App : System.Windows.Application
             }
         };
 
-        ShowWelcomeWindow();
+        var files = launchArguments.Where(File.Exists).Select(Path.GetFullPath).ToList();
+        if (files.Count > 0 && NativeMethods.GetCursorPos(out var cursor))
+        {
+            WheelMode mode = files.All(IsThreeMfProject) ? WheelMode.Conversions : WheelMode.FileTools;
+            _radialWheel.Summon(mode, DragGestureMonitor.GetDipPoint(cursor.X, cursor.Y), files);
+        }
+        else
+        {
+            ShowWelcomeWindow();
+        }
         _trayService.ShowNotification("Flow Converter Active", "Hold Alt, Shift, or Ctrl while dragging any file!");
     }
 
@@ -153,13 +162,21 @@ public partial class App : System.Windows.Application
             };
             if (petal.TargetPrinter3D != null || petal.TargetTool == FileTool.Convert3MF)
             {
-                ofd.Filter = "3MF 3D Print Projects (*.3mf)|*.3mf|All Files (*.*)|*.*";
+                ofd.Filter = "3MF 3D Print Projects (*.3mf)|*.3mf";
             }
             if (ofd.ShowDialog() == true)
             {
                 files = ofd.FileNames.ToList();
             }
             if (files.Count == 0) return;
+        }
+
+        if ((petal.TargetPrinter3D != null || petal.TargetTool == FileTool.Convert3MF) &&
+            !files.All(IsThreeMfProject))
+        {
+            System.Windows.MessageBox.Show("Select a .3mf project to use the 3MF Studio or printer converter.",
+                "Flow Converter", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
         }
 
         // 1. Direct 3MF Printer Petal
@@ -364,16 +381,25 @@ public partial class App : System.Windows.Application
         var ofd = new Microsoft.Win32.OpenFileDialog
         {
             Title = "Selecione um arquivo .3MF para inspecionar e converter",
-            Filter = "3MF 3D Print Projects (*.3mf)|*.3mf|All Files (*.*)|*.*",
+            Filter = "3MF 3D Print Projects (*.3mf)|*.3mf",
             Multiselect = true
         };
         if (ofd.ShowDialog() == true && ofd.FileNames.Length > 0)
         {
+            if (!ofd.FileNames.All(IsThreeMfProject))
+            {
+                System.Windows.MessageBox.Show("Select a .3mf project to open 3MF Studio.",
+                    "Flow Converter", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             var studio = new ToolWorkspaceWindow(FileTool.Convert3MF, ofd.FileNames);
             studio.Show();
             studio.Activate();
         }
     }
+
+    private static bool IsThreeMfProject(string path) =>
+        File.Exists(path) && Path.GetExtension(path).Equals(".3mf", StringComparison.OrdinalIgnoreCase);
 
     private void ShowWelcomeWindow()
     {

@@ -82,6 +82,8 @@ windows/src/FlowConverter.Windows/
   - Reads modifier keys asynchronously (`VK_MENU` for Alt, `VK_SHIFT` for Shift, `VK_CONTROL` for Ctrl, `VK_LWIN`/`VK_RWIN` for Windows key).
   - Translates physical screen pixels to Device Independent Pixels (DIP) based on per-monitor DPI scaling.
   - Summons the `RadialWheelWindow` directly under the cursor without stealing window focus from Explorer or third-party apps.
+  - Reads Explorer selection from the window where each drag starts. The wheel refreshes its file context from the actual drop payload.
+  - Opening a file with the executable starts the contextual Tools wheel. A launch containing only `.3mf` projects opens the printer conversion wheel.
 
 ### 3. `Services/`
 - **`AssetGenerator.cs`**: Generates required runtime assets on demand without proprietary dependencies:
