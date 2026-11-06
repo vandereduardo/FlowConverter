@@ -442,6 +442,11 @@ public partial class ToolWorkspaceWindow : Window
                 if (pr.Ratio.HasValue)
                 {
                     double r = pr.Ratio.Value;
+                    if (_tool == FileTool.CropImage)
+                    {
+                        _options.Crop.AspectRatio = r;
+                        r *= _cropOverlayCanvas!.Height / _cropOverlayCanvas.Width;
+                    }
                     double w = Math.Min(0.8, r >= 1.0 ? 0.8 : 0.8 * r);
                     double h = Math.Min(0.8, r >= 1.0 ? 0.8 / r : 0.8);
                     _options.Crop.NormalizedX = (1.0 - w) * 0.5;
@@ -451,6 +456,7 @@ public partial class ToolWorkspaceWindow : Window
                 }
                 else
                 {
+                    _options.Crop.AspectRatio = null;
                     _options.Crop.NormalizedX = 0.05;
                     _options.Crop.NormalizedY = 0.05;
                     _options.Crop.NormalizedWidth = 0.90;
@@ -482,11 +488,15 @@ public partial class ToolWorkspaceWindow : Window
                 bi.UriSource = new Uri(firstFile);
                 bi.CacheOption = BitmapCacheOption.OnLoad;
                 bi.EndInit();
+                double scale = Math.Min(_cropOverlayCanvas.Width / bi.PixelWidth,
+                    _cropOverlayCanvas.Height / bi.PixelHeight);
+                _cropOverlayCanvas.Width = bi.PixelWidth * scale;
+                _cropOverlayCanvas.Height = bi.PixelHeight * scale;
                 var img = new Image
                 {
                     Source = bi,
-                    Width = 560,
-                    Height = 340,
+                    Width = _cropOverlayCanvas.Width,
+                    Height = _cropOverlayCanvas.Height,
                     Stretch = Stretch.Fill,
                     Opacity = 0.88
                 };
@@ -507,13 +517,28 @@ public partial class ToolWorkspaceWindow : Window
         _cropOverlayCanvas.MouseLeftButtonDown += (_, e) =>
         {
             _isDrawingCrop = true;
-            _cropDragStart = e.GetPosition(_cropOverlayCanvas);
+            _cropDragStart = ClampCropPoint(e.GetPosition(_cropOverlayCanvas));
             _cropOverlayCanvas.CaptureMouse();
         };
         _cropOverlayCanvas.MouseMove += (_, e) =>
         {
             if (!_isDrawingCrop) return;
-            Point cur = e.GetPosition(_cropOverlayCanvas);
+            Point cur = ClampCropPoint(e.GetPosition(_cropOverlayCanvas));
+            if (_options.Crop.AspectRatio is double ratio)
+            {
+                double width = Math.Min(Math.Abs(cur.X - _cropDragStart.X),
+                    Math.Abs(cur.Y - _cropDragStart.Y) * ratio);
+                if (width <= 0) return;
+                cur = new Point(
+                    _cropDragStart.X + Math.CopySign(width, cur.X - _cropDragStart.X),
+                    _cropDragStart.Y + Math.CopySign(width / ratio, cur.Y - _cropDragStart.Y));
+                _options.Crop.NormalizedX = Math.Min(_cropDragStart.X, cur.X) / _cropOverlayCanvas.Width;
+                _options.Crop.NormalizedY = Math.Min(_cropDragStart.Y, cur.Y) / _cropOverlayCanvas.Height;
+                _options.Crop.NormalizedWidth = width / _cropOverlayCanvas.Width;
+                _options.Crop.NormalizedHeight = width / ratio / _cropOverlayCanvas.Height;
+                UpdateCropVisualBox();
+                return;
+            }
             double x = Math.Clamp(Math.Min(_cropDragStart.X, cur.X) / _cropOverlayCanvas.Width, 0, 0.96);
             double y = Math.Clamp(Math.Min(_cropDragStart.Y, cur.Y) / _cropOverlayCanvas.Height, 0, 0.96);
             double w = Math.Clamp(Math.Abs(cur.X - _cropDragStart.X) / _cropOverlayCanvas.Width, 0.04, 1.0 - x);
@@ -529,10 +554,15 @@ public partial class ToolWorkspaceWindow : Window
             _isDrawingCrop = false;
             _cropOverlayCanvas.ReleaseMouseCapture();
         };
+        _cropOverlayCanvas.LostMouseCapture += (_, _) => _isDrawingCrop = false;
 
         panel.Children.Add(_cropOverlayCanvas);
         WorkspaceContentPanel.Children.Add(card);
     }
+
+    private Point ClampCropPoint(Point point) => new(
+        Math.Clamp(point.X, 0, _cropOverlayCanvas!.Width),
+        Math.Clamp(point.Y, 0, _cropOverlayCanvas.Height));
 
     private void UpdateCropVisualBox()
     {
@@ -541,8 +571,8 @@ public partial class ToolWorkspaceWindow : Window
         double ch = _cropOverlayCanvas.Height;
         Canvas.SetLeft(_cropBoxRect, _options.Crop.NormalizedX * cw);
         Canvas.SetTop(_cropBoxRect, _options.Crop.NormalizedY * ch);
-        _cropBoxRect.Width = Math.Max(12, _options.Crop.NormalizedWidth * cw);
-        _cropBoxRect.Height = Math.Max(12, _options.Crop.NormalizedHeight * ch);
+        _cropBoxRect.Width = _options.Crop.NormalizedWidth * cw;
+        _cropBoxRect.Height = _options.Crop.NormalizedHeight * ch;
         FooterStatusText.Text = UiText.Format("Crop Area: X={0:0}% Y={1:0}% · W={2:0}% H={3:0}%", _options.Crop.NormalizedX * 100, _options.Crop.NormalizedY * 100, _options.Crop.NormalizedWidth * 100, _options.Crop.NormalizedHeight * 100);
     }
 

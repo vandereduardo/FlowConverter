@@ -320,6 +320,7 @@ public static class FileToolExtensions
 
 public class CropSelection
 {
+    public double? AspectRatio { get; set; }
     public double NormalizedX { get; set; } = 0.05;
     public double NormalizedY { get; set; } = 0.05;
     public double NormalizedWidth { get; set; } = 0.90;

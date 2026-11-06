@@ -410,10 +410,23 @@ public static class ToolExecutionEngine
     public static void CropImageFile(string srcPath, string outPath, CropSelection crop)
     {
         using var src = new Bitmap(srcPath);
-        int x = (int)Math.Clamp(Math.Round(crop.NormalizedX * src.Width), 0, Math.Max(0, src.Width - 2));
-        int y = (int)Math.Clamp(Math.Round(crop.NormalizedY * src.Height), 0, Math.Max(0, src.Height - 2));
-        int w = (int)Math.Clamp(Math.Round(crop.NormalizedWidth * src.Width), 2, src.Width - x);
-        int h = (int)Math.Clamp(Math.Round(crop.NormalizedHeight * src.Height), 2, src.Height - y);
+        int x = (int)Math.Clamp(Math.Round(crop.NormalizedX * src.Width), 0, src.Width - 1);
+        int y = (int)Math.Clamp(Math.Round(crop.NormalizedY * src.Height), 0, src.Height - 1);
+        int w = (int)Math.Clamp(Math.Round(crop.NormalizedWidth * src.Width), 1, src.Width - x);
+        int h = (int)Math.Clamp(Math.Round(crop.NormalizedHeight * src.Height), 1, src.Height - y);
+        if (crop.AspectRatio is double ratio && ratio > 0 && double.IsFinite(ratio))
+        {
+            // Fit the preset within the selected area on each source image.
+            double width = Math.Min(crop.NormalizedWidth * src.Width, src.Width - x);
+            double height = Math.Min(crop.NormalizedHeight * src.Height, src.Height - y);
+            double fittedWidth = Math.Min(width, height * ratio);
+            int fittedW = (int)Math.Clamp(Math.Round(fittedWidth), 1, w);
+            int fittedH = (int)Math.Clamp(Math.Round(fittedWidth / ratio), 1, h);
+            x += (w - fittedW) / 2;
+            y += (h - fittedH) / 2;
+            w = fittedW;
+            h = fittedH;
+        }
 
         using var cropped = new Bitmap(w, h, PixelFormat.Format32bppArgb);
         using (var g = Graphics.FromImage(cropped))

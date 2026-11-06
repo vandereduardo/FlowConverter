@@ -120,6 +120,7 @@ windows/src/FlowConverter.Windows/
 - **`ToolWorkspaceWindow.xaml`**:
   - Interactive multi-tool workspace providing dedicated visual editors:
     - **Visual Image/Video Cropper** with aspect-ratio presets (1:1, 16:9, 4:3, 9:16).
+      Image previews preserve the original proportions and lock the selection to the chosen ratio while dragging and exporting.
     - **Audio Waveform Trimmer** with a waveform decoded from the first file, draggable start/end handles and selection, 0.1-second adjustments, range playback, reset, and optional silence trimming at both ends. Batch exports apply the selected times to each file and detect its silent ends separately.
     - **Image & Video Redaction Canvas** for drawing blur, black, or pixelate boxes.
     - **QR Code Scanner & Generator** with custom colors, sizing, and error correction levels.
