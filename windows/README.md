@@ -124,6 +124,7 @@ windows/src/FlowConverter.Windows/
     - **Image Adjustments** with a live preview of exposure, brightness, contrast, and saturation. Batch edits preview the first image and apply to all selected images.
     - **Audio Waveform Trimmer** with a waveform decoded from the first file, draggable start/end handles and selection, 0.1-second adjustments, range playback, reset, and optional silence trimming at both ends. Batch exports apply the selected times to each file and detect its silent ends separately.
     - **Image & Video Redaction Canvas** for drawing blur, black, or pixelate boxes.
+      Photo redaction fits the preview to the source proportions and maps the marked regions to the original pixels.
     - **QR Code Scanner & Generator** with custom colors, sizing, and error correction levels.
     - **3MF Project Inspector** displaying bed dimensions, filament matrix, slicer origin, and target printer selection.
 - **`OperationProgressWindow.xaml`**:

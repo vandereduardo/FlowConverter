@@ -41,6 +41,7 @@ FlowConverter for Windows offers **English** and **Português (Brasil)** on firs
    - **Interactive Audio Waveform Trimmer:** Drag start/end handles on a real-time waveform with live audio preview.
      On Windows, play the selected range, reset to the full audio, or trim silent ends with an adjustable threshold.
    - **Interactive Video & Image Redaction:** Draw black, blur, or pixelate boxes on a live video/image canvas with timeline scrubbing.
+     On Windows, the photo preview preserves the image proportions and limits the selection to the image edges.
    - **Visual Image & Video Cropper:** Aspect-ratio presets and interactive crop handles.
      On Windows, the image preview preserves the source proportions, and the selected aspect ratio applies while dragging and saving.
    - **Image Adjustments on Windows:** Preview exposure, brightness, contrast, and saturation while editing.

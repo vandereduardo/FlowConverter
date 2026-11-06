@@ -536,10 +536,12 @@ public static class ToolExecutionEngine
             g.DrawImage(src, 0, 0, src.Width, src.Height);
             foreach (var r in rects)
             {
-                int rx = (int)Math.Clamp(r.NormalizedX * src.Width, 0, src.Width - 2);
-                int ry = (int)Math.Clamp(r.NormalizedY * src.Height, 0, src.Height - 2);
-                int rw = (int)Math.Clamp(r.NormalizedW * src.Width, 2, src.Width - rx);
-                int rh = (int)Math.Clamp(r.NormalizedH * src.Height, 2, src.Height - ry);
+                int rx = (int)Math.Clamp(Math.Floor(r.NormalizedX * src.Width), 0, src.Width - 1);
+                int ry = (int)Math.Clamp(Math.Floor(r.NormalizedY * src.Height), 0, src.Height - 1);
+                int right = (int)Math.Clamp(Math.Ceiling((r.NormalizedX + r.NormalizedW) * src.Width), rx + 1, src.Width);
+                int bottom = (int)Math.Clamp(Math.Ceiling((r.NormalizedY + r.NormalizedH) * src.Height), ry + 1, src.Height);
+                int rw = right - rx;
+                int rh = bottom - ry;
 
                 if (r.Style == RedactionStyle.Blur || defaultStyle == RedactionStyle.Blur || r.Style == RedactionStyle.Pixelate)
                 {

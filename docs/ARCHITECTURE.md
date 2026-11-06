@@ -74,6 +74,8 @@ The Windows image crop editor fits its canvas to the source pixel dimensions. It
 
 The Windows image adjustment editor updates a thumbnail as sliders move and shares the same color transform with the full-resolution export.
 
+Windows photo redaction shares the crop editor's fitted image canvas. Selections are clipped to the preview bounds and their normalized edges are mapped to the source pixels on export.
+
 ---
 
 ## 4. Deep Dive: .3MF Slicer Profile Inheritance & Sanitization Pipeline

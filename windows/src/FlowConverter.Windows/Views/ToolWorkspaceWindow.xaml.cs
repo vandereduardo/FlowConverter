@@ -479,32 +479,8 @@ public partial class ToolWorkspaceWindow : Window
             Margin = new Thickness(0, 4, 0, 8)
         };
 
-        string firstFile = _inputFiles.FirstOrDefault() ?? "";
-        if (File.Exists(firstFile) && _tool == FileTool.CropImage)
-        {
-            try
-            {
-                var bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(firstFile);
-                bi.CacheOption = BitmapCacheOption.OnLoad;
-                bi.EndInit();
-                double scale = Math.Min(_cropOverlayCanvas.Width / bi.PixelWidth,
-                    _cropOverlayCanvas.Height / bi.PixelHeight);
-                _cropOverlayCanvas.Width = bi.PixelWidth * scale;
-                _cropOverlayCanvas.Height = bi.PixelHeight * scale;
-                var img = new Image
-                {
-                    Source = bi,
-                    Width = _cropOverlayCanvas.Width,
-                    Height = _cropOverlayCanvas.Height,
-                    Stretch = Stretch.Fill,
-                    Opacity = 0.88
-                };
-                _cropOverlayCanvas.Children.Add(img);
-            }
-            catch { }
-        }
+        if (_tool == FileTool.CropImage)
+            AddFittedImagePreview(_cropOverlayCanvas, opacity: 0.88);
 
         _cropBoxRect = new System.Windows.Shapes.Rectangle
         {
@@ -561,9 +537,39 @@ public partial class ToolWorkspaceWindow : Window
         WorkspaceContentPanel.Children.Add(card);
     }
 
-    private Point ClampCropPoint(Point point) => new(
-        Math.Clamp(point.X, 0, _cropOverlayCanvas!.Width),
-        Math.Clamp(point.Y, 0, _cropOverlayCanvas.Height));
+    private Point ClampCropPoint(Point point) => ClampCanvasPoint(_cropOverlayCanvas!, point);
+
+    private static Point ClampCanvasPoint(Canvas canvas, Point point) => new(
+        Math.Clamp(point.X, 0, canvas.Width),
+        Math.Clamp(point.Y, 0, canvas.Height));
+
+    private void AddFittedImagePreview(Canvas canvas, double opacity = 1)
+    {
+        string? firstFile = _inputFiles.FirstOrDefault();
+        if (!File.Exists(firstFile)) return;
+
+        try
+        {
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(firstFile!);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.EndInit();
+            double scale = Math.Min(canvas.Width / bitmap.PixelWidth, canvas.Height / bitmap.PixelHeight);
+            canvas.Width = bitmap.PixelWidth * scale;
+            canvas.Height = bitmap.PixelHeight * scale;
+            canvas.Children.Add(new Image
+            {
+                Source = bitmap,
+                Width = canvas.Width,
+                Height = canvas.Height,
+                Stretch = Stretch.Fill,
+                Opacity = opacity,
+                IsHitTestVisible = false
+            });
+        }
+        catch { }
+    }
 
     private void UpdateCropVisualBox()
     {
@@ -677,36 +683,19 @@ public partial class ToolWorkspaceWindow : Window
             Cursor = Cursors.Cross
         };
 
-        string firstFile = _inputFiles.FirstOrDefault() ?? "";
-        if (File.Exists(firstFile) && _tool == FileTool.RedactImage)
-        {
-            try
-            {
-                var bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(firstFile);
-                bi.CacheOption = BitmapCacheOption.OnLoad;
-                bi.EndInit();
-                _redactOverlayCanvas.Children.Add(new Image
-                {
-                    Source = bi,
-                    Width = 560,
-                    Height = 320,
-                    Stretch = Stretch.Fill
-                });
-            }
-            catch { }
-        }
+        if (_tool == FileTool.RedactImage)
+            AddFittedImagePreview(_redactOverlayCanvas);
 
         _redactOverlayCanvas.MouseLeftButtonDown += (_, e) =>
         {
             _isDrawingRedact = true;
-            _redactDragStart = e.GetPosition(_redactOverlayCanvas);
+            _redactDragStart = ClampCanvasPoint(_redactOverlayCanvas, e.GetPosition(_redactOverlayCanvas));
             _activeRedactRectShape = new System.Windows.Shapes.Rectangle
             {
                 Stroke = new SolidColorBrush(Color.FromRgb(255, 107, 13)),
                 StrokeThickness = 2,
-                Fill = new SolidColorBrush(Color.FromArgb(190, 0, 0, 0))
+                Fill = new SolidColorBrush(Color.FromArgb(190, 0, 0, 0)),
+                IsHitTestVisible = false
             };
             Canvas.SetLeft(_activeRedactRectShape, _redactDragStart.X);
             Canvas.SetTop(_activeRedactRectShape, _redactDragStart.Y);
@@ -714,39 +703,52 @@ public partial class ToolWorkspaceWindow : Window
             _redactOverlayCanvas.CaptureMouse();
         };
 
+        void UpdateRegion(Point point)
+        {
+            if (_activeRedactRectShape == null) return;
+            Point cur = ClampCanvasPoint(_redactOverlayCanvas, point);
+            Canvas.SetLeft(_activeRedactRectShape, Math.Min(_redactDragStart.X, cur.X));
+            Canvas.SetTop(_activeRedactRectShape, Math.Min(_redactDragStart.Y, cur.Y));
+            _activeRedactRectShape.Width = Math.Abs(cur.X - _redactDragStart.X);
+            _activeRedactRectShape.Height = Math.Abs(cur.Y - _redactDragStart.Y);
+        }
+
         _redactOverlayCanvas.MouseMove += (_, e) =>
         {
-            if (!_isDrawingRedact || _activeRedactRectShape == null) return;
-            Point cur = e.GetPosition(_redactOverlayCanvas);
-            double x = Math.Min(_redactDragStart.X, cur.X);
-            double y = Math.Min(_redactDragStart.Y, cur.Y);
-            double w = Math.Max(8, Math.Abs(cur.X - _redactDragStart.X));
-            double h = Math.Max(8, Math.Abs(cur.Y - _redactDragStart.Y));
-            Canvas.SetLeft(_activeRedactRectShape, x);
-            Canvas.SetTop(_activeRedactRectShape, y);
-            _activeRedactRectShape.Width = w;
-            _activeRedactRectShape.Height = h;
+            if (_isDrawingRedact) UpdateRegion(e.GetPosition(_redactOverlayCanvas));
         };
 
         _redactOverlayCanvas.MouseLeftButtonUp += (_, e) =>
         {
             if (!_isDrawingRedact || _activeRedactRectShape == null) return;
+            UpdateRegion(e.GetPosition(_redactOverlayCanvas));
+            var region = _activeRedactRectShape;
+            _activeRedactRectShape = null;
             _isDrawingRedact = false;
             _redactOverlayCanvas.ReleaseMouseCapture();
 
-            double x = Canvas.GetLeft(_activeRedactRectShape) / _redactOverlayCanvas.Width;
-            double y = Canvas.GetTop(_activeRedactRectShape) / _redactOverlayCanvas.Height;
-            double w = _activeRedactRectShape.Width / _redactOverlayCanvas.Width;
-            double h = _activeRedactRectShape.Height / _redactOverlayCanvas.Height;
+            if (region.Width <= 0 || region.Height <= 0)
+            {
+                _redactOverlayCanvas.Children.Remove(region);
+                return;
+            }
+
             _options.RedactionRectangles.Add(new RedactionRectangle
             {
-                NormalizedX = Math.Clamp(x, 0, 0.98),
-                NormalizedY = Math.Clamp(y, 0, 0.98),
-                NormalizedW = Math.Clamp(w, 0.02, 1.0 - x),
-                NormalizedH = Math.Clamp(h, 0.02, 1.0 - y),
+                NormalizedX = Canvas.GetLeft(region) / _redactOverlayCanvas.Width,
+                NormalizedY = Canvas.GetTop(region) / _redactOverlayCanvas.Height,
+                NormalizedW = region.Width / _redactOverlayCanvas.Width,
+                NormalizedH = region.Height / _redactOverlayCanvas.Height,
                 Style = _options.DefaultRedactionStyle
             });
             FooterStatusText.Text = UiText.Format("{0} redaction region(s) added", _options.RedactionRectangles.Count);
+        };
+        _redactOverlayCanvas.LostMouseCapture += (_, _) =>
+        {
+            _isDrawingRedact = false;
+            if (_activeRedactRectShape == null) return;
+            _redactOverlayCanvas.Children.Remove(_activeRedactRectShape);
+            _activeRedactRectShape = null;
         };
 
         panel.Children.Add(_redactOverlayCanvas);
