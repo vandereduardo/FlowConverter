@@ -172,6 +172,15 @@ public static class ToolExecutionEngine
             }
 
             case FileTool.TrimAudio:
+            {
+                string outPath = ThreeMFConverterEngine.UniqueOutputPath(dir, $"{baseName} Trimmed", ext);
+                double start = Math.Max(0, options.TrimStartSeconds);
+                double duration = options.TrimEndSeconds > start ? options.TrimEndSeconds - start : 10.0;
+                AudioTrimEngine.TrimAsync(srcPath, outPath, start, duration,
+                    options.AutoTrimSilence, options.SilenceThresholdDb, preview: false).GetAwaiter().GetResult();
+                return new List<string> { outPath };
+            }
+
             case FileTool.TrimVideo:
             {
                 string outPath = ThreeMFConverterEngine.UniqueOutputPath(dir, $"{baseName} Trimmed", ext);

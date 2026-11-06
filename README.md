@@ -35,6 +35,7 @@ On Windows, **Settings → General → Media Tools (FFmpeg)** can install FFmpeg
 
 4. **Interactive Visual & Audio Studio**
    - **Interactive Audio Waveform Trimmer:** Drag start/end handles on a real-time waveform with live audio preview.
+     On Windows, play the selected range, reset to the full audio, or trim silent ends with an adjustable threshold.
    - **Interactive Video & Image Redaction:** Draw black, blur, or pixelate boxes on a live video/image canvas with timeline scrubbing.
    - **Visual Image & Video Cropper:** Aspect-ratio presets and interactive crop handles.
    - **Audio Visualizer:** Hardware-accelerated spectrum, waveform, and circular bar video generator for MP3/WAV/FLAC audio.

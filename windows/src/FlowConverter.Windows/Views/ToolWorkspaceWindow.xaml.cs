@@ -21,6 +21,7 @@ public partial class ToolWorkspaceWindow : Window
     private readonly FileTool _tool;
     private readonly List<string> _inputFiles;
     private readonly FileToolExecutionOptions _options = new();
+    private AudioTrimEditor? _audioTrimEditor;
 
     private ThreeMFProjectSummary? _threeMfSummary;
     private ComboBox? _targetPrinterCombo;
@@ -51,6 +52,12 @@ public partial class ToolWorkspaceWindow : Window
         ToolSubtitleText.Text = _tool.CenterDescription();
         FileCountBadgeText.Text = $"{_inputFiles.Count} file(s)";
         ExecuteButton.Content = _tool == FileTool.Convert3MF ? "Converter .3MF" : $"Run {_tool.DisplayName()}";
+        if (_tool == FileTool.TrimAudio)
+        {
+            Title = "Trim Audio";
+            ToolIconText.FontFamily = new FontFamily("Segoe MDL2 Assets");
+            ExecuteButton.Content = "Apply & Save";
+        }
 
         BuildEditorUI();
     }
@@ -71,6 +78,15 @@ public partial class ToolWorkspaceWindow : Window
                 break;
 
             case FileTool.TrimAudio:
+                ExecuteButton.IsEnabled = false;
+                if (_inputFiles.FirstOrDefault() is { } audio)
+                {
+                    _audioTrimEditor = new AudioTrimEditor(audio, _inputFiles.Count, _options);
+                    _audioTrimEditor.Ready += () => ExecuteButton.IsEnabled = true;
+                    WorkspaceContentPanel.Children.Add(_audioTrimEditor);
+                }
+                break;
+
             case FileTool.TrimVideo:
                 BuildWaveformTrimEditor();
                 break;
@@ -530,7 +546,7 @@ public partial class ToolWorkspaceWindow : Window
     }
 
     // ========================================================================
-    // 3. Interactive Audio / Video Waveform Trimmer
+    // 3. Interactive Video Trimmer
     // ========================================================================
     private void BuildWaveformTrimEditor()
     {
@@ -885,10 +901,16 @@ public partial class ToolWorkspaceWindow : Window
         }
 
         ExecuteButton.IsEnabled = false;
+        if (_audioTrimEditor != null)
+        {
+            _audioTrimEditor.StopPreview();
+            _audioTrimEditor.IsEnabled = false;
+        }
         if (ToolExecutionEngine.RequiresFfmpeg(_tool, _inputFiles) &&
             (!await FfmpegSetupWindow.EnsureAvailableAsync(this, _tool.DisplayName()) || !IsVisible))
         {
             ExecuteButton.IsEnabled = true;
+            if (_audioTrimEditor != null) _audioTrimEditor.IsEnabled = true;
             return;
         }
 
@@ -918,6 +940,12 @@ public partial class ToolWorkspaceWindow : Window
         FlowConverterSettings.Instance.Save();
 
         progressWin.Finish(outputs, errors);
+        if (_audioTrimEditor != null && errors.Count > 0)
+        {
+            _audioTrimEditor.IsEnabled = true;
+            ExecuteButton.IsEnabled = true;
+            return;
+        }
         Close();
     }
 }

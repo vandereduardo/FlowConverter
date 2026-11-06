@@ -487,6 +487,8 @@ public class FileToolExecutionOptions
     // Trim
     public double TrimStartSeconds { get; set; } = 0;
     public double TrimEndSeconds { get; set; } = 10;
+    public bool AutoTrimSilence { get; set; }
+    public double SilenceThresholdDb { get; set; } = -45;
 
     // Speed
     public double VideoSpeedMultiplier { get; set; } = 1.5;
