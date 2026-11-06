@@ -7,7 +7,7 @@
 ### Clean-Room Engineering Rules
 1. **Zero Proprietary Code & Binaries:** No reverse-engineered source code, proprietary header files, or closed-source third-party binaries from commercial radial tools are used.
 2. **Procedural Asset Generation:**
-   - Visual icons (`AppIcon.icns` on macOS, `AppIcon.ico` on Windows) are generated programmatically via vector drawing APIs (`CoreGraphics` / `System.Drawing`).
+   - The macOS icon artwork is generated with CoreGraphics. Windows embeds PNG frames from that same `AppIcon.icns` in `AppIcon.ico`.
    - Audio feedback (`HighlightSound.wav`) is synthesized mathematically from pure sine waves (a dual-harmonic chime combining `1046.5 Hz` C6 and `1567.98 Hz` G6 with exponential amplitude decay over 55 milliseconds at `44.1 kHz`, 16-bit mono PCM).
 3. **Local-Only Processing:** Zero telemetry, cloud dependencies, or external network requests. All conversions and tools execute entirely on the local machine.
 
@@ -54,7 +54,7 @@ The codebase maintains strict conceptual parity between the `macos/` and `window
 | :--- | :--- | :--- | :--- |
 | **Application Lifecycle** | `AppDelegate.swift` | `App.xaml` / `App.xaml.cs` | Single-instance lock (`NSRunningApplication` / `Mutex`), CLI parameter parsing, global state coordination, tray management. |
 | **Domain Models** | `Models.swift` | `Models/ConversionModels.cs`<br>`Models/FileToolModels.cs`<br>`Models/Printer3DModels.cs`<br>`Models/SettingsModel.cs` | Defines all 46 formats, 7 format groups, 29 file tools, 84 3D printer hardware specs, and user configuration. |
-| **Radial Wheel Window** | `RadialWheelOverlay.swift` | `Views/RadialWheelWindow.xaml`<br>`Views/RadialWheelWindow.xaml.cs` | `360×360` borderless, transparent, non-activating floating window with cyan/orange gradient petals and a `102×102` central hub. On Windows, petals have a 2° angular gap and Tools and Actions icons use Segoe MDL2 Assets. |
+| **Radial Wheel Window** | `RadialWheelOverlay.swift` | `Views/RadialWheelWindow.xaml`<br>`Views/RadialWheelWindow.xaml.cs` | `360×360` borderless, transparent, non-activating floating window. On Windows, light petals have neutral edges, a 2° gap, and an orange active state. Tools and Actions icons use Segoe MDL2 Assets. |
 | **Global Drag Monitor** | `AppDelegate.swift` (`NSEvent.addGlobalMonitorForEvents` & `CGEventTap`) | `Interop/DragGestureMonitor.cs`<br>`Interop/NativeMethods.cs` (`WH_MOUSE_LL`, `WH_KEYBOARD_LL`) | Low-level detection of file drag operations while holding trigger modifiers (`Alt`, `Shift`, `Ctrl`) without stealing focus. |
 | **Floating Drop Shelf** | `FloatingShelfWindow.swift` | `Views/FloatingShelfWindow.xaml`<br>`Views/FloatingShelfWindow.xaml.cs` | Translucent obsidian glass panel for holding files. Supports drag-in/drag-out, compact/expanded modes, and batch conversion trigger. |
 | **Conversion Engine** | `ConversionEngine.swift` | `Engines/UniversalConversionEngine.cs` | Format conversion pipeline routing images, documents, audio, video, archives, and subtitles. |

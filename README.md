@@ -116,7 +116,7 @@ cd windows
 .\build_windows.ps1
 ```
 
-The script publishes a self-contained or framework-dependent release bundle to `windows\build\FlowConverter\`, generates clean-room assets (`AppIcon.ico` and `HighlightSound.wav`), copies helper scripts (`flow_office_converter.py`), and automatically discovers and bundles local slicer profiles.
+The script publishes the Windows bundle to `windows\build\FlowConverter\`. The executable embeds the macOS artwork as a multi-resolution Windows icon. The Windows welcome screen uses warm neutral colors, and the radial wheel uses light petals with orange for the active selection.
 
 To run the application:
 ```powershell

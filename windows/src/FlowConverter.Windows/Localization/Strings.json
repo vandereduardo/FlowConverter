@@ -219,7 +219,7 @@
   "Getting_Started": ["Getting Started…","Primeiros passos…"],
   "GIF_Frame_Rate_FPS": ["GIF Frame Rate (FPS)","Taxa de quadros do GIF (FPS)"],
   "GIF_Resolution_Width": ["GIF Resolution Width","Largura do GIF"],
-  "Glass_Translucent_Obsidian": ["Glass (Translucent Obsidian)","Vidro (obsidiana translúcida)"],
+  "Glass_Translucent": ["Glass (Translucent)","Vidro (translúcido)"],
   "Global_encoding_profile_applied_to_images": ["Global encoding profile applied to images, audio, and video","Perfil de codificação para imagens, áudio e vídeo"],
   "Grid_Columns": ["Grid Columns","Colunas da grade"],
   "H_264_CRF_encoding_profile_for": ["H.264 CRF encoding profile for video reductions","Perfil de codificação H.264 (CRF) para reduzir vídeos"],

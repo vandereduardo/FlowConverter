@@ -408,7 +408,7 @@
                                             <TextBlock Text="{loc:Text Visual_appearance_of_the_radial_petals}" FontSize="11" Foreground="#8A99B5" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="ThemeComboBox" Grid.Column="1" Style="{StaticResource DarkComboBox}" SelectionChanged="ThemeComboBox_SelectionChanged">
-                                            <ComboBoxItem Content="{loc:Text Glass_Translucent_Obsidian}"/>
+                                            <ComboBoxItem Content="{loc:Text Glass_Translucent}"/>
                                             <ComboBoxItem Content="{loc:Text Metallic_High_Contrast}"/>
                                         </ComboBox>
                                     </Grid>

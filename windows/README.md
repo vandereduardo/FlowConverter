@@ -44,7 +44,7 @@ windows/src/FlowConverter.Windows/
 │   ├── NativeMethods.cs            # P/Invoke declarations (User32, Shell32, Gdi32)
 │   └── DragGestureMonitor.cs       # Low-level hooks (WH_MOUSE_LL, WH_KEYBOARD_LL) & DPI conversion
 ├── Services/                       # Application services and procedural asset synthesis
-│   ├── AssetGenerator.cs           # Procedural generator for HighlightSound.wav and AppIcon.ico
+│   ├── AssetGenerator.cs           # Procedural generator for HighlightSound.wav
 │   ├── SoundService.cs             # Thread-safe acoustic chime player (System.Media.SoundPlayer)
 │   └── TrayIconService.cs          # System tray icon, menus, and balloon notifications
 ├── Engines/                        # Conversion, tool processing, and 3MF engines
@@ -90,7 +90,7 @@ windows/src/FlowConverter.Windows/
 ### 3. `Services/`
 - **`AssetGenerator.cs`**: Generates required runtime assets on demand without proprietary dependencies:
   - Synthesizes `HighlightSound.wav` (44.1 kHz, 16-bit mono PCM, combining a 1046.5 Hz C6 sine wave and a 1567.98 Hz G6 harmonic chime with smooth exponential decay over 55 milliseconds).
-  - Generates multi-size Windows icon `AppIcon.ico` (containing 16×16, 32×32, 48×48, and 256×256 frames with the FlowConverter cyan gradient palette).
+  - The executable and tray use `Resources/AppIcon.ico`, which contains the original 32, 64, 128, and 256 pixel artwork from the macOS icon.
 - **`SoundService.cs`**: Low-latency, non-blocking acoustic player wrapping `System.Media.SoundPlayer` to provide snappy audio feedback as the cursor enters petals.
 - **`TrayIconService.cs`**: Integrates with the Windows Taskbar Notification Area using `System.Windows.Forms.NotifyIcon`:
   - Quick action menu to summon wheels (`Conversions`, `File Tools`, `Quick Actions`).
@@ -110,7 +110,7 @@ windows/src/FlowConverter.Windows/
 ### 5. `Views/`
 - **`RadialWheelWindow.xaml`**:
   - `360×360` transparent, borderless, topmost layered window.
-  - Outer ring rendering up to 12 contextual petals with smooth cyan/orange highlight gradients.
+  - Outer ring with up to 12 light petals, neutral borders, and an orange highlight for the active petal.
   - Central `102×102` control hub displaying the active mode, action title, and description.
   - Non-activating window behavior (`WS_EX_NOACTIVATE`) ensuring drag operations in Windows Explorer or third-party software are never interrupted.
 - **`FloatingShelfWindow.xaml`**:

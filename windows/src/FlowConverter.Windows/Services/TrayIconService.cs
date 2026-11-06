@@ -21,7 +21,11 @@ public sealed class TrayIconService : IDisposable
 
     public TrayIconService()
     {
-        _idleIcon = AssetGenerator.CreateTrayIcon(activeOperation: false);
+        var iconResource = System.Windows.Application.GetResourceStream(
+            new Uri("pack://application:,,,/FlowConverter;component/Resources/AppIcon.ico"));
+        using var iconStream = iconResource.Stream;
+        using var icon = new Icon(iconStream, SystemInformation.SmallIconSize);
+        _idleIcon = (Icon)icon.Clone();
 
         var menu = new ContextMenuStrip();
         var titleItem = new ToolStripMenuItem("Flow Converter (Windows)") { Enabled = false };

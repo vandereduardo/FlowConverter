@@ -250,32 +250,33 @@ public partial class RadialWheelWindow : Window
             var path = new System.Windows.Shapes.Path
             {
                 Data = geom,
-                StrokeThickness = isHighlighted ? 2.2 : 1.1
+                StrokeThickness = isHighlighted ? 1.3 : 1.1,
+                StrokeLineJoin = PenLineJoin.Round
             };
 
             if (isHighlighted)
             {
                 path.Fill = new LinearGradientBrush(
-                    Color.FromArgb(248, 255, 107, 13),
-                    Color.FromArgb(248, 230, 66, 0),
+                    Color.FromArgb(255, 195, 61, 13),
+                    Color.FromArgb(255, 161, 42, 6),
                     45.0);
-                path.Stroke = new SolidColorBrush(Color.FromArgb(255, 255, 185, 120));
+                path.Stroke = new SolidColorBrush(Color.FromArgb(255, 238, 119, 67));
             }
             else if (metallic)
             {
                 path.Fill = new LinearGradientBrush(
-                    Color.FromArgb(238, 71, 74, 84),
-                    Color.FromArgb(242, 34, 37, 45),
+                    Color.FromArgb(252, 235, 233, 230),
+                    Color.FromArgb(249, 188, 184, 180),
                     45.0);
-                path.Stroke = new SolidColorBrush(Color.FromArgb(115, 0, 229, 255));
+                path.Stroke = new SolidColorBrush(Color.FromArgb(190, 116, 109, 103));
             }
             else
             {
                 path.Fill = new LinearGradientBrush(
-                    Color.FromArgb(204, 56, 58, 68),
-                    Color.FromArgb(218, 25, 27, 34),
+                    Color.FromArgb(235, 255, 254, 252),
+                    Color.FromArgb(207, 235, 230, 225),
                     45.0);
-                path.Stroke = new SolidColorBrush(Color.FromArgb(75, 255, 255, 255));
+                path.Stroke = new SolidColorBrush(Color.FromArgb(214, 250, 248, 245));
             }
 
             PetalsCanvas.Children.Add(path);
@@ -291,6 +292,7 @@ public partial class RadialWheelWindow : Window
             };
 
             var petal = _petals[i];
+            Brush labelBrush = isHighlighted ? Brushes.White : Brushes.Black;
             bool hasIcon = !string.IsNullOrEmpty(petal.IconGlyph);
             string caption = hasIcon ? petal.IconGlyph : petal.SubLabel;
             if (!string.IsNullOrWhiteSpace(caption))
@@ -299,9 +301,7 @@ public partial class RadialWheelWindow : Window
                 {
                     Text = caption,
                     FontFamily = hasIcon ? WheelIconFont : FontFamily,
-                    Foreground = isHighlighted
-                        ? Brushes.White
-                        : new SolidColorBrush(Color.FromArgb(190, 0, 229, 255)),
+                    Foreground = labelBrush,
                     FontSize = hasIcon ? 15.0 : 9.0,
                     FontWeight = hasIcon ? FontWeights.Normal : FontWeights.SemiBold,
                     TextAlignment = TextAlignment.Center,
@@ -312,7 +312,7 @@ public partial class RadialWheelWindow : Window
             labelStack.Children.Add(new TextBlock
             {
                 Text = petal.ShortLabel,
-                Foreground = Brushes.White,
+                Foreground = labelBrush,
                 FontSize = isHighlighted ? 11.5 : 10.5,
                 FontWeight = FontWeights.Bold,
                 TextAlignment = TextAlignment.Center,

@@ -94,7 +94,6 @@ public partial class App : System.Windows.Application
     {
 
         AssetGenerator.EnsureHighlightSoundWav();
-        AssetGenerator.EnsureAppIconIco();
         _ = SoundService.Instance;
 
         _radialWheel = new RadialWheelWindow();
