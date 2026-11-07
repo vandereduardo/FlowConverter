@@ -653,7 +653,7 @@
                                         <TextBlock Grid.Column="0" Text="&#xE71B;" FontFamily="Segoe MDL2 Assets" FontSize="16" Foreground="{StaticResource ThemeAccent}" VerticalAlignment="Center" Margin="0,0,12,0"/>
                                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                             <TextBlock Text="{loc:Text Quick_Actions_Wheel}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}"/>
-                                            <TextBlock Text="{loc:Text Summons_actions_Float_Share_Copy_Move}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
+                                            <TextBlock Text="{loc:Text Summons_quick_file_actions}" FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" Margin="0,2,0,0"/>
                                         </StackPanel>
                                         <ComboBox x:Name="ActionsModifierComboBox" Grid.Column="2" Style="{StaticResource DarkComboBox}" SelectionChanged="ModifierComboBox_SelectionChanged"/>
                                     </Grid>

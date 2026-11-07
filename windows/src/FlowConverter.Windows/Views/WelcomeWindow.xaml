@@ -218,7 +218,7 @@
                             </Border>
                             <TextBlock Text="{loc:Text Quick_Actions_Shelf}" FontSize="12.5" FontWeight="SemiBold" Foreground="{StaticResource ThemeText}" VerticalAlignment="Center" TextWrapping="Wrap" />
                         </DockPanel>
-                        <TextBlock Text="{loc:Text Floating_drop_shelf_Share_Send_To}"
+                        <TextBlock Text="{loc:Text Floating_drop_shelf_and_file_actions}"
                                    FontSize="11" Foreground="{StaticResource ThemeSecondaryText}" TextWrapping="Wrap" LineHeight="15" />
                     </StackPanel>
                 </Border>

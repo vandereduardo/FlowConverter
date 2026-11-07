@@ -23,7 +23,7 @@ FlowConverter for Windows offers **English** and **Português (Brasil)** on firs
    - Interactive 3-mode wheel overlay:
      - **Conversions Mode:** Format conversion petals (up to 12 petals) or target 3D printer petals for `.3mf` files.
      - **File Tools Mode (`Shift` / `Win` + Drag):** 29 context-aware file utilities (Crop, Trim, Redact, Compress, Normalize, Organize).
-     - **Quick Actions Mode (`Ctrl` + Drag):** Instant workflow actions (Float, Share / Send To, Copy, Move, Copy Path, Open Terminal).
+     - **Quick Actions Mode (`Ctrl` + Drag):** Instant workflow actions (Float, Copy, Move, Copy Path, Open Terminal).
    - Center hub displays active action descriptions, status indicators, and cycles modes upon clicking.
 
 2. **Floating Drop Shelf ("Float")**
@@ -140,7 +140,7 @@ FlowConverter for Windows includes CLI commands for automated batch processing, 
 | :--- | :--- | :--- |
 | **`Alt` + Drag** | Drag file(s) while holding `Alt` | **Radial Conversion Wheel** — compatible format petals or target 3D printer petals for `.3mf` files |
 | **`Shift` + Drag** (or `Win` + Drag) | Drag file(s) while holding `Shift` | **Contextual File Tools Wheel** — 29 file tools (Crop, Trim, Redact, Compress, Normalize, Organize) |
-| **`Ctrl` + Drag** | Drag file(s) while holding `Ctrl` | **Quick Actions Wheel** — `Float`, `Share / Send To`, `Copy`, `Move`, `Copy Path`, `Open Terminal` |
+| **`Ctrl` + Drag** | Drag file(s) while holding `Ctrl` | **Quick Actions Wheel** — `Float`, `Copy`, `Move`, `Copy Path`, `Open Terminal` |
 | **Center Hub Click** | Click center disk | Cycles wheel modes: `Conversions` ➔ `File Tools` ➔ `Quick Actions` |
 | **Esc / Release Outside** | Release drag outside petals or press `Esc` | Dismisses the overlay window without executing actions |
 

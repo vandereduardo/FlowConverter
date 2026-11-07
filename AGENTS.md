@@ -94,7 +94,7 @@ Both macOS and Windows apps share a cohesive "Cockpit Radial Wheel" aesthetic:
    - 3 Modes:
      - **Convert (`Alt` + Drag):** Compatible output formats (up to 12 petals) or `.3MF` target 3D printers when dragging `.3mf` files.
      - **Tools (`Win` / `Shift` + Drag):** Context-aware file tools (`FileTool.CompatibleTools`).
-     - **Actions (`Ctrl` + Drag):** `Float`, `Share / Send To`, `Copy`, `Move`, `Copy Path`, `Open Terminal`.
+     - **Actions (`Ctrl` + Drag):** `Float`, `Copy`, `Move`, `Copy Path`, `Open Terminal`.
    - Center Hub (`102×102` disk with `#00E5FF` border): Displays active mode and hovered petal description; clicking cycles modes (`Convert` → `Tools` → `Actions`).
 3. **3D Printer `.3MF` Profile Converter (`ThreeMFConverterEngine`):**
    - Full catalog of **84 preset 3D printers across 12 brands** (`Anycubic`, `Bambu Lab`, `Creality`, `Flashforge`, `Elegoo`, `Prusa`, `Qidi Tech`, `Sovol`, `Artillery`, `Flsun`, `Voron`, `Two Trees`) + Custom printers.

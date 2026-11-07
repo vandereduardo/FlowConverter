@@ -245,7 +245,7 @@ FlowConverter supports headless automation for command-line workflows and batch 
 | :--- | :--- |
 | **`Alt` + Drag** | Summons the **Conversion Wheel** centered at cursor position. |
 | **`Shift` + Drag** / **`Win` + Drag** | Summons the **File Tools Wheel** centered at cursor position. |
-| **`Ctrl` + Drag** | Summons the **Quick Actions Wheel** (`Float`, `Share`, `Copy`, `Move`, `Copy Path`, `Terminal`). |
+| **`Ctrl` + Drag** | Summons the **Quick Actions Wheel** (`Float`, `Copy`, `Move`, `Copy Path`, `Terminal`). |
 | **Center Hub Click** | Switches between the 3 wheel modes (`Conversions` ➔ `File Tools` ➔ `Quick Actions`). |
 | **`Esc` / Release Outside** | Closes the radial overlay without executing. |
 | **Tray Icon Click** | Left-click tray icon to summon the default wheel; right-click for the context menu. |

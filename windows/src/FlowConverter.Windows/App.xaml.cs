@@ -385,15 +385,6 @@ public partial class App : System.Windows.Application
                 }
                 break;
             }
-
-            case QuickActionType.Share:
-            {
-                if (files.Count > 0)
-                {
-                    Process.Start("explorer.exe", $"/select,\"{files[0]}\"");
-                }
-                break;
-            }
         }
     }
 

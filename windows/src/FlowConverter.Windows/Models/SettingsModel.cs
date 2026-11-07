@@ -35,7 +35,6 @@ public enum WheelModifierKey
 public enum QuickActionType
 {
     Float,
-    Share,
     Copy,
     Move,
     CopyPath,
@@ -47,7 +46,6 @@ public static class QuickActionTypeExtensions
     public static string DisplayName(this QuickActionType action) => action switch
     {
         QuickActionType.Float => UiText.Get("Float"),
-        QuickActionType.Share => UiText.Get("Share / Send To"),
         QuickActionType.Copy => UiText.Get("Copy"),
         QuickActionType.Move => UiText.Get("Move"),
         QuickActionType.CopyPath => UiText.Get("Copy Path"),
@@ -58,7 +56,6 @@ public static class QuickActionTypeExtensions
     public static string ShortWheelLabel(this QuickActionType action) => action switch
     {
         QuickActionType.Float => UiText.Get("Float"),
-        QuickActionType.Share => UiText.Get("Share"),
         QuickActionType.Copy => UiText.Get("Copy"),
         QuickActionType.Move => UiText.Get("Move"),
         QuickActionType.CopyPath => UiText.Get("Copy Path"),
@@ -69,7 +66,6 @@ public static class QuickActionTypeExtensions
     public static string IconGlyph(this QuickActionType action) => action switch
     {
         QuickActionType.Float => "\uE71B",        // Pin / PinToScreen
-        QuickActionType.Share => "\uE72D",        // Share
         QuickActionType.Copy => "\uE8C8",         // Copy
         QuickActionType.Move => "\uE8DE",         // Move / Folder
         QuickActionType.CopyPath => "\uE71B",     // Link
@@ -80,7 +76,6 @@ public static class QuickActionTypeExtensions
     public static string Description(this QuickActionType action) => action switch
     {
         QuickActionType.Float => UiText.Get("Float file or folder on screen drop shelf"),
-        QuickActionType.Share => UiText.Get("Share or send files via Windows Share dialog"),
         QuickActionType.Copy => UiText.Get("Copy files and folders to destination"),
         QuickActionType.Move => UiText.Get("Move files and folders to chosen destination"),
         QuickActionType.CopyPath => UiText.Get("Copy absolute file and folder paths to clipboard"),
