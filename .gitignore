@@ -1,9 +1,12 @@
 # Build outputs
 macos/build/
+windows/build/
 *.app/
 build/
 bin/
 obj/
+.vs/
+*.user
 
 # macOS system files
 .DS_Store
@@ -13,6 +16,8 @@ obj/
 # Bundled external binaries & caches
 macos/Resources/Tools/
 macos/Resources/profiles/
+windows/Resources/Tools/
+windows/Resources/profiles/
 /tmp/
 *.swp
 *~

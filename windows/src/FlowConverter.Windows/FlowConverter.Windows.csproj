@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>FlowConverter</AssemblyName>
+    <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
+    <RootNamespace>FlowConverter.Windows</RootNamespace>
+    <Version>1.0.0</Version>
+    <Company>FlowConverter Open Source</Company>
+    <Product>Flow Converter</Product>
+    <Description>Fast, clean-room radial file converter, floating drop shelf, media studio, and 3D printer .3MF profile converter for Windows.</Description>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\AppIcon.ico" />
+    <EmbeddedResource Include="Localization\Strings.json" />
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+</Project>
