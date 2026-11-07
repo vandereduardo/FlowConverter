@@ -256,7 +256,9 @@ public partial class App : System.Windows.Application
                 }
                 catch (Exception ex)
                 {
-                    errs.Add(ex.Message);
+                    errs.Add(ex is IOException { HResult: unchecked((int)0x8007016A) }
+                        ? UiText.Get("Open OneDrive and make the file available offline, then retry.")
+                        : ex.Message);
                 }
             });
             FlowConverterSettings.Instance.UsageCount += outs.Count;

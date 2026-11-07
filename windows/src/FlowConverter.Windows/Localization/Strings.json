@@ -1,4 +1,5 @@
 {
+  "Open_OneDrive_and_make_file_available": ["Open OneDrive and make the file available offline, then retry.","Abra o OneDrive, disponibilize o arquivo offline e tente novamente."],
   "Image_preview_is_unavailable": ["Image preview is unavailable.","Prévia da imagem indisponível."],
   "Preview_of_the_first_image": ["Preview of the first image. Adjustments apply to all selected images.","Prévia da primeira imagem. Os ajustes se aplicam a todas as imagens selecionadas."],
   "0_1_2_0_3_0": ["{0} — {1} ({2:0}×{3:0}×{4:0} mm · Nozzle {5:0.0} mm)","{0} — {1} ({2:0}×{3:0}×{4:0} mm · Bico {5:0.0}mm)"],

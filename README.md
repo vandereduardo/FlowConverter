@@ -11,6 +11,8 @@ On Windows, **Settings → General → Media Tools (FFmpeg)** can install FFmpeg
 
 Opening a file directly with FlowConverter on Windows shows tools for that file. Opening only `.3mf` projects shows the printer conversion wheel.
 
+For OneDrive files on Windows, make the source available offline before converting if the cloud provider is stopped.
+
 FlowConverter for Windows offers **English** and **Português (Brasil)** on first launch. Change the choice under **Settings → General → App Language** and reopen the app to apply it. [Track macOS localization](https://github.com/vandereduardo/FlowConverter/issues/2).
 
 ---

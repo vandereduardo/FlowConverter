@@ -6,6 +6,8 @@ The first launch asks you to choose **English** or **Português (Brasil)**. The 
 
 The welcome screen, Settings, editors, floating shelf, and operation dialogs share warm neutral surfaces, ivory controls, and muted borders. The radial wheel has light petals with an orange active selection.
 
+If conversion reports that OneDrive is stopped, open OneDrive and make the source available offline before trying again. The converted file is saved beside the original.
+
 Built using **.NET 8 (`net8.0-windows`)**, **WPF**, and low-level **Win32 Interop**, FlowConverter achieves complete feature parity with the macOS implementation while adhering to Windows design standards and system integration best practices.
 
 ---
