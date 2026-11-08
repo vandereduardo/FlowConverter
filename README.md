@@ -34,7 +34,7 @@ FlowConverter for Windows offers **English** and **Português (Brasil)** on firs
    - Compact (`96×112`) and expanded (`280×320`) display modes.
 
 3. **3D Printer `.3MF` Profile Converter**
-   - Built-in catalog of **84 3D printers across 12 manufacturers** (*Anycubic Kobra X*, *Kobra 4*, *Kobra 3*, *Kobra S1*, *Bambu Lab X1C / P1S / A1 / H2D*, *Creality K1 / K2 Plus / Ender-3*, *Flashforge*, *Elegoo*, *Prusa*, *Qidi Tech*, *Sovol*, *Artillery*, *Flsun*, *Voron*, *Two Trees*, and custom printers).
+   - Built-in catalog of **105 3D printers across 13 manufacturers** (*Anycubic Kobra X*, *Kobra 4*, *Kobra 3*, *Kobra S1*, *Bambu Lab X1C / P1S / A1 / H2D*, *Creality K1 / K2 Plus / Ender-3*, *Flashforge Creator 5 / Adventurer 5M / Guider 4*, *Snapmaker U1 / J1s / Artisan / 2.0*, *Elegoo*, *Prusa*, *Qidi Tech*, *Sovol*, *Artillery*, *Flsun*, *Voron*, *Two Trees*, and custom printers).
    - Reads official slicer profile inheritance chains (`machine_list`, `process_list`, `filament_list`) from **AnycubicSlicerNext**, **OrcaSlicer**, and **Bambu Studio**.
    - Preserves multi-color filament slots (`filament_colour`, `filament_type`, purge volumes) and **all custom project overrides** (`different_settings_to_system`, infill density/pattern, wall speeds, supports, prime tower) while sanitizing cross-slicer schema differences.
    - Automatic bed recentering: parses `3D/3dmodel.model` and re-centers model objects on the destination printer's print bed.

@@ -849,6 +849,18 @@ public static class ThreeMFConverterEngine
             "Anycubic Kobra" => "Anycubic Kobra 1",
             "Anycubic Kobra Plus" => "Anycubic Kobra 1 Plus",
             "Anycubic Kobra Max" => "Anycubic Kobra 1 Max",
+            "Flashforge Guider 4" => "Flashforge Guider4",
+            "Flashforge Guider 4 Pro" => "Flashforge Guider4 Pro",
+            "Flashforge Adventurer 4 Pro" => "Flashforge Adventurer 4 Series",
+            "Flashforge Adventurer 3" => "Flashforge Adventurer 3 Series",
+            "Snapmaker J1s" => "Snapmaker J1",
+            "Snapmaker 2.0 A350T / A350" => "Snapmaker A350",
+            "Snapmaker 2.0 A350 Dual" => "Snapmaker A350 Dual",
+            "Snapmaker 2.0 A350 QSKit" => "Snapmaker A350 QSKit",
+            "Snapmaker 2.0 A250T / A250" => "Snapmaker A250",
+            "Snapmaker 2.0 A250 Dual" => "Snapmaker A250 Dual",
+            "Snapmaker 2.0 A250 QSKit" => "Snapmaker A250 QSKit",
+            "Snapmaker 2.0 A150" => "Snapmaker A250",
             _ => trimmed
         };
     }
@@ -861,6 +873,7 @@ public static class ThreeMFConverterEngine
             "bambu lab" or "bambulab" or "bbl" => new[] { "BBL" },
             "creality" => new[] { "Creality" },
             "flashforge" => new[] { "Flashforge" },
+            "snapmaker" => new[] { "Snapmaker" },
             "elegoo" => new[] { "Elegoo" },
             "prusa" or "prusa research" => new[] { "Prusa" },
             "qidi tech" or "qidi" => new[] { "Qidi" },
@@ -957,9 +970,13 @@ public static class ThreeMFConverterEngine
         string cleanModel = CanonicalPrinterModelName(targetPrinter);
         string[] candidateMachineNames =
         {
-            $"{cleanModel} {nozzleStr} nozzle",
             targetPrinter.PrinterSettingsID,
+            $"{cleanModel} {nozzleStr} nozzle",
+            $"{cleanModel} {nozzleStr} Nozzle",
+            $"{cleanModel} ({nozzleStr} nozzle)",
             $"{cleanModel} 0.4 nozzle",
+            $"{cleanModel} 0.4 Nozzle",
+            $"{cleanModel} (0.4 nozzle)",
             cleanModel
         };
 

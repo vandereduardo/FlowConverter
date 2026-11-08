@@ -42,10 +42,13 @@ if (Test-Path $officePy) {
 }
 
 $anycubicProfiles = "C:\Program Files\AnycubicSlicerNext\resources\profiles"
+$orcaProfiles = "C:\Program Files\OrcaSlicer\resources\profiles"
+$targetProfiles = Join-Path $resDir "profiles"
+if ((Test-Path $anycubicProfiles) -or (Test-Path $orcaProfiles)) {
+    New-Item -ItemType Directory -Force -Path $targetProfiles | Out-Null
+}
 if (Test-Path $anycubicProfiles) {
     Write-Host "==> Bundling official Anycubic 3D printer profiles..." -ForegroundColor Cyan
-    $targetProfiles = Join-Path $resDir "profiles"
-    New-Item -ItemType Directory -Force -Path $targetProfiles | Out-Null
     $anycubicJson = Join-Path $anycubicProfiles "Anycubic.json"
     $anycubicFolder = Join-Path $anycubicProfiles "Anycubic"
     if (Test-Path $anycubicJson) {
@@ -53,6 +56,19 @@ if (Test-Path $anycubicProfiles) {
     }
     if (Test-Path $anycubicFolder) {
         Copy-Item $anycubicFolder (Join-Path $targetProfiles "Anycubic") -Recurse -Force
+    }
+}
+if (Test-Path $orcaProfiles) {
+    Write-Host "==> Bundling official Flashforge and Snapmaker 3D printer profiles..." -ForegroundColor Cyan
+    foreach ($vendor in @("Flashforge", "Snapmaker")) {
+        $vendorJson = Join-Path $orcaProfiles "$vendor.json"
+        $vendorFolder = Join-Path $orcaProfiles $vendor
+        if (Test-Path $vendorJson) {
+            Copy-Item $vendorJson (Join-Path $targetProfiles "$vendor.json") -Force
+        }
+        if (Test-Path $vendorFolder) {
+            Copy-Item $vendorFolder (Join-Path $targetProfiles $vendor) -Recurse -Force
+        }
     }
 }
 

@@ -48,29 +48,35 @@ for tool in ffmpeg cwebp; do
     fi
 done
 
-# Bundle official 3D slicer profiles (AnycubicSlicerNext) if installed on build machine
+# Bundle official 3D slicer profiles (AnycubicSlicerNext & OrcaSlicer) if installed on build machine
 /usr/bin/python3 -c '
 import json, os, shutil
-src_base = "/Applications/AnycubicSlicerNext.app/Contents/Resources/profiles"
+
 dst_base = os.path.join("'"$APP_BUNDLE"'", "Contents/Resources/profiles")
-idx_path = os.path.join(src_base, "Anycubic.json")
-if os.path.exists(idx_path):
-    os.makedirs(dst_base, exist_ok=True)
-    shutil.copyfile(idx_path, os.path.join(dst_base, "Anycubic.json"))
-    with open(idx_path) as f:
-        idx = json.load(f)
-    for k in ("machine_model_list", "machine_list", "process_list", "filament_list"):
-        for item in idx.get(k, []):
-            sp = item.get("sub_path")
-            if sp:
-                s = os.path.join(src_base, "Anycubic", sp)
-                d = os.path.join(dst_base, "Anycubic", sp)
-                if os.path.exists(s):
-                    os.makedirs(os.path.dirname(d), exist_ok=True)
-                    try:
-                        shutil.copyfile(s, d)
-                    except Exception:
-                        pass
+sources = [
+    ("/Applications/AnycubicSlicerNext.app/Contents/Resources/profiles", "Anycubic"),
+    ("/Applications/OrcaSlicer.app/Contents/Resources/profiles", "Flashforge"),
+    ("/Applications/OrcaSlicer.app/Contents/Resources/profiles", "Snapmaker"),
+]
+for src_base, vendor in sources:
+    idx_path = os.path.join(src_base, f"{vendor}.json")
+    if os.path.exists(idx_path):
+        os.makedirs(dst_base, exist_ok=True)
+        shutil.copyfile(idx_path, os.path.join(dst_base, f"{vendor}.json"))
+        with open(idx_path) as f:
+            idx = json.load(f)
+        for k in ("machine_model_list", "machine_list", "process_list", "filament_list"):
+            for item in idx.get(k, []):
+                sp = item.get("sub_path")
+                if sp:
+                    s = os.path.join(src_base, vendor, sp)
+                    d = os.path.join(dst_base, vendor, sp)
+                    if os.path.exists(s):
+                        os.makedirs(os.path.dirname(d), exist_ok=True)
+                        try:
+                            shutil.copyfile(s, d)
+                        except Exception:
+                            pass
 '
 
 echo "[4/4] Signing $APP_BUNDLE..."

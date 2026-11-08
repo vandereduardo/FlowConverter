@@ -1,5 +1,5 @@
 // FlowConverter - Clean-Room 100% MIT Open Source
-// Models/Printer3DModels.cs - 3D Printer Profiles, 84-Model Catalog, and .3MF Metadata Models
+// Models/Printer3DModels.cs - 3D Printer Profiles, 105-Model Catalog, and .3MF Metadata Models
 #nullable enable
 
 using System;
@@ -78,6 +78,7 @@ public class Printer3DModel
         "Bambu Lab",
         "Creality",
         "Flashforge",
+        "Snapmaker",
         "Elegoo",
         "Prusa",
         "Qidi Tech",
@@ -151,12 +152,35 @@ public class Printer3DModel
         new Printer3DModel("creality-cr10-se", "Creality", "Creality CR-10 SE", "CR-10 SE", 220, 220, 265, 0.4, "klipper", "Creality CR-10 SE 0.4 nozzle", false),
         new Printer3DModel("creality-cr10-smart-pro", "Creality", "Creality CR-10 Smart Pro", "CR-10 Smart", 300, 300, 400, 0.4, "marlin", "Creality CR-10 Smart Pro 0.4 nozzle", false),
 
-        // MARK: Flashforge (5 models)
-        new Printer3DModel("flashforge-adv5m-pro", "Flashforge", "Flashforge Adventurer 5M Pro", "Adv 5M Pro", 220, 220, 220, 0.4, "klipper", "Flashforge Adventurer 5M Pro 0.4 nozzle", true),
-        new Printer3DModel("flashforge-adv5m", "Flashforge", "Flashforge Adventurer 5M", "Adv 5M", 220, 220, 220, 0.4, "klipper", "Flashforge Adventurer 5M 0.4 nozzle", false),
+        // MARK: Flashforge (15 models)
+        new Printer3DModel("flashforge-creator-5", "Flashforge", "Flashforge Creator 5", "Creator 5", 256, 256, 256, 0.4, "klipper", "Flashforge Creator 5 0.4 nozzle", false),
+        new Printer3DModel("flashforge-creator-5-pro", "Flashforge", "Flashforge Creator 5 Pro", "Creator 5P", 256, 256, 256, 0.4, "klipper", "Flashforge Creator 5 Pro 0.4 nozzle", false),
+        new Printer3DModel("flashforge-adv5m-pro", "Flashforge", "Flashforge Adventurer 5M Pro", "Adv 5M Pro", 220, 220, 220, 0.4, "klipper", "Flashforge Adventurer 5M Pro 0.4 Nozzle", true),
+        new Printer3DModel("flashforge-adv5m", "Flashforge", "Flashforge Adventurer 5M", "Adv 5M", 220, 220, 220, 0.4, "klipper", "Flashforge Adventurer 5M 0.4 Nozzle", false),
         new Printer3DModel("flashforge-ad5x", "Flashforge", "Flashforge AD5X", "AD5X", 220, 220, 220, 0.4, "klipper", "Flashforge AD5X 0.4 nozzle", false),
-        new Printer3DModel("flashforge-guider3-ultra", "Flashforge", "Flashforge Guider 3 Ultra", "Guider 3U", 330, 330, 600, 0.4, "klipper", "Flashforge Guider 3 Ultra 0.4 nozzle", false),
-        new Printer3DModel("flashforge-adv4-pro", "Flashforge", "Flashforge Adventurer 4 Pro", "Adv 4 Pro", 220, 200, 250, 0.4, "marlin", "Flashforge Adventurer 4 Pro 0.4 nozzle", false),
+        new Printer3DModel("flashforge-guider4", "Flashforge", "Flashforge Guider 4", "Guider 4", 300, 300, 300, 0.4, "klipper", "Flashforge Guider4 0.4 nozzle", false),
+        new Printer3DModel("flashforge-guider4-pro", "Flashforge", "Flashforge Guider 4 Pro", "Guider 4P", 300, 300, 300, 0.4, "klipper", "Flashforge Guider4 Pro 0.4 nozzle", false),
+        new Printer3DModel("flashforge-guider3-ultra", "Flashforge", "Flashforge Guider 3 Ultra", "Guider 3U", 330, 330, 600, 0.4, "klipper", "Flashforge Guider 3 Ultra 0.4 Nozzle", false),
+        new Printer3DModel("flashforge-guider2s", "Flashforge", "Flashforge Guider 2s", "Guider 2s", 280, 250, 300, 0.4, "marlin", "Flashforge Guider 2s 0.4 nozzle", false),
+        new Printer3DModel("flashforge-adv4-pro", "Flashforge", "Flashforge Adventurer 4 Pro", "Adv 4 Pro", 220, 200, 250, 0.4, "marlin", "Flashforge Adventurer 4 Series 0.4 Nozzle", false),
+        new Printer3DModel("flashforge-adv3", "Flashforge", "Flashforge Adventurer 3", "Adv 3", 150, 150, 150, 0.4, "marlin", "Flashforge Adventurer 3 Series 0.4 Nozzle", false),
+        new Printer3DModel("flashforge-artemis", "Flashforge", "Flashforge Artemis", "Artemis", 195, 195, 200, 0.4, "marlin", "Flashforge Artemis 0.4 Nozzle", false),
+        new Printer3DModel("flashforge-creator-4", "Flashforge", "Flashforge Creator 4", "Creator 4", 400, 350, 500, 0.4, "marlin", "Flashforge Creator 4 0.4 nozzle", false),
+        new Printer3DModel("flashforge-creator-3-pro", "Flashforge", "Flashforge Creator 3 Pro", "Creator 3P", 300, 250, 200, 0.4, "marlin", "Flashforge Creator 3 Pro 0.4 nozzle", false),
+        new Printer3DModel("flashforge-creator-pro-2", "Flashforge", "Flashforge Creator Pro 2", "Creator P2", 200, 148, 150, 0.4, "marlin", "Flashforge Creator Pro 2 0.4 nozzle", false),
+
+        // MARK: Snapmaker (11 models)
+        new Printer3DModel("snapmaker-u1", "Snapmaker", "Snapmaker U1", "Snap U1", 270, 270, 270, 0.4, "klipper", "Snapmaker U1 (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-j1s", "Snapmaker", "Snapmaker J1s", "Snap J1s", 300, 200, 200, 0.4, "marlin2", "Snapmaker J1 (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-j1", "Snapmaker", "Snapmaker J1", "Snap J1", 324, 200, 200, 0.4, "marlin2", "Snapmaker J1 (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-artisan", "Snapmaker", "Snapmaker Artisan", "Artisan", 400, 400, 400, 0.4, "marlin2", "Snapmaker Artisan (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-a350", "Snapmaker", "Snapmaker 2.0 A350T / A350", "Snap A350", 320, 350, 325, 0.4, "marlin2", "Snapmaker A350 (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-a350-dual", "Snapmaker", "Snapmaker 2.0 A350 Dual", "A350 Dual", 320, 350, 285, 0.4, "marlin2", "Snapmaker A350 Dual (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-a350-qskit", "Snapmaker", "Snapmaker 2.0 A350 QSKit", "A350 QS", 320, 350, 310, 0.4, "marlin2", "Snapmaker A350 QSKit (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-a250", "Snapmaker", "Snapmaker 2.0 A250T / A250", "Snap A250", 230, 250, 230, 0.4, "marlin2", "Snapmaker A250 (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-a250-dual", "Snapmaker", "Snapmaker 2.0 A250 Dual", "A250 Dual", 230, 250, 190, 0.4, "marlin2", "Snapmaker A250 Dual (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-a250-qskit", "Snapmaker", "Snapmaker 2.0 A250 QSKit", "A250 QS", 230, 250, 215, 0.4, "marlin2", "Snapmaker A250 QSKit (0.4 nozzle)", false),
+        new Printer3DModel("snapmaker-a150", "Snapmaker", "Snapmaker 2.0 A150", "Snap A150", 160, 160, 145, 0.4, "marlin2", "Snapmaker A250 (0.4 nozzle)", false),
 
         // MARK: Elegoo (8 models)
         new Printer3DModel("elegoo-neptune4-pro", "Elegoo", "Elegoo Neptune 4 Pro", "Neptune 4P", 225, 225, 265, 0.4, "klipper", "Elegoo Neptune 4 Pro 0.4 nozzle", false),
@@ -224,11 +248,11 @@ public class Printer3DModel
         new Printer3DModel("bambu-x1c", "Bambu Lab", "Bambu Lab X1 Carbon", "X1 Carbon", 256, 256, 256, 0.4, "marlin", "Bambu Lab X1 Carbon 0.4 nozzle", true),
         new Printer3DModel("creality-k1", "Creality", "Creality K1", "Creality K1", 220, 220, 250, 0.4, "klipper", "Creality K1 0.4 nozzle", true),
         new Printer3DModel("creality-k1-max", "Creality", "Creality K1 Max", "K1 Max", 300, 300, 300, 0.4, "klipper", "Creality K1 Max 0.4 nozzle", true),
-        new Printer3DModel("flashforge-adv5m-pro", "Flashforge", "Flashforge Adventurer 5M Pro", "Adv 5M Pro", 220, 220, 220, 0.4, "klipper", "Flashforge Adventurer 5M Pro 0.4 nozzle", true),
+        new Printer3DModel("flashforge-adv5m-pro", "Flashforge", "Flashforge Adventurer 5M Pro", "Adv 5M Pro", 220, 220, 220, 0.4, "klipper", "Flashforge Adventurer 5M Pro 0.4 Nozzle", true),
         new Printer3DModel("bambu-p1p", "Bambu Lab", "Bambu Lab P1P", "Bambu P1P", 256, 256, 256, 0.4, "marlin", "Bambu Lab P1P 0.4 nozzle", false),
         new Printer3DModel("creality-k2-plus", "Creality", "Creality K2 Plus", "K2 Plus", 350, 350, 350, 0.4, "klipper", "Creality K2 Plus 0.4 nozzle", false),
         new Printer3DModel("creality-ender3-v3", "Creality", "Creality Ender-3 V3", "Ender-3 V3", 220, 220, 250, 0.4, "klipper", "Creality Ender-3 V3 0.4 nozzle", false),
-        new Printer3DModel("flashforge-adv5m", "Flashforge", "Flashforge Adventurer 5M", "Adv 5M", 220, 220, 220, 0.4, "klipper", "Flashforge Adventurer 5M 0.4 nozzle", false),
+        new Printer3DModel("flashforge-adv5m", "Flashforge", "Flashforge Adventurer 5M", "Adv 5M", 220, 220, 220, 0.4, "klipper", "Flashforge Adventurer 5M 0.4 Nozzle", false),
         new Printer3DModel("elegoo-neptune4-pro", "Elegoo", "Elegoo Neptune 4 Pro", "Neptune 4", 225, 225, 265, 0.4, "klipper", "Elegoo Neptune 4 Pro 0.4 nozzle", false),
         new Printer3DModel("prusa-mk4", "Prusa", "Original Prusa MK4", "Prusa MK4", 250, 210, 220, 0.4, "marlin", "Original Prusa MK4 Input Shaper 0.4 nozzle", false)
     };

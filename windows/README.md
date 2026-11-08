@@ -18,7 +18,7 @@ Built using **.NET 8 (`net8.0-windows`)**, **WPF**, and low-level **Win32 Intero
 | :--- | :--- | :--- | :---: |
 | **Supported Formats** | 46 formats (7 categories) | 46 formats (7 categories) | 100% |
 | **Contextual File Tools** | 29 tools | 29 tools | 100% |
-| **3D Printer Catalog** | 84 models across 12 brands + custom | 84 models across 12 brands + custom | 100% |
+| **3D Printer Catalog** | 105 models across 13 brands + custom | 105 models across 13 brands + custom | 100% |
 | **Radial Wheel Overlay** | `360×360` borderless `NSPanel` | `360×360` layered `WS_EX_NOACTIVATE` WPF window with narrow petal gaps and native Tools and Actions icons | 100% |
 | **Wheel Modes** | Conversions, File Tools, Quick Actions | Conversions, File Tools, Quick Actions | 100% |
 | **Center Hub Interaction** | Click cycles modes, hover shows details | Click cycles modes, hover shows details | 100% |
@@ -42,7 +42,7 @@ windows/src/FlowConverter.Windows/
 ├── Models/                         # Core domain models and configuration
 │   ├── ConversionModels.cs         # 46 formats, 7 format groups, conversion options
 │   ├── FileToolModels.cs           # 29 tools, tool options, crop & redaction models
-│   ├── Printer3DModels.cs          # 84 3D printer models, bed dimensions, gcode flavors
+│   ├── Printer3DModels.cs          # 105 3D printer models, bed dimensions, gcode flavors
 │   └── SettingsModel.cs            # Persistent settings (%APPDATA%\FlowConverter\settings.json)
 ├── Interop/                        # Win32 APIs and low-level system monitors
 │   ├── NativeMethods.cs            # P/Invoke declarations (User32, Shell32, Gdi32)
@@ -74,7 +74,7 @@ windows/src/FlowConverter.Windows/
   - **Archives (4):** ZIP, TAR, GZIP, RAR.
   Provides `ConversionOptions` for quality, resolution, format filtering, and target directory resolution.
 - **`FileToolModels.cs`**: Declares the `FileTool` enum with all 29 context-aware utilities, along with supporting data structures such as `CropRectModel`, `RedactBoxModel`, `AudioWaveformModel`, and `FileToolExecutionOptions`.
-- **`Printer3DModels.cs`**: Contains the full hardware catalog of 84 pre-configured 3D printer profiles across 12 manufacturers (Anycubic, Bambu Lab, Creality, Flashforge, Elegoo, Prusa, Qidi Tech, Sovol, Artillery, Flsun, Voron, Two Trees) plus user-defined custom printers. Stores bed dimensions (`BedWidthMM`, `BedDepthMM`, `BedHeightMM`), nozzle diameters, G-code flavors (`klipper`, `marlin`, `reprapfirmware`), and slicer identifier tags.
+- **`Printer3DModels.cs`**: Contains the full hardware catalog of 105 pre-configured 3D printer profiles across 13 manufacturers (Anycubic, Bambu Lab, Creality, Flashforge, Snapmaker, Elegoo, Prusa, Qidi Tech, Sovol, Artillery, Flsun, Voron, Two Trees) plus user-defined custom printers. Stores bed dimensions (`BedWidthMM`, `BedDepthMM`, `BedHeightMM`), nozzle diameters, G-code flavors (`klipper`, `marlin`, `marlin2`, `reprapfirmware`), and slicer identifier tags.
 - **`SettingsModel.cs`**: Manages global user configuration with JSON persistence at `%APPDATA%\FlowConverter\settings.json`. Covers themes (`Glass`, `Metallic`), modifier key bindings, default output formats, compression presets, watched folders, and first-run flags.
 
 ### 2. `Interop/`

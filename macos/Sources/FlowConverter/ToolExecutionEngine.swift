@@ -1391,6 +1391,18 @@ public enum ThreeMFConverterEngine {
         case "Anycubic Kobra": return "Anycubic Kobra 1"
         case "Anycubic Kobra Plus": return "Anycubic Kobra 1 Plus"
         case "Anycubic Kobra Max": return "Anycubic Kobra 1 Max"
+        case "Flashforge Guider 4": return "Flashforge Guider4"
+        case "Flashforge Guider 4 Pro": return "Flashforge Guider4 Pro"
+        case "Flashforge Adventurer 4 Pro": return "Flashforge Adventurer 4 Series"
+        case "Flashforge Adventurer 3": return "Flashforge Adventurer 3 Series"
+        case "Snapmaker J1s": return "Snapmaker J1"
+        case "Snapmaker 2.0 A350T / A350": return "Snapmaker A350"
+        case "Snapmaker 2.0 A350 Dual": return "Snapmaker A350 Dual"
+        case "Snapmaker 2.0 A350 QSKit": return "Snapmaker A350 QSKit"
+        case "Snapmaker 2.0 A250T / A250": return "Snapmaker A250"
+        case "Snapmaker 2.0 A250 Dual": return "Snapmaker A250 Dual"
+        case "Snapmaker 2.0 A250 QSKit": return "Snapmaker A250 QSKit"
+        case "Snapmaker 2.0 A150": return "Snapmaker A250"
         default: return trimmed
         }
     }
@@ -1401,6 +1413,7 @@ public enum ThreeMFConverterEngine {
         case "bambu lab", "bambulab", "bbl": return ["BBL"]
         case "creality": return ["Creality"]
         case "flashforge": return ["Flashforge"]
+        case "snapmaker": return ["Snapmaker"]
         case "elegoo": return ["Elegoo"]
         case "prusa", "prusa research": return ["Prusa"]
         case "qidi tech", "qidi": return ["Qidi"]
@@ -1472,9 +1485,13 @@ public enum ThreeMFConverterEngine {
     ) -> (combined: [String: Any], processProfile: [String: Any], filamentKeys: Set<String>)? {
         let cleanModel = canonicalPrinterModelName(for: targetPrinter)
         let candidateMachineNames = [
-            "\(cleanModel) \(nozzleStr) nozzle",
             targetPrinter.printerSettingsID,
+            "\(cleanModel) \(nozzleStr) nozzle",
+            "\(cleanModel) \(nozzleStr) Nozzle",
+            "\(cleanModel) (\(nozzleStr) nozzle)",
             "\(cleanModel) 0.4 nozzle",
+            "\(cleanModel) 0.4 Nozzle",
+            "\(cleanModel) (0.4 nozzle)",
             cleanModel
         ]
         let vendors = vendorIndexNames(for: targetPrinter.brand)
