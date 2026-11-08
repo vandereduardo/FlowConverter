@@ -49,9 +49,9 @@ func drawFlowConverterIcon(size: Int) -> Data? {
         )
     }
 
-    // Subtle radial cyan glow in the center
+    // Subtle radial royal blue glow in the center
     let glowColors = [
-        CGColor(red: 0.0, green: 0.90, blue: 1.0, alpha: 0.22),
+        CGColor(red: 0.16, green: 0.48, blue: 0.92, alpha: 0.24),
         CGColor(red: 0.36, green: 0.38, blue: 0.81, alpha: 0.0)
     ] as CFArray
     if let glow = CGGradient(colorsSpace: colorSpace, colors: glowColors, locations: [0.0, 1.0]) {
@@ -69,7 +69,7 @@ func drawFlowConverterIcon(size: Int) -> Data? {
     // Outer subtle border
     ctx.saveGState()
     ctx.addPath(bgPath)
-    ctx.setStrokeColor(CGColor(red: 0.0, green: 0.88, blue: 1.0, alpha: 0.35))
+    ctx.setStrokeColor(CGColor(red: 0.26, green: 0.58, blue: 1.0, alpha: 0.38))
     ctx.setLineWidth(max(1.5, s * 0.014))
     ctx.strokePath()
     ctx.restoreGState()
@@ -93,9 +93,9 @@ func drawFlowConverterIcon(size: Int) -> Data? {
         ctx.saveGState()
         ctx.addPath(path)
 
-        // Highlight active segment at top-right in glowing Electric Cyan, others in sleek gradient
+        // Highlight active segment at top-right in rich Royal Blue, others in sleek gradient
         if i == 1 || i == 2 {
-            ctx.setFillColor(CGColor(red: 0.0, green: 0.90, blue: 1.0, alpha: i == 1 ? 0.95 : 0.75))
+            ctx.setFillColor(CGColor(red: 0.14, green: 0.48, blue: 0.92, alpha: i == 1 ? 0.96 : 0.78))
             ctx.fillPath()
         } else if i == 5 || i == 6 {
             ctx.setFillColor(CGColor(red: 0.42, green: 0.36, blue: 0.91, alpha: 0.72))
@@ -104,27 +104,27 @@ func drawFlowConverterIcon(size: Int) -> Data? {
             ctx.setFillColor(CGColor(red: 0.16, green: 0.23, blue: 0.36, alpha: 0.85))
             ctx.fillPath()
             ctx.addPath(path)
-            ctx.setStrokeColor(CGColor(red: 0.0, green: 0.85, blue: 1.0, alpha: 0.38))
+            ctx.setStrokeColor(CGColor(red: 0.26, green: 0.58, blue: 1.0, alpha: 0.38))
             ctx.setLineWidth(max(1.0, s * 0.008))
             ctx.strokePath()
         }
         ctx.restoreGState()
     }
 
-    // Center hub circle with glowing cyan ring
+    // Center hub circle with glowing royal blue ring
     let hubR = s * 0.115
     let hubRect = CGRect(x: center.x - hubR, y: center.y - hubR, width: hubR * 2, height: hubR * 2)
     ctx.saveGState()
     ctx.setFillColor(CGColor(red: 0.05, green: 0.08, blue: 0.14, alpha: 1.0))
     ctx.fillEllipse(in: hubRect)
-    ctx.setStrokeColor(CGColor(red: 0.0, green: 0.90, blue: 1.0, alpha: 0.95))
+    ctx.setStrokeColor(CGColor(red: 0.26, green: 0.58, blue: 1.0, alpha: 0.95))
     ctx.setLineWidth(max(1.5, s * 0.018))
     ctx.strokeEllipse(in: hubRect)
     ctx.restoreGState()
 
     // Central "//" Flow slash accent inside the hub
     ctx.saveGState()
-    ctx.setStrokeColor(CGColor(red: 0.0, green: 0.94, blue: 1.0, alpha: 1.0))
+    ctx.setStrokeColor(CGColor(red: 0.32, green: 0.64, blue: 1.0, alpha: 1.0))
     ctx.setLineWidth(max(1.5, s * 0.022))
     ctx.setLineCap(.round)
     let slashH = hubR * 0.48

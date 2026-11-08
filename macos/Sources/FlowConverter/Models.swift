@@ -3,6 +3,15 @@ import AppKit
 import SwiftUI
 import UniformTypeIdentifiers
 
+// MARK: - Unified System Accent Palette
+
+public extension Color {
+    /// Deep royal blue (#1968E6) for filled buttons, active cards, and controls with white text (WCAG AA > 5.1:1 contrast).
+    static let flowAccent = Color(red: 0.10, green: 0.41, blue: 0.90)
+    /// Soft azure blue (#4294FF) for icons, badges, and borders on dark surfaces.
+    static let flowAccentLight = Color(red: 0.26, green: 0.58, blue: 1.0)
+}
+
 // MARK: - Core Formats & Groups
 
 public enum SupportedFormatGroup: String, CaseIterable, Identifiable, Codable {

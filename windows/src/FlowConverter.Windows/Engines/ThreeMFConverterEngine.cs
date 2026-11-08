@@ -293,7 +293,7 @@ public static class ThreeMFConverterEngine
                     {
                         int id = int.TryParse(fil.Attribute("id")?.Value, out int parsedId) ? parsedId : (idx + 1);
                         string type = fil.Attribute("type")?.Value ?? (idx < filamentTypes.Count ? filamentTypes[idx] : "PLA");
-                        string color = NormalizeHexColor(fil.Attribute("color")?.Value ?? (idx < filamentColors.Count ? filamentColors[idx] : "#00E5FF"));
+                        string color = NormalizeHexColor(fil.Attribute("color")?.Value ?? (idx < filamentColors.Count ? filamentColors[idx] : "#1968E6"));
                         double.TryParse(fil.Attribute("used_g")?.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out double usedG);
                         double.TryParse(fil.Attribute("used_m")?.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out double usedM);
                         sliceFilaments.Add(new ThreeMFFilamentSlot
@@ -338,7 +338,7 @@ public static class ThreeMFConverterEngine
                     {
                         SlotIndex = i + 1,
                         FilamentType = i < filamentTypes.Count ? filamentTypes[i] : "PLA",
-                        ColorHex = NormalizeHexColor(i < filamentColors.Count ? filamentColors[i] : "#00E5FF")
+                        ColorHex = NormalizeHexColor(i < filamentColors.Count ? filamentColors[i] : "#1968E6")
                     });
                 }
             }
@@ -483,7 +483,7 @@ public static class ThreeMFConverterEngine
                         : (origTypes.FirstOrDefault() ?? "PLA");
                     string c = (i < origColors.Count && !string.IsNullOrWhiteSpace(origColors[i]))
                         ? NormalizeHexColor(origColors[i])
-                        : NormalizeHexColor(origColors.FirstOrDefault() ?? "#00E5FF");
+                        : NormalizeHexColor(origColors.FirstOrDefault() ?? "#1968E6");
                     resolvedTypes.Add(t);
                     resolvedColors.Add(c);
                 }
@@ -491,7 +491,7 @@ public static class ThreeMFConverterEngine
             else
             {
                 resolvedTypes.Add("PLA");
-                resolvedColors.Add("#00E5FF");
+                resolvedColors.Add("#1968E6");
             }
 
             var origSettingsDict = new Dictionary<string, object?>(settingsDict, StringComparer.Ordinal);
@@ -1283,11 +1283,11 @@ public static class ThreeMFConverterEngine
 
     public static string NormalizeHexColor(string? raw)
     {
-        if (string.IsNullOrWhiteSpace(raw)) return "#00E5FF";
+        if (string.IsNullOrWhiteSpace(raw)) return "#1968E6";
         string cleaned = raw.Trim().TrimStart('#');
         if (cleaned.Length >= 6)
             return "#" + cleaned.Substring(0, 6).ToUpperInvariant();
-        return "#00E5FF";
+        return "#1968E6";
     }
 
     private static (int W, int D) ParsePrintableArea(List<string> area)

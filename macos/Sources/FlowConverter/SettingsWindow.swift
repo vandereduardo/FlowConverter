@@ -468,7 +468,7 @@ public struct FlowConverterSettingsView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Image(systemName: "checkmark.seal.fill")
-                            .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                            .foregroundColor(Color.flowAccentLight)
                             .font(.title2)
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Full version unlocked").font(.headline)
@@ -640,7 +640,7 @@ public struct FlowConverterSettingsView: View {
                 folderStore.requestFolderAccess()
             }
             .buttonStyle(.borderedProminent)
-            .tint(Color(red: 0.0, green: 0.898, blue: 1.0))
+            .tint(Color.flowAccent)
 
             if folderStore.folders.isEmpty {
                 Text("No folders explicitly bookmarked yet (Standard access active).")
@@ -649,7 +649,7 @@ public struct FlowConverterSettingsView: View {
             } else {
                 ForEach(folderStore.folders, id: \.self) { url in
                     HStack {
-                        Image(systemName: "folder.fill").foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                        Image(systemName: "folder.fill").foregroundColor(Color.flowAccentLight)
                         Text(url.path).lineLimit(1).truncationMode(.middle)
                         Spacer()
                         Button(role: .destructive) {
@@ -677,7 +677,7 @@ public struct FlowConverterSettingsView: View {
                                 .font(.system(.caption, design: .rounded).weight(.semibold))
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 6)
-                                .background(Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.14))
+                                .background(Color.flowAccent.opacity(0.22))
                                 .cornerRadius(6)
                         }
                     }
@@ -811,7 +811,7 @@ public struct FlowConverterSettingsView: View {
                                 Label("Add to List", systemImage: "plus.circle.fill")
                             }
                             .buttonStyle(.borderedProminent)
-                            .tint(Color(red: 0.0, green: 0.898, blue: 1.0))
+                            .tint(Color.flowAccent)
                             .disabled(model.newPrinterName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                         }
                     }
@@ -832,7 +832,7 @@ public struct FlowConverterSettingsView: View {
                             .help("Show this printer on the Radial Wheel when dragging a .3mf file")
 
                             Image(systemName: "printer.fill")
-                                .foregroundColor(printer.showInWheel ? Color(red: 0.0, green: 0.898, blue: 1.0) : .secondary)
+                                .foregroundColor(printer.showInWheel ? Color.flowAccentLight : .secondary)
 
                             VStack(alignment: .leading, spacing: 2) {
                                 HStack(spacing: 6) {
@@ -842,8 +842,8 @@ public struct FlowConverterSettingsView: View {
                                         .font(.caption2.weight(.bold))
                                         .padding(.horizontal, 6)
                                         .padding(.vertical, 2)
-                                        .background(Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.16))
-                                        .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                                        .background(Color.flowAccent.opacity(0.24))
+                                        .foregroundColor(Color.flowAccentLight)
                                         .cornerRadius(4)
                                     if printer.showInWheel {
                                         Text("Wheel: \"\(printer.shortWheelName)\"")
@@ -891,7 +891,7 @@ public struct FlowConverterSettingsView: View {
                         }
                         .padding(.vertical, 6)
                         .padding(.horizontal, 8)
-                        .background(printer.showInWheel ? Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.06) : Color.clear)
+                        .background(printer.showInWheel ? Color.flowAccent.opacity(0.10) : Color.clear)
                         .cornerRadius(8)
 
                         if idx < model.printers3D.count - 1 {

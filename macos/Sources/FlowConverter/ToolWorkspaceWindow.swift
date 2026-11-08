@@ -778,7 +778,7 @@ public struct FileToolOptionsView: View {
             HStack {
                 Label(model.tool.title, systemImage: model.tool.iconName)
                     .font(.title3.bold())
-                    .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                    .foregroundColor(Color.flowAccentLight)
                 Spacer()
                 Text("\(model.sourceURLs.count) \(model.sourceURLs.count == 1 ? "file" : "files")")
                     .font(.caption)
@@ -814,7 +814,7 @@ public struct FileToolOptionsView: View {
                     model.onApply?()
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(Color(red: 0.0, green: 0.898, blue: 1.0))
+                .tint(Color.flowAccent)
                 .keyboardShortcut(.defaultAction)
             }
             .padding(16)
@@ -1058,7 +1058,7 @@ public struct FileToolOptionsView: View {
                                     .font(.caption.weight(isSelected ? .bold : .medium))
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 5)
-                                    .background(isSelected ? Color(red: 0.0, green: 0.898, blue: 1.0) : Color.secondary.opacity(0.14))
+                                    .background(isSelected ? Color.flowAccent : Color.secondary.opacity(0.14))
                                     .foregroundColor(isSelected ? .white : .primary)
                                     .cornerRadius(6)
                             }
@@ -1154,7 +1154,7 @@ public struct FileToolOptionsView: View {
                                             .cornerRadius(6)
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 6)
-                                                    .stroke(isActive ? Color(red: 0.0, green: 0.898, blue: 1.0) : Color.clear, lineWidth: 2.5)
+                                                    .stroke(isActive ? Color.flowAccentLight : Color.clear, lineWidth: 2.5)
                                             )
                                     }
                                     Text(url.lastPathComponent)
@@ -1204,7 +1204,7 @@ public struct FileToolOptionsView: View {
                 .foregroundColor(.secondary)
             ForEach($model.options.annotations) { $ann in
                 HStack {
-                    Image(systemName: ann.kind.iconName).foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                    Image(systemName: ann.kind.iconName).foregroundColor(Color.flowAccentLight)
                     Text(ann.kind.title).frame(width: 80, alignment: .leading)
                     if ann.kind == .text {
                         TextField("Text", text: $ann.text).textFieldStyle(.roundedBorder)
@@ -1300,7 +1300,7 @@ public struct FileToolOptionsView: View {
                     )
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(Color(red: 0.0, green: 0.898, blue: 1.0))
+                .tint(Color.flowAccent)
                 .controlSize(.regular)
 
                 Button("Reset Full Audio") {
@@ -1329,7 +1329,7 @@ public struct FileToolOptionsView: View {
                     HStack(spacing: 6) {
                         Text(FileToolOptionsModel.formatTime(model.options.trimStartSeconds))
                             .font(.system(.title3, design: .monospaced).bold())
-                            .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                            .foregroundColor(Color.flowAccentLight)
                         Button("-0.1s") { model.setTrimStart(model.options.trimStartSeconds - 0.1) }
                             .controlSize(.mini)
                         Button("+0.1s") { model.setTrimStart(model.options.trimStartSeconds + 0.1) }
@@ -1349,7 +1349,7 @@ public struct FileToolOptionsView: View {
                     HStack(spacing: 6) {
                         Text(FileToolOptionsModel.formatTime(model.trimEndSeconds))
                             .font(.system(.title3, design: .monospaced).bold())
-                            .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                            .foregroundColor(Color.flowAccentLight)
                         Button("-0.1s") { model.setTrimEnd(model.trimEndSeconds - 0.1) }
                             .controlSize(.mini)
                         Button("+0.1s") { model.setTrimEnd(model.trimEndSeconds + 0.1) }
@@ -1478,7 +1478,7 @@ public struct FileToolOptionsView: View {
                             VStack(spacing: 8) {
                                 Image(systemName: "photo.badge.plus")
                                     .font(.system(size: 32))
-                                    .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                                    .foregroundColor(Color.flowAccentLight)
                                 Text("Choose a static image for the video")
                                     .font(.caption)
                                     .foregroundColor(.white.opacity(0.75))
@@ -1492,7 +1492,7 @@ public struct FileToolOptionsView: View {
                                     Capsule()
                                         .fill(
                                             LinearGradient(
-                                                colors: [Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.75), Color(red: 1.0, green: 0.32, blue: 0.0), Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.75)],
+                                                colors: [Color.flowAccentLight.opacity(0.85), Color(red: 1.0, green: 0.32, blue: 0.0), Color.flowAccentLight.opacity(0.85)],
                                                 startPoint: .top,
                                                 endPoint: .bottom
                                             )
@@ -1667,7 +1667,7 @@ public struct FileToolOptionsView: View {
                         Spacer()
                         Text("\(FileToolOptionsModel.formatTime(model.redactionPreviewTime)) / \(FileToolOptionsModel.formatTime(model.mediaDuration))")
                             .font(.system(.caption, design: .monospaced))
-                            .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                            .foregroundColor(Color.flowAccentLight)
                     }
                     Slider(
                         value: Binding(
@@ -1676,7 +1676,7 @@ public struct FileToolOptionsView: View {
                         ),
                         in: 0...max(model.mediaDuration, 0.2)
                     )
-                    .tint(Color(red: 0.0, green: 0.898, blue: 1.0))
+                    .tint(Color.flowAccent)
                 }
                 .padding(10)
                 .background(Color.secondary.opacity(0.08))
@@ -1706,7 +1706,7 @@ public struct FileToolOptionsView: View {
                                     }
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 5)
-                                    .background(isSelected ? Color(red: 0.0, green: 0.898, blue: 1.0) : Color.secondary.opacity(0.15))
+                                    .background(isSelected ? Color.flowAccent : Color.secondary.opacity(0.15))
                                     .foregroundColor(isSelected ? .white : .primary)
                                     .cornerRadius(6)
                                 }
@@ -1883,7 +1883,7 @@ public struct FileToolOptionsView: View {
                             VStack(spacing: 6) {
                                 Image(systemName: "cube.transparent.fill")
                                     .font(.system(size: 38))
-                                    .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                                    .foregroundColor(Color.flowAccentLight)
                                 Text(".3MF Project")
                                     .font(.caption2.weight(.semibold))
                                     .foregroundColor(.white.opacity(0.75))
@@ -1894,15 +1894,15 @@ public struct FileToolOptionsView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(spacing: 8) {
                             Image(systemName: "printer.fill")
-                                .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                                .foregroundColor(Color.flowAccentLight)
                             Text("Impressora Original:")
                                 .font(.subheadline.weight(.semibold))
                             Text(info.currentPrinterModel)
                                 .font(.subheadline.weight(.bold))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 3)
-                                .background(Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.16))
-                                .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                                .background(Color.flowAccent.opacity(0.24))
+                                .foregroundColor(Color.flowAccentLight)
                                 .cornerRadius(6)
                             Spacer()
                         }
@@ -1989,7 +1989,7 @@ public struct FileToolOptionsView: View {
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Escolha o Fabricante e o Modelo (ou digite um personalizado):")
                                 .font(.caption.weight(.semibold))
-                                .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                                .foregroundColor(Color.flowAccentLight)
 
                             HStack(spacing: 10) {
                                 VStack(alignment: .leading, spacing: 3) {
@@ -2062,13 +2062,13 @@ public struct FileToolOptionsView: View {
                                     model.showAddPrinterIn3MFEditor = false
                                 }
                                 .buttonStyle(.borderedProminent)
-                                .tint(Color(red: 0.0, green: 0.898, blue: 1.0))
+                                .tint(Color.flowAccent)
                                 .controlSize(.small)
                                 .disabled(settings.newPrinterName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                             }
                         }
                         .padding(10)
-                        .background(Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.08))
+                        .background(Color.flowAccent.opacity(0.12))
                         .cornerRadius(8)
                     }
 
@@ -2082,7 +2082,7 @@ public struct FileToolOptionsView: View {
                                 HStack(spacing: 10) {
                                     Image(systemName: isSelected ? "checkmark.circle.fill" : "printer.fill")
                                         .font(.title3)
-                                        .foregroundColor(isSelected ? .white : Color(red: 0.0, green: 0.898, blue: 1.0))
+                                        .foregroundColor(isSelected ? .white : Color.flowAccentLight)
 
                                     VStack(alignment: .leading, spacing: 2) {
                                         HStack(spacing: 4) {
@@ -2100,7 +2100,7 @@ public struct FileToolOptionsView: View {
                                         }
                                         Text("\(printer.bedWidthMM)×\(printer.bedDepthMM)×\(printer.bedHeightMM) mm · \(String(format: "%.1f", printer.nozzleDiameterMM))mm")
                                             .font(.system(size: 10, design: .monospaced))
-                                            .opacity(isSelected ? 0.92 : 0.72)
+                                            .opacity(isSelected ? 0.96 : 0.72)
                                     }
                                     Spacer(minLength: 0)
                                 }
@@ -2108,11 +2108,11 @@ public struct FileToolOptionsView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .background(
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .fill(isSelected ? Color(red: 0.0, green: 0.898, blue: 1.0) : Color.secondary.opacity(0.10))
+                                        .fill(isSelected ? Color.flowAccent : Color.secondary.opacity(0.10))
                                 )
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .stroke(isSelected ? Color(red: 0.0, green: 0.898, blue: 1.0) : Color.primary.opacity(0.10), lineWidth: 1.2)
+                                        .stroke(isSelected ? Color.flowAccentLight : Color.primary.opacity(0.10), lineWidth: 1.2)
                                 )
                                 .foregroundColor(isSelected ? .white : .primary)
                             }
@@ -2148,7 +2148,7 @@ public struct FileToolOptionsView: View {
         HStack(spacing: 5) {
             Image(systemName: icon)
                 .font(.caption2)
-                .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                .foregroundColor(Color.flowAccentLight)
             Text("\(label):")
                 .font(.caption2)
                 .foregroundColor(.secondary)
@@ -2175,7 +2175,7 @@ public struct FileToolOptionsView: View {
         var cleaned = hex.trimmingCharacters(in: .whitespacesAndNewlines)
         if cleaned.hasPrefix("#") { cleaned.removeFirst() }
         guard cleaned.count >= 6, let val = Int(cleaned.prefix(6), radix: 16) else {
-            return Color(red: 0.0, green: 0.898, blue: 1.0)
+            return Color.flowAccentLight
         }
         let r = Double((val >> 16) & 0xFF) / 255.0
         let g = Double((val >> 8) & 0xFF) / 255.0
@@ -2257,7 +2257,7 @@ public struct VisualCropCanvasView: View {
                         Rectangle()
                             .strokeBorder(Color.white, lineWidth: 1.6)
                             .background(
-                                Rectangle().strokeBorder(Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.9), lineWidth: 0.8).padding(-1)
+                                Rectangle().strokeBorder(Color.flowAccentLight.opacity(0.9), lineWidth: 0.8).padding(-1)
                             )
                             .allowsHitTesting(false)
 
@@ -2372,7 +2372,7 @@ public struct VisualCropCanvasView: View {
 
             if isCorner {
                 Circle()
-                    .fill(Color(red: 0.0, green: 0.898, blue: 1.0))
+                    .fill(Color.flowAccent)
                     .frame(width: 13, height: 13)
                     .overlay(Circle().stroke(Color.white, lineWidth: 2))
                     .shadow(color: .black.opacity(0.45), radius: 2, x: 0, y: 1)
@@ -2380,13 +2380,13 @@ public struct VisualCropCanvasView: View {
                 Capsule()
                     .fill(Color.white)
                     .frame(width: 20, height: 7)
-                    .overlay(Capsule().stroke(Color(red: 0.0, green: 0.898, blue: 1.0), lineWidth: 1.2))
+                    .overlay(Capsule().stroke(Color.flowAccent, lineWidth: 1.2))
                     .shadow(color: .black.opacity(0.45), radius: 2, x: 0, y: 1)
             } else {
                 Capsule()
                     .fill(Color.white)
                     .frame(width: 7, height: 20)
-                    .overlay(Capsule().stroke(Color(red: 0.0, green: 0.898, blue: 1.0), lineWidth: 1.2))
+                    .overlay(Capsule().stroke(Color.flowAccent, lineWidth: 1.2))
                     .shadow(color: .black.opacity(0.45), radius: 2, x: 0, y: 1)
             }
         }
@@ -2601,7 +2601,7 @@ public struct AudioWaveformTrimView: View {
                                 .fill(
                                     isInside
                                         ? LinearGradient(
-                                            colors: [Color(red: 0.0, green: 0.898, blue: 1.0), Color(red: 1.0, green: 0.36, blue: 0.05)],
+                                            colors: [Color.flowAccentLight, Color(red: 1.0, green: 0.36, blue: 0.05)],
                                             startPoint: .top,
                                             endPoint: .bottom
                                         )
@@ -2636,17 +2636,17 @@ public struct AudioWaveformTrimView: View {
                         .allowsHitTesting(false)
                 }
 
-                // 4. Selected Window Interior (Tint + Top/Bottom Orange Rails + Drag to Slide Window)
+                // 4. Selected Window Interior (Tint + Top/Bottom Rails + Drag to Slide Window)
                 ZStack {
-                    Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.08)
+                    Color.flowAccent.opacity(0.14)
 
                     VStack(spacing: 0) {
                         Rectangle()
-                            .fill(Color(red: 0.0, green: 0.898, blue: 1.0))
+                            .fill(Color.flowAccentLight)
                             .frame(height: 3.5)
                         Spacer()
                         Rectangle()
-                            .fill(Color(red: 0.0, green: 0.898, blue: 1.0))
+                            .fill(Color.flowAccentLight)
                             .frame(height: 3.5)
                     }
                 }
@@ -2745,9 +2745,9 @@ public struct AudioWaveformTrimView: View {
             Color.white.opacity(0.001)
                 .frame(width: 28, height: height)
 
-            // Vertical Orange Bar
+            // Vertical Accent Bar
             RoundedRectangle(cornerRadius: 6, style: .continuous)
-                .fill(Color(red: 0.0, green: 0.898, blue: 1.0))
+                .fill(Color.flowAccent)
                 .frame(width: handleWidth, height: height)
                 .shadow(color: .black.opacity(0.45), radius: 3, x: 0, y: 1)
                 .overlay(
@@ -2867,13 +2867,13 @@ public struct VisualRedactionCanvasView: View {
                                 }
                             } else {
                                 // Inactive at current video timestamp: subtle hatch tint
-                                Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.10)
+                                Color.flowAccent.opacity(0.16)
                             }
 
                             // Selection / Box Border
                             Rectangle()
                                 .strokeBorder(
-                                    isSelected ? Color(red: 0.0, green: 0.898, blue: 1.0) : Color.white.opacity(0.75),
+                                    isSelected ? Color.flowAccentLight : Color.white.opacity(0.75),
                                     style: StrokeStyle(
                                         lineWidth: isSelected ? 2.2 : 1.2,
                                         dash: isVisibleAtTime ? [] : [5, 4]
@@ -2892,7 +2892,7 @@ public struct VisualRedactionCanvasView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 6)
                             .padding(.vertical, 2)
-                            .background(isSelected ? Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.92) : Color.black.opacity(0.72))
+                            .background(isSelected ? Color.flowAccent.opacity(0.95) : Color.black.opacity(0.72))
                             .cornerRadius(4)
                             .padding(4)
                         }
@@ -2957,7 +2957,7 @@ public struct VisualRedactionCanvasView: View {
 
             if isCorner {
                 Circle()
-                    .fill(Color(red: 0.0, green: 0.898, blue: 1.0))
+                    .fill(Color.flowAccent)
                     .frame(width: 12, height: 12)
                     .overlay(Circle().stroke(Color.white, lineWidth: 2))
                     .shadow(color: .black.opacity(0.45), radius: 2, x: 0, y: 1)
@@ -2965,13 +2965,13 @@ public struct VisualRedactionCanvasView: View {
                 Capsule()
                     .fill(Color.white)
                     .frame(width: 18, height: 6)
-                    .overlay(Capsule().stroke(Color(red: 0.0, green: 0.898, blue: 1.0), lineWidth: 1.2))
+                    .overlay(Capsule().stroke(Color.flowAccent, lineWidth: 1.2))
                     .shadow(color: .black.opacity(0.45), radius: 2, x: 0, y: 1)
             } else {
                 Capsule()
                     .fill(Color.white)
                     .frame(width: 6, height: 18)
-                    .overlay(Capsule().stroke(Color(red: 0.0, green: 0.898, blue: 1.0), lineWidth: 1.2))
+                    .overlay(Capsule().stroke(Color.flowAccent, lineWidth: 1.2))
                     .shadow(color: .black.opacity(0.45), radius: 2, x: 0, y: 1)
             }
         }

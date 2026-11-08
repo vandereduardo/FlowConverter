@@ -50,7 +50,7 @@ private struct WelcomeView: View {
             Image(systemName: "circle.hexagongrid.fill")
                 .font(.system(size: 52))
                 .foregroundStyle(
-                    LinearGradient(colors: [Color(red: 0.0, green: 0.898, blue: 1.0), .red], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    LinearGradient(colors: [Color.flowAccentLight, .red], startPoint: .topLeading, endPoint: .bottomTrailing)
                 )
 
             Text("Welcome to Flow Converter")
@@ -85,7 +85,7 @@ private struct WelcomeView: View {
                     onDismiss()
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(Color(red: 0.0, green: 0.898, blue: 1.0))
+                .tint(Color.flowAccent)
             }
             .padding(.top, 6)
             Spacer()
@@ -103,7 +103,8 @@ private struct WelcomeView: View {
                         .font(.caption.bold())
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.2))
+                        .background(Color.flowAccent.opacity(0.24))
+                        .foregroundColor(Color.flowAccentLight)
                         .cornerRadius(4)
                 }
                 Text(subtitle)

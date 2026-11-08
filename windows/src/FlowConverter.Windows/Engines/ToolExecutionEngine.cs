@@ -506,7 +506,7 @@ public static class ToolExecutionEngine
             g.DrawImage(src, 0, 0, src.Width, src.Height);
             foreach (var item in items)
             {
-                Color c = ColorTranslator.FromHtml(string.IsNullOrWhiteSpace(item.ColorHex) ? "#00E5FF" : item.ColorHex);
+                Color c = ColorTranslator.FromHtml(string.IsNullOrWhiteSpace(item.ColorHex) ? "#1968E6" : item.ColorHex);
                 float rx = (float)(item.NormalizedX * src.Width);
                 float ry = (float)(item.NormalizedY * src.Height);
                 float rw = (float)(Math.Max(0.08, item.NormalizedW) * src.Width);

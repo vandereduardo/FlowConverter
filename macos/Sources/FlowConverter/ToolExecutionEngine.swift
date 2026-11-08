@@ -869,7 +869,7 @@ public enum ThreeMFConverterEngine {
                     guard let el = node as? XMLElement else { continue }
                     let id = Int(el.attribute(forName: "id")?.stringValue ?? "") ?? (idx + 1)
                     let type = el.attribute(forName: "type")?.stringValue ?? (idx < filamentTypes.count ? filamentTypes[idx] : "PLA")
-                    let color = Self.normalizeHexColor(el.attribute(forName: "color")?.stringValue ?? (idx < filamentColors.count ? filamentColors[idx] : "#00E5FF"))
+                    let color = Self.normalizeHexColor(el.attribute(forName: "color")?.stringValue ?? (idx < filamentColors.count ? filamentColors[idx] : "#1968E6"))
                     let usedG = Double(el.attribute(forName: "used_g")?.stringValue ?? "")
                     let usedM = Double(el.attribute(forName: "used_m")?.stringValue ?? "")
                     sliceFilaments.append(ThreeMFFilamentSlot(id: id, type: type, colorHex: color, usedGrams: usedG, usedMeters: usedM))
@@ -892,7 +892,7 @@ public enum ThreeMFConverterEngine {
             if count > 0 {
                 for i in 0..<count {
                     let t = i < filamentTypes.count ? filamentTypes[i] : "PLA"
-                    let c = Self.normalizeHexColor(i < filamentColors.count ? filamentColors[i] : "#00E5FF")
+                    let c = Self.normalizeHexColor(i < filamentColors.count ? filamentColors[i] : "#1968E6")
                     info.filaments.append(ThreeMFFilamentSlot(id: i + 1, type: t, colorHex: c))
                 }
             }
@@ -988,13 +988,13 @@ public enum ThreeMFConverterEngine {
         if options.preserve3MFFilaments {
             for i in 0..<filamentCount {
                 let t = (i < origTypes.count && !origTypes[i].isEmpty) ? origTypes[i] : (origTypes.first ?? "PLA")
-                let c = (i < origColors.count && !origColors[i].isEmpty) ? Self.normalizeHexColor(origColors[i]) : Self.normalizeHexColor(origColors.first ?? "#00E5FF")
+                let c = (i < origColors.count && !origColors[i].isEmpty) ? Self.normalizeHexColor(origColors[i]) : Self.normalizeHexColor(origColors.first ?? "#1968E6")
                 resolvedTypes.append(t)
                 resolvedColors.append(c)
             }
         } else {
             resolvedTypes = ["PLA"]
-            resolvedColors = ["#00E5FF"]
+            resolvedColors = ["#1968E6"]
         }
 
         let origSettingsDict = settingsDict
@@ -1378,7 +1378,7 @@ public enum ThreeMFConverterEngine {
         if cleaned.count >= 6 {
             return "#" + String(cleaned.prefix(6)).uppercased()
         }
-        return "#00E5FF"
+        return "#1968E6"
     }
 
     // MARK: - Official Slicer Profile Resolver & Cross-Slicer Sanitizer

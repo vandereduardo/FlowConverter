@@ -347,7 +347,7 @@ public struct FloatingFilePanelContentView: View {
                 .fill(.ultraThinMaterial)
                 .overlay(
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.55), lineWidth: 1.5)
+                        .stroke(Color.flowAccentLight.opacity(0.65), lineWidth: 1.5)
                 )
 
             VStack(spacing: 4) {
@@ -360,7 +360,7 @@ public struct FloatingFilePanelContentView: View {
                     } else {
                         Image(systemName: "paperclip")
                             .font(.title2.bold())
-                            .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                            .foregroundColor(Color.flowAccentLight)
                     }
                 }
                 Text("\(model.items.count) \(model.items.count == 1 ? "file" : "files")")
@@ -384,7 +384,7 @@ public struct FloatingFilePanelContentView: View {
                         .frame(width: 22, height: 22)
                 } else {
                     Image(systemName: "paperclip")
-                        .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                        .foregroundColor(Color.flowAccentLight)
                         .font(.system(size: 14, weight: .bold))
                 }
 
@@ -521,7 +521,7 @@ private struct FloatingGridItemView: View {
         .frame(width: 76)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(isSelected ? Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.28) : Color.clear)
+                .fill(isSelected ? Color.flowAccent.opacity(0.45) : Color.clear)
         )
         .onTapGesture(count: 2) {
             NSWorkspace.shared.open(item.url)
@@ -581,7 +581,7 @@ private struct FloatingListItemView: View {
         .padding(.vertical, 4)
         .background(
             RoundedRectangle(cornerRadius: 6)
-                .fill(isSelected ? Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.28) : Color.clear)
+                .fill(isSelected ? Color.flowAccent.opacity(0.45) : Color.clear)
         )
         .onTapGesture(count: 2) {
             NSWorkspace.shared.open(item.url)

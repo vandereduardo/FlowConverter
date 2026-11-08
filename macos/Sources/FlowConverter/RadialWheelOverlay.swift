@@ -249,7 +249,7 @@ public struct NativeGlassFanView: View {
                             lineWidth: isHighlighted ? 2.2 : 1.0
                         )
                     )
-                    .shadow(color: isHighlighted ? Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.45) : Color.black.opacity(0.28), radius: isHighlighted ? 12 : 6, x: 0, y: 3)
+                    .shadow(color: isHighlighted ? Color.flowAccentLight.opacity(0.45) : Color.black.opacity(0.28), radius: isHighlighted ? 12 : 6, x: 0, y: 3)
 
                     // Petal Label & Optional Icon
                     let labelPos = CGPoint(
@@ -303,14 +303,14 @@ public struct NativeGlassFanView: View {
                     .frame(width: 102, height: 102)
                     .overlay(
                         Circle()
-                            .stroke(Color(red: 0.0, green: 0.898, blue: 1.0).opacity(0.75), lineWidth: 1.5)
+                            .stroke(Color.flowAccentLight.opacity(0.80), lineWidth: 1.5)
                     )
                     .shadow(color: .black.opacity(0.4), radius: 8, x: 0, y: 2)
 
                 VStack(spacing: 4) {
                     Text(model.fanMode.title.uppercased())
                         .font(.system(size: 8.5, weight: .heavy, design: .rounded))
-                        .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                        .foregroundColor(Color.flowAccentLight)
                     Text(activeCenterText)
                         .font(.system(size: 11, weight: .semibold, design: .rounded))
                         .foregroundColor(.white)

@@ -139,7 +139,7 @@ private struct OperationProgressView: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: controller.isFinished ? (controller.errors.isEmpty ? "checkmark.circle.fill" : "exclamationmark.triangle.fill") : "arrow.triangle.2.circlepath")
-                    .foregroundColor(Color(red: 0.0, green: 0.898, blue: 1.0))
+                    .foregroundColor(Color.flowAccentLight)
                     .font(.title2)
                 Text(controller.titleText)
                     .font(.headline)
@@ -147,7 +147,7 @@ private struct OperationProgressView: View {
             }
 
             ProgressView(value: controller.progress, total: 1.0)
-                .tint(Color(red: 0.0, green: 0.898, blue: 1.0))
+                .tint(Color.flowAccent)
 
             Text(controller.statusText)
                 .font(.caption)
