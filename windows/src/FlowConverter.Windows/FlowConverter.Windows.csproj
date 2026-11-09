@@ -10,7 +10,7 @@
     <AssemblyName>FlowConverter</AssemblyName>
     <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
     <RootNamespace>FlowConverter.Windows</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Company>FlowConverter Open Source</Company>
     <Product>Flow Converter</Product>
     <Description>Fast, clean-room radial file converter, floating drop shelf, media studio, and 3D printer .3MF profile converter for Windows.</Description>
