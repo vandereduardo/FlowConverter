@@ -19,17 +19,38 @@ if [[ ! -f "$RES_DIR/AppIcon.icns" || ! -f "$RES_DIR/HighlightSound.wav" ]]; the
     xcrun swift -module-cache-path /tmp/rea-swift-module-cache "$SCRIPT_DIR/Scripts/generate_assets.swift" "$RES_DIR"
 fi
 
-echo "[2/4] Compiling FlowConverter Swift sources..."
-xcrun swiftc -module-cache-path /tmp/rea-swift-module-cache -O -target arm64-apple-macosx13.0 \
-  "$SRC_DIR/Models.swift" \
-  "$SRC_DIR/SettingsWindow.swift" \
-  "$SRC_DIR/RadialWheelOverlay.swift" \
-  "$SRC_DIR/FloatingShelfWindow.swift" \
-  "$SRC_DIR/ConversionEngine.swift" \
-  "$SRC_DIR/ToolWorkspaceWindow.swift" \
-  "$SRC_DIR/ToolExecutionEngine.swift" \
-  "$SRC_DIR/AppDelegate.swift" \
-  -o "$APP_BUNDLE/Contents/MacOS/FlowConverter"
+echo "[2/4] Compiling FlowConverter Swift sources (Universal Binary: arm64 + x86_64)..."
+SWIFT_SOURCES=(
+  "$SRC_DIR/Models.swift"
+  "$SRC_DIR/SettingsWindow.swift"
+  "$SRC_DIR/RadialWheelOverlay.swift"
+  "$SRC_DIR/FloatingShelfWindow.swift"
+  "$SRC_DIR/ConversionEngine.swift"
+  "$SRC_DIR/ToolWorkspaceWindow.swift"
+  "$SRC_DIR/ToolExecutionEngine.swift"
+  "$SRC_DIR/AppDelegate.swift"
+)
+
+TARGET_ARCH="${1:-universal}"
+if [[ "$TARGET_ARCH" == "x86_64" || "$TARGET_ARCH" == "intel" ]]; then
+    xcrun swiftc -module-cache-path /tmp/rea-swift-module-cache -O -target x86_64-apple-macosx13.0 \
+      "${SWIFT_SOURCES[@]}" \
+      -o "$APP_BUNDLE/Contents/MacOS/FlowConverter"
+elif [[ "$TARGET_ARCH" == "arm64" ]]; then
+    xcrun swiftc -module-cache-path /tmp/rea-swift-module-cache -O -target arm64-apple-macosx13.0 \
+      "${SWIFT_SOURCES[@]}" \
+      -o "$APP_BUNDLE/Contents/MacOS/FlowConverter"
+else
+    xcrun swiftc -module-cache-path /tmp/rea-swift-module-cache -O -target arm64-apple-macosx13.0 \
+      "${SWIFT_SOURCES[@]}" \
+      -o "$BUILD_DIR/FlowConverter-arm64"
+    xcrun swiftc -module-cache-path /tmp/rea-swift-module-cache -O -target x86_64-apple-macosx13.0 \
+      "${SWIFT_SOURCES[@]}" \
+      -o "$BUILD_DIR/FlowConverter-x86_64"
+    lipo -create "$BUILD_DIR/FlowConverter-arm64" "$BUILD_DIR/FlowConverter-x86_64" \
+      -output "$APP_BUNDLE/Contents/MacOS/FlowConverter"
+    rm -f "$BUILD_DIR/FlowConverter-arm64" "$BUILD_DIR/FlowConverter-x86_64"
+fi
 
 echo "[3/4] Copying clean-room Info.plist, icons, sounds, scripts, and open-source CLI tools..."
 cp "$RES_DIR/Info.plist" "$APP_BUNDLE/Contents/Info.plist"
@@ -39,12 +60,24 @@ cp "$RES_DIR/Scripts/flow_office_converter.py" "$APP_BUNDLE/Contents/Resources/S
 cp "$RES_DIR/Scripts/flow_pages_export.js" "$APP_BUNDLE/Contents/Resources/Scripts/flow_pages_export.js"
 chmod +x "$APP_BUNDLE/Contents/Resources/Scripts/flow_office_converter.py"
 
-# Bundle open-source ffmpeg & cwebp if available locally or via Homebrew
+# Bundle open-source ffmpeg & cwebp if available locally or via Homebrew (matching target architecture)
 for tool in ffmpeg cwebp; do
+    CANDIDATE=""
     if [[ -x "$RES_DIR/Tools/$tool" ]]; then
-        cp "$RES_DIR/Tools/$tool" "$APP_BUNDLE/Contents/Resources/Tools/$tool"
+        CANDIDATE="$RES_DIR/Tools/$tool"
+    elif [[ "$TARGET_ARCH" == "x86_64" || "$TARGET_ARCH" == "intel" ]] && [[ -x "/usr/local/bin/$tool" ]]; then
+        CANDIDATE="/usr/local/bin/$tool"
     elif [[ -x "/opt/homebrew/bin/$tool" ]]; then
-        cp "/opt/homebrew/bin/$tool" "$APP_BUNDLE/Contents/Resources/Tools/$tool"
+        CANDIDATE="/opt/homebrew/bin/$tool"
+    fi
+    if [[ -n "$CANDIDATE" ]]; then
+        if [[ "$TARGET_ARCH" == "x86_64" || "$TARGET_ARCH" == "intel" ]]; then
+            if file "$CANDIDATE" | grep -q "x86_64"; then
+                cp "$CANDIDATE" "$APP_BUNDLE/Contents/Resources/Tools/$tool"
+            fi
+        else
+            cp "$CANDIDATE" "$APP_BUNDLE/Contents/Resources/Tools/$tool"
+        fi
     fi
 done
 

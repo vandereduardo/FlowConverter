@@ -45,17 +45,47 @@ public enum BundledResources {
         return URL(fileURLWithPath: "/Users/vander/DEV/Clone Tagerine/FlowConverter/macos/Resources")
     }
 
+    private static func isCompatibleMachOBinary(atPath path: String) -> Bool {
+        guard FileManager.default.isExecutableFile(atPath: path),
+              let handle = FileHandle(forReadingAtPath: path) else { return false }
+        defer { try? handle.close() }
+        guard let data = try? handle.read(upToCount: 64), data.count >= 8 else { return false }
+        let magic = data.withUnsafeBytes { $0.load(as: UInt32.self) }
+        #if arch(x86_64)
+        let targetCPU: UInt32 = 0x01000007 // CPU_TYPE_X86_64
+        #else
+        let targetCPU: UInt32 = 0x0100000C // CPU_TYPE_ARM64
+        #endif
+        if magic == 0xFEEDFACF { // MH_MAGIC_64 (native endian)
+            let cpu = data.withUnsafeBytes { $0.load(fromByteOffset: 4, as: UInt32.self) }
+            return cpu == targetCPU
+        } else if magic == 0xBEBAFECA { // FAT_CIGAM (Universal binary, big-endian header)
+            let nfat = UInt32(bigEndian: data.withUnsafeBytes { $0.load(fromByteOffset: 4, as: UInt32.self) })
+            for i in 0..<Int(min(nfat, 4)) {
+                let offset = 8 + i * 20
+                if data.count >= offset + 4 {
+                    let cpu = UInt32(bigEndian: data.withUnsafeBytes { $0.load(fromByteOffset: offset, as: UInt32.self) })
+                    if cpu == targetCPU { return true }
+                }
+            }
+            return false
+        }
+        return true
+    }
+
     public static var ffmpegPath: String {
         let bundled = resourceRoot.appendingPathComponent("Tools/ffmpeg").path
-        if FileManager.default.isExecutableFile(atPath: bundled) { return bundled }
-        if FileManager.default.isExecutableFile(atPath: "/opt/homebrew/bin/ffmpeg") { return "/opt/homebrew/bin/ffmpeg" }
+        if isCompatibleMachOBinary(atPath: bundled) { return bundled }
+        if isCompatibleMachOBinary(atPath: "/usr/local/bin/ffmpeg") { return "/usr/local/bin/ffmpeg" }
+        if isCompatibleMachOBinary(atPath: "/opt/homebrew/bin/ffmpeg") { return "/opt/homebrew/bin/ffmpeg" }
         return "/usr/local/bin/ffmpeg"
     }
 
     public static var cwebpPath: String {
         let bundled = resourceRoot.appendingPathComponent("Tools/cwebp").path
-        if FileManager.default.isExecutableFile(atPath: bundled) { return bundled }
-        if FileManager.default.isExecutableFile(atPath: "/opt/homebrew/bin/cwebp") { return "/opt/homebrew/bin/cwebp" }
+        if isCompatibleMachOBinary(atPath: bundled) { return bundled }
+        if isCompatibleMachOBinary(atPath: "/usr/local/bin/cwebp") { return "/usr/local/bin/cwebp" }
+        if isCompatibleMachOBinary(atPath: "/opt/homebrew/bin/cwebp") { return "/opt/homebrew/bin/cwebp" }
         return "/usr/local/bin/cwebp"
     }
 
